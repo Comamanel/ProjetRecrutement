@@ -1,7 +1,6 @@
 package be.ucm.projetrecrutementapi;
 
 import be.ucm.projetrecrutementapi.dal.entities.Projet;
-import be.ucm.projetrecrutementapi.dal.entities.Technologie;
 import be.ucm.projetrecrutementapi.dal.entities.enums.EtatProjet;
 import be.ucm.projetrecrutementapi.dal.entities.enums.TypeProjet;
 import be.ucm.projetrecrutementapi.dal.repositories.ProjetRepository;
@@ -10,7 +9,6 @@ import be.ucm.projetrecrutementapi.dal.entities.Group;
 import be.ucm.projetrecrutementapi.dal.entities.enums.GroupEnum;
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
 import be.ucm.projetrecrutementapi.dal.repositories.UtilisateurDAO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
