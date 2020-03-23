@@ -2,6 +2,7 @@ package be.ucm.projetrecrutementapi.dal.entities;
 
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -12,10 +13,11 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode(of={})
+@EqualsAndHashCode(of={ "id", "nom" })
 public class Group implements Serializable {
     @Id
     private Long id;
+    @Column(nullable = false)
     private GroupEnum nom;
 
     @ManyToMany(targetEntity = Role.class)

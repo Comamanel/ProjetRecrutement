@@ -2,9 +2,7 @@ package be.ucm.projetrecrutementapi.dal.entities;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -16,10 +14,13 @@ import java.io.Serializable;
 public class Participation_Projet implements Serializable {
     @Id
     private Long id;
-    @ManyToOne
+    @ManyToOne(targetEntity = Utilisateur.class, cascade = CascadeType.PERSIST)
     private Utilisateur utilisateur;
+    //@ManyToOne(targetEntity = Projet.class, cascade = CascadeType.PERSIST)
     //private Projet projet;
+    @Column(nullable = false)
     private boolean actif;
+    @Column(nullable = false)
     private boolean proprio;
 
 }

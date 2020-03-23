@@ -17,9 +17,13 @@ public class Utilisateur implements Serializable {
 
     @Id
     private Long id;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String motDePasse;
+    @Column(nullable = false)
     private String pseudo;
+    @Column(nullable = false)
     private LocalDate dateDeNaissance;
     private String nom;
     private String prenom;
@@ -30,12 +34,13 @@ public class Utilisateur implements Serializable {
     private String photoProfil;
     private String cvDoc;
 
-    @ManyToOne(targetEntity = Group.class)
+    @ManyToOne(targetEntity = Group.class, cascade = CascadeType.PERSIST)
     private Group group;
 
-    @ManyToMany(targetEntity = Role.class)
+
+    @ManyToMany(targetEntity = Role.class, cascade = CascadeType.PERSIST)
     private Set<Role> roles;
-    @OneToMany(targetEntity = Participation_Projet.class, mappedBy = "Utilisateur_id")
+    @OneToMany(targetEntity = Participation_Projet.class, mappedBy = "utilisateur", cascade = CascadeType.PERSIST)
     private Set<Participation_Projet> projetsParticipes;
     /*
     private Set<Projet> projetsCrees;
