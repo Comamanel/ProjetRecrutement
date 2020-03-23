@@ -1,5 +1,11 @@
 package be.ucm.projetrecrutementapi;
 
+import be.ucm.projetrecrutementapi.dal.entities.Projet;
+import be.ucm.projetrecrutementapi.dal.entities.Technologie;
+import be.ucm.projetrecrutementapi.dal.entities.enums.EtatProjet;
+import be.ucm.projetrecrutementapi.dal.entities.enums.TypeProjet;
+import be.ucm.projetrecrutementapi.dal.repositories.ProjetRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import be.ucm.projetrecrutementapi.dal.entities.Group;
 import be.ucm.projetrecrutementapi.dal.entities.enums.GroupEnum;
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
@@ -21,6 +27,9 @@ public class ProjetRecrutementApiApplication {
 
 	@Autowired
 	private UtilisateurDAO utilisateurDAO;
+
+	@Autowired
+	private ProjetRepository projetRepository;
 
 	@EventListener(ApplicationReadyEvent.class)
 	public void ajouterUtilisateur(){
@@ -45,4 +54,18 @@ public class ProjetRecrutementApiApplication {
 		utilisateurDAO.save(user);
 	}
 
+	@EventListener(ApplicationReadyEvent.class)
+	private void ajouterProjet(){
+		Projet projet = new Projet();
+		projet.setName("TestProjet");
+		projet.setDescription("Ceci est un test de projet pour voir si l'affichage fonctionne bien");
+		projet.setDateDebut(LocalDate.of(2020, 3, 23));
+		projet.setTypeProjet(TypeProjet.SER);
+		projet.setMaxParticipants(10);
+		projet.setDateFin(LocalDate.of(2100, 1, 10));
+		projet.setTpsTravailHebdo(5);
+		projet.setStatut(EtatProjet.ACT);
+
+		this.projetRepository.save(projet);
+	}
 }
