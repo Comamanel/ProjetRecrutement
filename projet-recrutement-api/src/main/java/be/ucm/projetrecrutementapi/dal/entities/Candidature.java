@@ -26,9 +26,9 @@ public class Candidature {
     @Column(nullable = false)
     private EtatCandidature statut;
 
-    //@ManyToOne(cascade = CascadeType.PERSIST)
-    //@Column(nullable = false)
-    //private Utilisateur utilisateur;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(nullable = false)
+    private Utilisateur utilisateur;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Projet projet;

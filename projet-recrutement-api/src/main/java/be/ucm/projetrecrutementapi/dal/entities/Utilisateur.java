@@ -42,18 +42,21 @@ public class Utilisateur implements Serializable {
     private Set<Role> roles;
     @OneToMany(targetEntity = Participation_Projet.class, mappedBy = "utilisateur", cascade = CascadeType.PERSIST)
     private Set<Participation_Projet> projetsParticipes;
-    /*
+
+    @OneToMany(targetEntity = Projet.class, cascade = CascadeType.PERSIST)
     private Set<Projet> projetsCrees;
+
+    @ManyToMany(targetEntity = Maitrise.class, cascade = CascadeType.PERSIST)
     private Set<Maitrise> maitrises;
-     */
+
 
     public Utilisateur(){
         this.roles = new HashSet<>();
         this.projetsParticipes = new HashSet<>();
-        /*
+
         this.projetsCrees = new HashSet<>();
         this.maitrises = new HashSet<>();
-         */
+
     }
 
     public Utilisateur(Long id, String email, String motDePasse, String pseudo, LocalDate dateDeNaissance, String nom, String prenom, String infoSupp, String numTel, String pays, String lienGit, String photoProfil, String cvDoc, Group group) {

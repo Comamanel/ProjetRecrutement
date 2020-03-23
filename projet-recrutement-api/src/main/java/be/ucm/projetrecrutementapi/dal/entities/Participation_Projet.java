@@ -16,8 +16,8 @@ public class Participation_Projet implements Serializable {
     private Long id;
     @ManyToOne(targetEntity = Utilisateur.class, cascade = CascadeType.PERSIST)
     private Utilisateur utilisateur;
-    //@ManyToOne(targetEntity = Projet.class, cascade = CascadeType.PERSIST)
-    //private Projet projet;
+    @ManyToOne(targetEntity = Projet.class, cascade = CascadeType.PERSIST)
+    private Projet projet;
     @Column(nullable = false)
     private boolean actif;
     @Column(nullable = false)
