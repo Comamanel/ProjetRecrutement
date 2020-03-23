@@ -1,11 +1,9 @@
 package be.ucm.projetrecrutementapi.dal.entities;
 
+import be.ucm.projetrecrutementapi.dal.entities.enums.GroupEnum;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +14,7 @@ import java.util.Set;
 @EqualsAndHashCode(of={ "id", "nom" })
 public class Group implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private GroupEnum nom;
