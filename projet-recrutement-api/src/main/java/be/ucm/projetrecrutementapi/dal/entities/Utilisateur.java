@@ -54,7 +54,6 @@ public class Utilisateur implements Serializable {
     public Utilisateur(){
         this.roles = new HashSet<>();
         this.projetsParticipes = new HashSet<>();
-
         this.projetsCrees = new HashSet<>();
         this.maitrises = new HashSet<>();
 

@@ -13,10 +13,11 @@ import java.io.Serializable;
 @EqualsAndHashCode(of={"id", "actif", "proprio", "utilisateur"/*, "projet"*/ })
 public class Participation_Projet implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(targetEntity = Utilisateur.class, cascade = CascadeType.PERSIST)
+    @ManyToOne(targetEntity = Utilisateur.class, cascade = CascadeType.DETACH)
     private Utilisateur utilisateur;
-    @ManyToOne(targetEntity = Projet.class, cascade = CascadeType.PERSIST)
+    @ManyToOne(targetEntity = Projet.class, cascade = CascadeType.DETACH)
     private Projet projet;
     @Column(nullable = false)
     private boolean actif;
