@@ -13,10 +13,9 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-public class UtilisateurDTO {
+public class AfficheUtilisateurDTO {
     private Long id;
     private String email;
-    private String motDePasse;
     private String pseudo;
     private LocalDate dateDeNaissance;
     private String nom;
@@ -30,14 +29,13 @@ public class UtilisateurDTO {
     private Group group;
     private List<RoleDTO> roles;
     private List<Participation_Projet_DTO> projetsParticipes;
-    //private List<ProjetDTO> projetsCrees;
+    private List<AfficheProjetDTO> projetsCrees;
     private List<MaitriseDTO> maitrises;
 
-    public UtilisateurDTO(){};
-    public UtilisateurDTO(Utilisateur utilisateur){
+    public AfficheUtilisateurDTO(){};
+    public AfficheUtilisateurDTO(Utilisateur utilisateur){
         this.id = utilisateur.getId();
         this.email = utilisateur.getEmail();
-        this.motDePasse = utilisateur.getMotDePasse();
         this.pseudo = utilisateur.getPseudo();
         this.dateDeNaissance = utilisateur.getDateDeNaissance();
         this.nom = utilisateur.getNom();
@@ -51,7 +49,7 @@ public class UtilisateurDTO {
         this.group = utilisateur.getGroup();
         this.roles = utilisateur.getRoles().stream().map(RoleDTO::new).collect(Collectors.toList());
         this.projetsParticipes = utilisateur.getProjetsParticipes().stream().map(Participation_Projet_DTO::new).collect(Collectors.toList());
-        //this.projetCrees = utilisateur.getProjetsCrees().stream().map(ProjetDTO::new).collect(Collectors.toList());
+        this.projetsCrees = utilisateur.getProjetsCrees().stream().map(AfficheProjetDTO::new).collect(Collectors.toList());
         this.maitrises = utilisateur.getMaitrises().stream().map(MaitriseDTO::new).collect(Collectors.toList());
     }
 }

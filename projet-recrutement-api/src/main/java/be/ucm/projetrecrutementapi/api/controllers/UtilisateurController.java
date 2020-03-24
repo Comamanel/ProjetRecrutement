@@ -1,6 +1,6 @@
 package be.ucm.projetrecrutementapi.api.controllers;
 
-import be.ucm.projetrecrutementapi.api.dto.UtilisateurDTO;
+import be.ucm.projetrecrutementapi.api.dto.AfficheUtilisateurDTO;
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
 import be.ucm.projetrecrutementapi.dal.repositories.UtilisateurDAO;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +21,10 @@ public class UtilisateurController {
     public UtilisateurController(UtilisateurDAO utilisateurDAO) { this.utilisateurDAO = utilisateurDAO;}
 
     @GetMapping("")
-    public ResponseEntity<List<UtilisateurDTO>> getAll(){
+    public ResponseEntity<List<AfficheUtilisateurDTO>> getAll(){
         List<Utilisateur> utilisateurs = utilisateurDAO.findAll();
 
-        return ResponseEntity.ok(utilisateurs.stream().map(UtilisateurDTO::new).collect(Collectors.toList()));
+        return ResponseEntity.ok(utilisateurs.stream().map(AfficheUtilisateurDTO::new).collect(Collectors.toList()));
     }
 
 }

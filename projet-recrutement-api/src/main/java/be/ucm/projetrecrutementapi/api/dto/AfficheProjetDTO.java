@@ -1,6 +1,5 @@
 package be.ucm.projetrecrutementapi.api.dto;
 
-import be.ucm.projetrecrutementapi.dal.entities.Maitrise;
 import be.ucm.projetrecrutementapi.dal.entities.Projet;
 import be.ucm.projetrecrutementapi.dal.entities.enums.EtatProjet;
 import be.ucm.projetrecrutementapi.dal.entities.enums.TypeProjet;
@@ -26,7 +25,7 @@ public class AfficheProjetDTO {
     private int tpsTravailHebdo;
     private EtatProjet statut;
 
-    private Set<AfficheProjetMaitriseDTO> maitrisesDemandees = new HashSet<>();
+    private Set<MaitriseDTO> maitrisesDemandees = new HashSet<>();
 
     public AfficheProjetDTO(Projet projet){
         this.id = projet.getId();
@@ -39,6 +38,6 @@ public class AfficheProjetDTO {
         this.tpsTravailHebdo = projet.getTpsTravailHebdo();
         this.statut = projet.getStatut();
 
-        projet.getMaitrisesDemandees().forEach(m -> this.maitrisesDemandees.add(new AfficheProjetMaitriseDTO(m)));
+        projet.getMaitrisesDemandees().forEach(m -> this.maitrisesDemandees.add(new MaitriseDTO(m)));
     }
 }

@@ -9,12 +9,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AfficheProjetTechnologieDTO {
+public class ProjetTechnologieDTO {
     private Long id;
     private String nom;
     private String createur;
 
-    public AfficheProjetTechnologieDTO(Technologie technologie){
+    public ProjetTechnologieDTO(Technologie technologie){
         this.id = technologie.getId();
         this.nom = technologie.getNom();
         this.createur= technologie.getCreateur();
