@@ -1,7 +1,7 @@
 package be.ucm.projetrecrutementapi.services;
 
 import be.ucm.projetrecrutementapi.dal.entities.Projet;
-import be.ucm.projetrecrutementapi.dal.repositories.projetRepository;
+import be.ucm.projetrecrutementapi.dal.repositories.ProjetDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +11,11 @@ import java.util.Optional;
 @Service
 public class ProjetServiceImpl implements ProjetService {
     @Autowired
-    private projetRepository projetRepository;
+    private ProjetDAO projetDAO;
 
     @Override
     public Optional<Projet> findById(Long id) {
-        return this.projetRepository.findById(id);
+        return this.projetDAO.findById(id);
     }
 
 /*  @Override
@@ -23,6 +23,6 @@ public class ProjetServiceImpl implements ProjetService {
 
     @Override
     public List<Projet> findAll() {
-        return (List<Projet>)this.projetRepository.findAll();
+        return (List<Projet>)this.projetDAO.findAll();
     }
 }

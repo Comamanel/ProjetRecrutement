@@ -4,7 +4,7 @@ import be.ucm.projetrecrutementapi.dal.entities.Projet;
 import be.ucm.projetrecrutementapi.dal.entities.enums.EtatProjet;
 import be.ucm.projetrecrutementapi.dal.entities.enums.TypeProjet;
 import be.ucm.projetrecrutementapi.dal.repositories.ParticipationDAO;
-import be.ucm.projetrecrutementapi.dal.repositories.projetRepository;
+import be.ucm.projetrecrutementapi.dal.repositories.ProjetDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import be.ucm.projetrecrutementapi.dal.entities.Group;
 import be.ucm.projetrecrutementapi.dal.entities.enums.GroupEnum;
@@ -31,7 +31,7 @@ public class ProjetRecrutementApiApplication {
 	private ParticipationDAO participationDAO;
 
 	@Autowired
-	private be.ucm.projetrecrutementapi.dal.repositories.projetRepository projetRepository;
+	private ProjetDAO projetRepository;
 
 	@EventListener(ApplicationReadyEvent.class)
 	public void ajouterUtilisateur(){
