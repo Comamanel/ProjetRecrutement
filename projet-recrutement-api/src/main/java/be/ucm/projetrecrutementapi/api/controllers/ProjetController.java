@@ -16,12 +16,11 @@ import java.util.stream.Collectors;
 @RequestMapping(value={ "/api/projet" })
 public class ProjetController {
 
-    private final projetRepository projetRepository;
-    public ProjetController (projetRepository projetRepository) { this.projetRepository = projetRepository;}
-
     @Autowired
     private ProjetService projetService;
 
+    @Autowired
+    private projetRepository projetRepository;
 
     @GetMapping(value={"/{id}"})
     public ResponseEntity<AfficheProjetDTO> getOne(@PathVariable Long id){
@@ -36,6 +35,13 @@ public class ProjetController {
         List<Projet> projets = projetRepository.findByUserId(id);
 
         return ResponseEntity.ok(projets.stream().map(AfficheProjetDTO::new).collect(Collectors.toList()));
+    }
+
+    @GetMapping({"/", "/list"})
+    public ResponseEntity<List<AfficheProjetDTO>> getAll(){
+        return ResponseEntity.ok(
+                this.projetService.findAll().stream().map(AfficheProjetDTO::new).collect(Collectors.toList())
+        );
     }
 
 }

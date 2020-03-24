@@ -1,10 +1,10 @@
 package be.ucm.projetrecrutementapi;
 
-import be.ucm.projetrecrutementapi.dal.entities.Participation_Projet;
 import be.ucm.projetrecrutementapi.dal.entities.Projet;
 import be.ucm.projetrecrutementapi.dal.entities.enums.EtatProjet;
 import be.ucm.projetrecrutementapi.dal.entities.enums.TypeProjet;
 import be.ucm.projetrecrutementapi.dal.repositories.ParticipationDAO;
+import be.ucm.projetrecrutementapi.dal.repositories.projetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import be.ucm.projetrecrutementapi.dal.entities.Group;
 import be.ucm.projetrecrutementapi.dal.entities.enums.GroupEnum;
@@ -15,7 +15,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 
-import java.lang.reflect.Type;
 import java.time.LocalDate;
 
 @SpringBootApplication
@@ -54,8 +53,11 @@ public class ProjetRecrutementApiApplication {
 		user.setCvDoc("hector.pdf");
 		user.setGroup(members);
 
-		this.utilisateurDAO.save(user);
+		utilisateurDAO.save(user);
+	}
 
+	@EventListener(ApplicationReadyEvent.class)
+	private void ajouterProjet(){
 		Projet projet = new Projet();
 		projet.setName("TestProjet");
 		projet.setDescription("Ceci est un test de projet pour voir si l'affichage fonctionne bien");
@@ -77,23 +79,20 @@ public class ProjetRecrutementApiApplication {
 		projet2.setStatut(EtatProjet.ACT);
 
 		this.projetRepository.save(projet);
-		this.projetRepository.save(projet2);
-
-		Participation_Projet pprojet = new Participation_Projet();
-		pprojet.setActif(true);
-		pprojet.setProjet(projet);
-		pprojet.setProprio(false);
-		pprojet.setUtilisateur(user);
-
-		Participation_Projet pprojet2 = new Participation_Projet();
-		pprojet2.setActif(true);
-		pprojet2.setProjet(projet2);
-		pprojet2.setProprio(false);
-		pprojet2.setUtilisateur(user);
-
-		this.participationDAO.save(pprojet);
-		this.participationDAO.save(pprojet2);
-
 	}
 
+	@EventListener(ApplicationReadyEvent.class)
+	private void ajouterProjet2(){
+		Projet projet = new Projet();
+		projet.setName("TestProjet2");
+		projet.setDescription("Ceci est un deuxième test de projet pour voir si l'affichage de plusieurs projets fonctionne bien");
+		projet.setDateDebut(LocalDate.of(2020, 3, 24));
+		projet.setTypeProjet(TypeProjet.SER);
+		projet.setMaxParticipants(1);
+		projet.setDateFin(LocalDate.of(2100, 1, 11));
+		projet.setTpsTravailHebdo(10);
+		projet.setStatut(EtatProjet.ACT);
+
+		this.projetRepository.save(projet);
+	}
 }

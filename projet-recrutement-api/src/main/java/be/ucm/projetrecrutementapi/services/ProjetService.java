@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface ProjetService {
     Optional<Projet> findById(Long id);
     //List<Projet> findByUserId(Long id);
+    List<Projet> findAll();
 }
