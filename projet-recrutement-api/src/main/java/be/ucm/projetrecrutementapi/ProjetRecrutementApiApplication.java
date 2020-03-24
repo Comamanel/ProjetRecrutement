@@ -66,4 +66,19 @@ public class ProjetRecrutementApiApplication {
 
 		this.projetRepository.save(projet);
 	}
+
+	@EventListener(ApplicationReadyEvent.class)
+	private void ajouterProjet2(){
+		Projet projet = new Projet();
+		projet.setName("TestProjet2");
+		projet.setDescription("Ceci est un deuxième test de projet pour voir si l'affichage de plusieurs projets fonctionne bien");
+		projet.setDateDebut(LocalDate.of(2020, 3, 24));
+		projet.setTypeProjet(TypeProjet.SER);
+		projet.setMaxParticipants(1);
+		projet.setDateFin(LocalDate.of(2100, 1, 11));
+		projet.setTpsTravailHebdo(10);
+		projet.setStatut(EtatProjet.ACT);
+
+		this.projetRepository.save(projet);
+	}
 }

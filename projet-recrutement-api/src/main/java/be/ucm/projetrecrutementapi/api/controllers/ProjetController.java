@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping(value={ "/api/projet" })
@@ -22,6 +25,13 @@ public class ProjetController {
                 new AfficheProjetDTO(
                     this.projetService.findById(id).orElse(new Projet())
         ));
+    }
+
+    @GetMapping({"/", "/list"})
+    public ResponseEntity<List<AfficheProjetDTO>> getAll(){
+        return ResponseEntity.ok(
+                this.projetService.findAll().stream().map(AfficheProjetDTO::new).collect(Collectors.toList())
+        );
     }
 
 }
