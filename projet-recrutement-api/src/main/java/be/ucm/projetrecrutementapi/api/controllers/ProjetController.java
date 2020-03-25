@@ -1,6 +1,7 @@
 package be.ucm.projetrecrutementapi.api.controllers;
 
 import be.ucm.projetrecrutementapi.api.dto.AfficheProjetDTO;
+import be.ucm.projetrecrutementapi.api.dto.ProjetFiltreDTO;
 import be.ucm.projetrecrutementapi.dal.entities.Projet;
 import be.ucm.projetrecrutementapi.dal.repositories.ProjetDAO;
 import be.ucm.projetrecrutementapi.services.ProjetService;
@@ -37,11 +38,11 @@ public class ProjetController {
         return ResponseEntity.ok(projets.stream().map(AfficheProjetDTO::new).collect(Collectors.toList()));
     }
 
-    @GetMapping({"/", "/list"})
-    public ResponseEntity<List<AfficheProjetDTO>> getAll(){
-        return ResponseEntity.ok(
-                this.projetService.findAll().stream().map(AfficheProjetDTO::new).collect(Collectors.toList())
-        );
+    @GetMapping({"/"})
+    public ResponseEntity<List<AfficheProjetDTO>> getAll(ProjetFiltreDTO filters){
+        List<Projet> projetsFiltres = this.projetService.findAllFiltered(filters);
+        return ResponseEntity.ok(projetsFiltres.stream().map(AfficheProjetDTO::new).collect(Collectors.toList()));
     }
+
 
 }
