@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -27,4 +28,18 @@ public class UtilisateurController {
         return ResponseEntity.ok(utilisateurs.stream().map(AfficheUtilisateurDTO::new).collect(Collectors.toList()));
     }
 
+    //Pour tester si il renvoie bien quelque chose (pas indispensable)
+    @GetMapping("/email={email}")
+    public ResponseEntity<Utilisateur> getByEmail(@PathVariable String email){
+        Utilisateur utilisateur = utilisateurDAO.findByEmail(email).orElse(null);
+
+        return ResponseEntity.ok(utilisateur);
+    }
+
+    @GetMapping("/pseudo={pseudo}")
+    public ResponseEntity<Utilisateur> getByPseudo(@PathVariable String pseudo){
+        Utilisateur utilisateur = utilisateurDAO.findByPseudo(pseudo).orElse(null);
+
+        return ResponseEntity.ok(utilisateur);
+    }
 }
