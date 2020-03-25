@@ -79,6 +79,7 @@ public class ProjetRecrutementApiApplication {
 		projet2.setStatut(EtatProjet.ACT);
 
 		this.projetDAO.save(projet);
+		this.projetDAO.save(projet2);
 	}
 
 	@EventListener(ApplicationReadyEvent.class)
