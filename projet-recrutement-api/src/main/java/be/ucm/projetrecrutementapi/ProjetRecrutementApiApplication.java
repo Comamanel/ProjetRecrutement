@@ -31,7 +31,7 @@ public class ProjetRecrutementApiApplication {
 	private ParticipationDAO participationDAO;
 
 	@Autowired
-	private ProjetDAO projetRepository;
+	private ProjetDAO projetDAO;
 
 	@EventListener(ApplicationReadyEvent.class)
 	public void ajouterUtilisateur(){
@@ -59,7 +59,7 @@ public class ProjetRecrutementApiApplication {
 	@EventListener(ApplicationReadyEvent.class)
 	private void ajouterProjet(){
 		Projet projet = new Projet();
-		projet.setName("TestProjet");
+		projet.setNom("TestProjet");
 		projet.setDescription("Ceci est un test de projet pour voir si l'affichage fonctionne bien");
 		projet.setDateDebut(LocalDate.of(2020, 3, 23));
 		projet.setTypeProjet(TypeProjet.SER);
@@ -69,7 +69,7 @@ public class ProjetRecrutementApiApplication {
 		projet.setStatut(EtatProjet.ACT);
 
 		Projet projet2 = new Projet();
-		projet2.setName("Application Sushi");
+		projet2.setNom("Application Sushi");
 		projet2.setDescription("Une application qui permet de commander de délicieux sushis");
 		projet2.setDateDebut(LocalDate.of(2019, 11, 18));
 		projet2.setTypeProjet(TypeProjet.APP);
@@ -78,13 +78,13 @@ public class ProjetRecrutementApiApplication {
 		projet2.setTpsTravailHebdo(4);
 		projet2.setStatut(EtatProjet.ACT);
 
-		this.projetRepository.save(projet);
+		this.projetDAO.save(projet);
 	}
 
 	@EventListener(ApplicationReadyEvent.class)
 	private void ajouterProjet2(){
 		Projet projet = new Projet();
-		projet.setName("TestProjet2");
+		projet.setNom("TestProjet2");
 		projet.setDescription("Ceci est un deuxième test de projet pour voir si l'affichage de plusieurs projets fonctionne bien");
 		projet.setDateDebut(LocalDate.of(2020, 3, 24));
 		projet.setTypeProjet(TypeProjet.SER);
@@ -93,6 +93,6 @@ public class ProjetRecrutementApiApplication {
 		projet.setTpsTravailHebdo(10);
 		projet.setStatut(EtatProjet.ACT);
 
-		this.projetRepository.save(projet);
+		this.projetDAO.save(projet);
 	}
 }

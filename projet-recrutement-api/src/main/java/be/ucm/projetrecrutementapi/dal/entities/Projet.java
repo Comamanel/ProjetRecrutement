@@ -24,7 +24,7 @@ public class Projet {
     @Column(name = "id_projet", nullable = false)
     private Long id;
     @Column(nullable = false)
-    private String name;
+    private String nom;
     @Column(nullable = false, length = 1000)
     private String description;
     @Column(nullable = false)

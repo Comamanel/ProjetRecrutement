@@ -29,7 +29,7 @@ public class AfficheProjetDTO {
 
     public AfficheProjetDTO(Projet projet){
         this.id = projet.getId();
-        this.name = projet.getName();
+        this.name = projet.getNom();
         this.description = projet.getDescription();
         this.dateDebut = projet.getDateDebut();
         this.typeProjet = projet.getTypeProjet();
