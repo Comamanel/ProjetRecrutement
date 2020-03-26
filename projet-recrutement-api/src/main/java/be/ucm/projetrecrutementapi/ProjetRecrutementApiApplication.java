@@ -61,10 +61,10 @@ public class ProjetRecrutementApiApplication {
 		Projet projet = new Projet();
 		projet.setNom("TestProjet");
 		projet.setDescription("Ceci est un test de projet pour voir si l'affichage fonctionne bien");
-		projet.setDateDebut(LocalDate.of(2020, 3, 23));
+		projet.setDateDebut(LocalDate.of(2020, 1, 23));
 		projet.setTypeProjet(TypeProjet.SER);
 		projet.setMaxParticipants(10);
-		projet.setDateFin(LocalDate.of(2100, 1, 10));
+		projet.setDateFin(LocalDate.of(2080, 1, 10));
 		projet.setTpsTravailHebdo(5);
 		projet.setStatut(EtatProjet.ACT);
 
@@ -92,7 +92,7 @@ public class ProjetRecrutementApiApplication {
 		projet.setMaxParticipants(1);
 		projet.setDateFin(LocalDate.of(2100, 1, 11));
 		projet.setTpsTravailHebdo(10);
-		projet.setStatut(EtatProjet.ACT);
+		projet.setStatut(EtatProjet.ARC);
 
 		this.projetDAO.save(projet);
 	}
