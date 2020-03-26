@@ -30,6 +30,29 @@ public class ProjetServiceImpl implements ProjetService {
 
     @Override
     public List<Projet> findAllFiltered(ProjetFiltreDTO filtres) {
+        if(filtres.getDateDebutEgal() != null){
+            filtres.setDateDebutEgalConverti(filtres.getDateDebutEgal().toLocalDate());
+        }
+
+        if(filtres.getDateDebutAvant() != null){
+            filtres.setDateDebutAvantConverti(filtres.getDateDebutAvant().toLocalDate());
+        }
+
+        if(filtres.getDateDebutApres() != null){
+            filtres.setDateDebutApresConverti(filtres.getDateDebutApres().toLocalDate());
+        }
+
+        if(filtres.getDateFinEgal() != null){
+            filtres.setDateFinEgalConverti(filtres.getDateFinEgal().toLocalDate());
+        }
+
+        if(filtres.getDateFinAvant() != null){
+            filtres.setDateFinAvantConverti(filtres.getDateFinAvant().toLocalDate());
+        }
+
+        if(filtres.getDateFinApres() != null){
+            filtres.setDateFinApresConverti(filtres.getDateFinApres().toLocalDate());
+        }
         return this.projetDAO.getFiltered(filtres);
     }
 }
