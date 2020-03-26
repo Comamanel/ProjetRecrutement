@@ -84,6 +84,11 @@
 			<version>5.4.1</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-spring</artifactId>
+			<version>5.4.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>

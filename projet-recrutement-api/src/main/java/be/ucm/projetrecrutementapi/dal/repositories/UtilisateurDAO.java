@@ -1,6 +1,7 @@
 package be.ucm.projetrecrutementapi.dal.repositories;
 
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
