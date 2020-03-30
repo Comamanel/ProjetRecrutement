@@ -35,7 +35,7 @@ public class Utilisateur implements Serializable {
     private String photoProfil;
     private String cvDoc;
 
-    @ManyToOne(targetEntity = Group.class, cascade = CascadeType.PERSIST)
+    @ManyToOne(targetEntity = Group.class, cascade = CascadeType.DETACH)
     private Group group;
 
 

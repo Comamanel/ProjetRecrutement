@@ -3,6 +3,7 @@ package be.ucm.projetrecrutementapi;
 import be.ucm.projetrecrutementapi.dal.entities.Projet;
 import be.ucm.projetrecrutementapi.dal.entities.enums.EtatProjet;
 import be.ucm.projetrecrutementapi.dal.entities.enums.TypeProjet;
+import be.ucm.projetrecrutementapi.dal.repositories.GroupDAO;
 import be.ucm.projetrecrutementapi.dal.repositories.ParticipationDAO;
 import be.ucm.projetrecrutementapi.dal.repositories.ProjetDAO;
 import be.ucm.projetrecrutementapi.services.UtilisateurServices;
@@ -35,10 +36,15 @@ public class ProjetRecrutementApiApplication {
 	@Autowired
 	private ProjetDAO projetDAO;
 
+	@Autowired
+	private GroupDAO groupDAO;
+
 	@EventListener(ApplicationReadyEvent.class)
 	public void ajouterUtilisateur(){
 		Group members = new Group();
 		members.setNom(GroupEnum.MEMBRE);
+
+		members = this.groupDAO.save(members);
 
 		Utilisateur user = new Utilisateur();
 		user.setPseudo("SpaceBichon");
@@ -56,6 +62,25 @@ public class ProjetRecrutementApiApplication {
 		user.setGroup(members);
 
 		utilisateurDAO.save(user);
+
+		Utilisateur user2 = new Utilisateur();
+		user2.setPseudo("MaurChev");
+		user2.setNom("Le Chevalier");
+		user2.setPrenom("Maurice");
+		user2.setEmail("maurice@chevalier.com");
+		user2.setDateDeNaissance(LocalDate.of(1256, 4, 5));
+		user2.setMotDePasse("ALAssaut");
+		user2.setInfoSupp("Le chevalier le plus courageux du XXIeme siecle [T]");
+		user2.setNumTel("000/000000");
+		user2.setPays("Belgiqve");
+		user2.setLienGit("maurice-chevalier.git");
+		user2.setPhotoProfil("mauricelechevalier.png");
+		user2.setCvDoc("maurice.pdf");
+		user2.setGroup(members);
+
+		utilisateurDAO.save(user2);
+
+
 	}
 
 	@EventListener(ApplicationReadyEvent.class)
