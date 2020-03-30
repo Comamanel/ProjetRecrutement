@@ -15,7 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CandidatureDemandeFormulaireDTO {
+public class CandidatureFormulaireDTO {
     @NotNull
     @PositiveOrZero
     @Max(168)
@@ -24,5 +24,5 @@ public class CandidatureDemandeFormulaireDTO {
     private Long utilisateurId;
     @NotNull
     private Long projetId;
-    private Set<TechnologieDTO> technologiesSouhaitees = new HashSet<>();
+    private Set<Long> technologiesSouhaitees = new HashSet<>();
 }

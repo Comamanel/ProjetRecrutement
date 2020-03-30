@@ -1,8 +1,7 @@
 package be.ucm.projetrecrutementapi.api.controllers;
 
 import be.ucm.projetrecrutementapi.api.dto.AfficheCandidatureDTO;
-import be.ucm.projetrecrutementapi.api.dto.CandidatureDemandeFormulaireDTO;
-import be.ucm.projetrecrutementapi.dal.entities.Candidature;
+import be.ucm.projetrecrutementapi.api.dto.CandidatureFormulaireDTO;
 import be.ucm.projetrecrutementapi.services.CandidatureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,7 @@ public class CandidatureController {
     private CandidatureService candidatureService;
 
     @PostMapping("new")
-    public ResponseEntity<AfficheCandidatureDTO> createCandidature(@RequestBody @Valid CandidatureDemandeFormulaireDTO candidature){
+    public ResponseEntity<AfficheCandidatureDTO> createCandidature(@RequestBody @Valid CandidatureFormulaireDTO candidature){
         return ResponseEntity.ok(new AfficheCandidatureDTO(this.candidatureService.save(candidature)));
     }
 }

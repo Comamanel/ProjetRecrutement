@@ -1,18 +1,16 @@
 package be.ucm.projetrecrutementapi;
 
 import be.ucm.projetrecrutementapi.dal.entities.Projet;
+import be.ucm.projetrecrutementapi.dal.entities.Technologie;
 import be.ucm.projetrecrutementapi.dal.entities.enums.EtatProjet;
 import be.ucm.projetrecrutementapi.dal.entities.enums.TypeProjet;
-import be.ucm.projetrecrutementapi.dal.repositories.GroupDAO;
-import be.ucm.projetrecrutementapi.dal.repositories.ParticipationDAO;
-import be.ucm.projetrecrutementapi.dal.repositories.ProjetDAO;
+import be.ucm.projetrecrutementapi.dal.repositories.*;
 import be.ucm.projetrecrutementapi.services.UtilisateurServices;
 import net.minidev.json.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import be.ucm.projetrecrutementapi.dal.entities.Group;
 import be.ucm.projetrecrutementapi.dal.entities.enums.GroupEnum;
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
-import be.ucm.projetrecrutementapi.dal.repositories.UtilisateurDAO;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -37,7 +35,34 @@ public class ProjetRecrutementApiApplication {
 	private ProjetDAO projetDAO;
 
 	@Autowired
+	private TechnologieDAO technologieDAO;
+
+	@Autowired
 	private GroupDAO groupDAO;
+
+
+	@EventListener(ApplicationReadyEvent.class)
+	private void ajouterTechnologies(){
+		Technologie technologie1 = new Technologie();
+		technologie1.setCreateur("Sun Microsystem");
+		technologie1.setNom("Java");
+		this.technologieDAO.save(technologie1);
+
+		Technologie technologie2 = new Technologie();
+		technologie2.setCreateur("Google et des randoms apparemment");
+		technologie2.setNom("Angular");
+		this.technologieDAO.save(technologie2);
+
+		Technologie technologie3 = new Technologie();
+		technologie3.setCreateur("Apache");
+		technologie3.setNom("Struts2");
+		this.technologieDAO.save(technologie3);
+
+		Technologie technologie4 = new Technologie();
+		technologie4.setCreateur("IBM");
+		technologie4.setNom("DB2");
+		this.technologieDAO.save(technologie4);
+	}
 
 	@EventListener(ApplicationReadyEvent.class)
 	public void ajouterUtilisateur(){
@@ -123,4 +148,5 @@ public class ProjetRecrutementApiApplication {
 
 		this.projetDAO.save(projet);
 	}
+
 }
