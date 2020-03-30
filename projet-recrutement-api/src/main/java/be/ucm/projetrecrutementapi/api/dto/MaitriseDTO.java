@@ -12,11 +12,11 @@ import lombok.Setter;
 public class MaitriseDTO {
     private Long id;
     private NiveauMaitrise niveauMaitrise;
-    private ProjetTechnologieDTO technologie;
+    private TechnologieDTO technologie;
 
     public MaitriseDTO(Maitrise maitrise){
         this.id = maitrise.getId();
         this.niveauMaitrise = maitrise.getNiveauMaitrise();
-        this.technologie = new ProjetTechnologieDTO(maitrise.getTechnologie());
+        this.technologie = new TechnologieDTO(maitrise.getTechnologie());
     }
 }
