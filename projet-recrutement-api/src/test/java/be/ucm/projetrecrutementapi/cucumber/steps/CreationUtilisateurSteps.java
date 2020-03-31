@@ -1,8 +1,7 @@
 package be.ucm.projetrecrutementapi.cucumber.steps;
 
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
-import be.ucm.projetrecrutementapi.dal.repositories.UtilisateurDAO;
-import be.ucm.projetrecrutementapi.services.UtilisateurServices;
+import be.ucm.projetrecrutementapi.services.UtilisateurService;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.junit.Assert;
@@ -17,7 +16,7 @@ public class CreationUtilisateurSteps {
     private Utilisateur nouvelUtilisateur;
 
     @Autowired
-    private UtilisateurServices utilisateurService;
+    private UtilisateurService utilisateurService;
 
     @Given("someone wants to create an account")
     public void someone_wants_to_create_an_account(){

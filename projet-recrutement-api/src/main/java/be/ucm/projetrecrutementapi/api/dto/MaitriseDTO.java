@@ -14,6 +14,13 @@ public class MaitriseDTO {
     private NiveauMaitrise niveauMaitrise;
     private ProjetTechnologieDTO technologie;
 
+    public Maitrise toEntity(){
+        Maitrise maitrise = new Maitrise();
+        maitrise.setNiveauMaitrise(this.niveauMaitrise);
+        maitrise.setTechnologie(this.technologie.toEntity());
+        return maitrise;
+    }
+
     public MaitriseDTO(Maitrise maitrise){
         this.id = maitrise.getId();
         this.niveauMaitrise = maitrise.getNiveauMaitrise();

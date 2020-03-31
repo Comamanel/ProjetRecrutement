@@ -4,13 +4,12 @@ import be.ucm.projetrecrutementapi.api.dto.AfficheUtilisateurDTO;
 import be.ucm.projetrecrutementapi.api.dto.DataUtilisateurDTO;
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
 import be.ucm.projetrecrutementapi.dal.repositories.UtilisateurDAO;
-import be.ucm.projetrecrutementapi.services.UtilisateurServices;
+import be.ucm.projetrecrutementapi.services.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.crypto.Data;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +22,7 @@ public class UtilisateurController {
     private UtilisateurDAO utilisateurDAO;
 
     @Autowired
-    private UtilisateurServices utilisateurService;
+    private UtilisateurService utilisateurService;
 
     @GetMapping("")
     public ResponseEntity<List<AfficheUtilisateurDTO>> getAll(){

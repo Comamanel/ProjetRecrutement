@@ -16,12 +16,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@CrossOrigin
-public class UtilisateurServices {
+public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Autowired
     private UtilisateurDAO utilisateurDAO;
 
+    @Override
     public Utilisateur testerNouvelUtilisateur(Utilisateur nouvelUtilisateur){
 
         if (nouvelUtilisateur.getEmail() == null

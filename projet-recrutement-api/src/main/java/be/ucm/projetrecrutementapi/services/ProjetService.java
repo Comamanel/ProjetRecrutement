@@ -2,6 +2,7 @@ package be.ucm.projetrecrutementapi.services;
 
 import be.ucm.projetrecrutementapi.api.dto.ProjetFiltreDTO;
 import be.ucm.projetrecrutementapi.dal.entities.Projet;
+import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface ProjetService {
     List<Projet> findByUserId(Long id);
     List<Projet> findAll();
     public List<Projet> findAllFiltered(ProjetFiltreDTO filtres);
+    public Projet testerValiditeProjet(Utilisateur utilisateurActif, Projet nouveauProjet);
 }
