@@ -1,15 +1,18 @@
 package be.ucm.projetrecrutementapi;
 
 import be.ucm.projetrecrutementapi.dal.entities.Projet;
+import be.ucm.projetrecrutementapi.dal.entities.Technologie;
 import be.ucm.projetrecrutementapi.dal.entities.enums.EtatProjet;
 import be.ucm.projetrecrutementapi.dal.entities.enums.TypeProjet;
+import be.ucm.projetrecrutementapi.dal.repositories.*;
+import be.ucm.projetrecrutementapi.services.UtilisateurServices;
+import net.minidev.json.JSONUtil;
 import be.ucm.projetrecrutementapi.dal.repositories.ParticipationDAO;
 import be.ucm.projetrecrutementapi.dal.repositories.ProjetDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import be.ucm.projetrecrutementapi.dal.entities.Group;
 import be.ucm.projetrecrutementapi.dal.entities.enums.GroupEnum;
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
-import be.ucm.projetrecrutementapi.dal.repositories.UtilisateurDAO;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -33,10 +36,42 @@ public class ProjetRecrutementApiApplication {
 	@Autowired
 	private ProjetDAO projetDAO;
 
+	@Autowired
+	private TechnologieDAO technologieDAO;
+
+	@Autowired
+	private GroupDAO groupDAO;
+
+
+	@EventListener(ApplicationReadyEvent.class)
+	private void ajouterTechnologies(){
+		Technologie technologie1 = new Technologie();
+		technologie1.setCreateur("Sun Microsystem");
+		technologie1.setNom("Java");
+		this.technologieDAO.save(technologie1);
+
+		Technologie technologie2 = new Technologie();
+		technologie2.setCreateur("Google et des randoms apparemment");
+		technologie2.setNom("Angular");
+		this.technologieDAO.save(technologie2);
+
+		Technologie technologie3 = new Technologie();
+		technologie3.setCreateur("Apache");
+		technologie3.setNom("Struts2");
+		this.technologieDAO.save(technologie3);
+
+		Technologie technologie4 = new Technologie();
+		technologie4.setCreateur("IBM");
+		technologie4.setNom("DB2");
+		this.technologieDAO.save(technologie4);
+	}
+
 	@EventListener(ApplicationReadyEvent.class)
 	public void ajouterUtilisateur(){
 		Group members = new Group();
 		members.setNom(GroupEnum.MEMBRE);
+
+		members = this.groupDAO.save(members);
 
 		Utilisateur user = new Utilisateur();
 		user.setPseudo("SpaceBichon");
@@ -54,6 +89,25 @@ public class ProjetRecrutementApiApplication {
 		user.setGroup(members);
 
 		utilisateurDAO.save(user);
+
+		Utilisateur user2 = new Utilisateur();
+		user2.setPseudo("MaurChev");
+		user2.setNom("Le Chevalier");
+		user2.setPrenom("Maurice");
+		user2.setEmail("maurice@chevalier.com");
+		user2.setDateDeNaissance(LocalDate.of(1256, 4, 5));
+		user2.setMotDePasse("ALAssaut");
+		user2.setInfoSupp("Le chevalier le plus courageux du XXIeme siecle [T]");
+		user2.setNumTel("000/000000");
+		user2.setPays("Belgiqve");
+		user2.setLienGit("maurice-chevalier.git");
+		user2.setPhotoProfil("mauricelechevalier.png");
+		user2.setCvDoc("maurice.pdf");
+		user2.setGroup(members);
+
+		utilisateurDAO.save(user2);
+
+
 	}
 
 	@EventListener(ApplicationReadyEvent.class)

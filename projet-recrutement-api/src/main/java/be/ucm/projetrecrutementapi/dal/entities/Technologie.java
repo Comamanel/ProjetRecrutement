@@ -1,5 +1,6 @@
 package be.ucm.projetrecrutementapi.dal.entities;
 
+import be.ucm.projetrecrutementapi.api.dto.TechnologieDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,4 +24,9 @@ public class Technologie {
     @Column(nullable = false)
     private String createur;
 
+    public Technologie(TechnologieDTO dto){
+        this.id = dto.getId();
+        this.nom = dto.getNom();
+        this.createur = dto.getCreateur();
+    }
 }
