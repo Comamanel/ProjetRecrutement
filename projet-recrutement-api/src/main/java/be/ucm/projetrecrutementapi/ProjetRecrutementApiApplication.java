@@ -120,23 +120,34 @@ public class ProjetRecrutementApiApplication {
 	private void ajouterMaitrises(){
 		Maitrise m1 = new Maitrise();
 		m1.setNiveauMaitrise(NiveauMaitrise.AVA);
-		m1.setTechnologie(technologieDAO.getOne(1L));
+		Technologie techno1 = technologieDAO.findById(1L).orElse(null);
+		m1.setTechnologie(techno1);
 
 		Maitrise m2 = new Maitrise();
-		m1.setNiveauMaitrise(NiveauMaitrise.DEB);
-		m1.setTechnologie(technologieDAO.getOne(2L));
+		m2.setNiveauMaitrise(NiveauMaitrise.DEB);
+		Technologie techno2 = technologieDAO.findById(2L).orElse(null);
+		m2.setTechnologie(techno2);
 
 		Maitrise m3 = new Maitrise();
-		m1.setNiveauMaitrise(NiveauMaitrise.INT);
-		m1.setTechnologie(technologieDAO.getOne(3L));
+		m3.setNiveauMaitrise(NiveauMaitrise.INT);
+		Technologie techno3 = technologieDAO.findById(3L).orElse(null);
+		m3.setTechnologie(techno3);
 
 		Maitrise m4 = new Maitrise();
-		m1.setNiveauMaitrise(NiveauMaitrise.AVA);
-		m1.setTechnologie(technologieDAO.getOne(2L));
+		m4.setNiveauMaitrise(NiveauMaitrise.AVA);
+		Technologie techno4 = technologieDAO.findById(1L).orElse(null);
+		m4.setTechnologie(techno4);
 
 		Maitrise m5 = new Maitrise();
-		m1.setNiveauMaitrise(NiveauMaitrise.INT);
-		m1.setTechnologie(technologieDAO.getOne(1L));
+		m5.setNiveauMaitrise(NiveauMaitrise.INT);
+		Technologie techno5 = technologieDAO.findById(2L).orElse(null);
+		m5.setTechnologie(techno5);
+
+		maitriseDAO.save(m1);
+		maitriseDAO.save(m2);
+		maitriseDAO.save(m3);
+		maitriseDAO.save(m4);
+		maitriseDAO.save(m5);
 	}
 
 	private void ajouterProjet(){
@@ -149,10 +160,9 @@ public class ProjetRecrutementApiApplication {
 		projet.setDateFin(LocalDate.of(2080, 1, 10));
 		projet.setTpsTravailHebdo(5);
 		projet.setStatut(EtatProjet.ACT);
-		Maitrise test = maitriseDAO.getOne(1L);
-		projet.getMaitrisesDemandees().add(maitriseDAO.getOne(1L));
-		projet.getMaitrisesDemandees().add(maitriseDAO.getOne(2L));
-		projet.getMaitrisesDemandees().add(maitriseDAO.getOne(3L));
+		projet.getMaitrisesDemandees().add(maitriseDAO.findById(1L).orElse(null));
+		projet.getMaitrisesDemandees().add(maitriseDAO.findById(2L).orElse(null));
+		projet.getMaitrisesDemandees().add(maitriseDAO.findById(3L).orElse(null));
 
 		Projet projet2 = new Projet();
 		projet2.setNom("Application Sushi");

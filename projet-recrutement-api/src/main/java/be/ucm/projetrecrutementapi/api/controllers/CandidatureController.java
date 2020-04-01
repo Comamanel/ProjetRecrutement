@@ -2,7 +2,6 @@ package be.ucm.projetrecrutementapi.api.controllers;
 
 import be.ucm.projetrecrutementapi.api.dto.AfficheCandidatureDTO;
 import be.ucm.projetrecrutementapi.api.dto.CandidatureFormulaireDTO;
-import be.ucm.projetrecrutementapi.api.dto.EnvoiInfosCandidatureDTO;
 import be.ucm.projetrecrutementapi.services.CandidatureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

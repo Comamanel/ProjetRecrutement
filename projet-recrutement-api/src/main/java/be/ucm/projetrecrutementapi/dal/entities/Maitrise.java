@@ -4,6 +4,7 @@ import be.ucm.projetrecrutementapi.dal.entities.enums.NiveauMaitrise;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Getter
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @EqualsAndHashCode(of={ "id", "niveauMaitrise", "technologie" })
 @ToString(of={ "id", "niveauMaitrise", "technologie" })
-public class Maitrise {
+public class Maitrise implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
