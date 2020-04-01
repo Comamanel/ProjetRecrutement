@@ -1,16 +1,15 @@
 package be.ucm.projetrecrutementapi;
 
-import be.ucm.projetrecrutementapi.dal.entities.Projet;
-import be.ucm.projetrecrutementapi.dal.entities.Technologie;
+import be.ucm.projetrecrutementapi.api.dto.MaitriseDTO;
+import be.ucm.projetrecrutementapi.dal.entities.*;
 import be.ucm.projetrecrutementapi.dal.entities.enums.EtatProjet;
+import be.ucm.projetrecrutementapi.dal.entities.enums.NiveauMaitrise;
 import be.ucm.projetrecrutementapi.dal.entities.enums.TypeProjet;
 import be.ucm.projetrecrutementapi.dal.repositories.*;
 import be.ucm.projetrecrutementapi.dal.repositories.ParticipationDAO;
 import be.ucm.projetrecrutementapi.dal.repositories.ProjetDAO;
 import org.springframework.beans.factory.annotation.Autowired;
-import be.ucm.projetrecrutementapi.dal.entities.Group;
 import be.ucm.projetrecrutementapi.dal.entities.enums.GroupEnum;
-import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -20,10 +19,6 @@ import java.time.LocalDate;
 
 @SpringBootApplication
 public class ProjetRecrutementApiApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(ProjetRecrutementApiApplication.class, args);
-	}
 
 	@Autowired
 	private UtilisateurDAO utilisateurDAO;
@@ -40,8 +35,23 @@ public class ProjetRecrutementApiApplication {
 	@Autowired
 	private GroupDAO groupDAO;
 
+	@Autowired
+	private MaitriseDAO maitriseDAO;
+
+	public static void main(String[] args) {
+		SpringApplication.run(ProjetRecrutementApiApplication.class, args);
+	}
+
 
 	@EventListener(ApplicationReadyEvent.class)
+	private void ajouts(){
+		this.ajouterTechnologies();
+		this.ajouterMaitrises();
+		this.ajouterUtilisateur();
+		this.ajouterProjet();
+		this.ajouterProjet2();
+	}
+
 	private void ajouterTechnologies(){
 		Technologie technologie1 = new Technologie();
 		technologie1.setCreateur("Sun Microsystem");
@@ -64,7 +74,6 @@ public class ProjetRecrutementApiApplication {
 		this.technologieDAO.save(technologie4);
 	}
 
-	@EventListener(ApplicationReadyEvent.class)
 	public void ajouterUtilisateur(){
 		Group members = new Group();
 		members.setNom(GroupEnum.MEMBRE);
@@ -108,7 +117,28 @@ public class ProjetRecrutementApiApplication {
 
 	}
 
-	@EventListener(ApplicationReadyEvent.class)
+	private void ajouterMaitrises(){
+		Maitrise m1 = new Maitrise();
+		m1.setNiveauMaitrise(NiveauMaitrise.AVA);
+		m1.setTechnologie(technologieDAO.getOne(1L));
+
+		Maitrise m2 = new Maitrise();
+		m1.setNiveauMaitrise(NiveauMaitrise.DEB);
+		m1.setTechnologie(technologieDAO.getOne(2L));
+
+		Maitrise m3 = new Maitrise();
+		m1.setNiveauMaitrise(NiveauMaitrise.INT);
+		m1.setTechnologie(technologieDAO.getOne(3L));
+
+		Maitrise m4 = new Maitrise();
+		m1.setNiveauMaitrise(NiveauMaitrise.AVA);
+		m1.setTechnologie(technologieDAO.getOne(2L));
+
+		Maitrise m5 = new Maitrise();
+		m1.setNiveauMaitrise(NiveauMaitrise.INT);
+		m1.setTechnologie(technologieDAO.getOne(1L));
+	}
+
 	private void ajouterProjet(){
 		Projet projet = new Projet();
 		projet.setNom("TestProjet");
@@ -119,6 +149,10 @@ public class ProjetRecrutementApiApplication {
 		projet.setDateFin(LocalDate.of(2080, 1, 10));
 		projet.setTpsTravailHebdo(5);
 		projet.setStatut(EtatProjet.ACT);
+		Maitrise test = maitriseDAO.getOne(1L);
+		projet.getMaitrisesDemandees().add(maitriseDAO.getOne(1L));
+		projet.getMaitrisesDemandees().add(maitriseDAO.getOne(2L));
+		projet.getMaitrisesDemandees().add(maitriseDAO.getOne(3L));
 
 		Projet projet2 = new Projet();
 		projet2.setNom("Application Sushi");
@@ -134,7 +168,6 @@ public class ProjetRecrutementApiApplication {
 		this.projetDAO.save(projet2);
 	}
 
-	@EventListener(ApplicationReadyEvent.class)
 	private void ajouterProjet2(){
 		Projet projet = new Projet();
 		projet.setNom("TestProjet2");

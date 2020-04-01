@@ -31,6 +31,12 @@ public class UtilisateurController {
         return ResponseEntity.ok(utilisateurs.stream().map(AfficheUtilisateurDTO::new).collect(Collectors.toList()));
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<AfficheUtilisateurDTO> getOne(@PathVariable Long id){
+        AfficheUtilisateurDTO utilisateur = new AfficheUtilisateurDTO(utilisateurDAO.getOne(id));
+        return ResponseEntity.ok(utilisateur);
+    }
+
     @PostMapping("/create")
     public ResponseEntity createUser (@RequestBody DataUtilisateurDTO dataUtilisateurDTO){
         Utilisateur nouvelUtilisateur = dataUtilisateurDTO.toEntity();

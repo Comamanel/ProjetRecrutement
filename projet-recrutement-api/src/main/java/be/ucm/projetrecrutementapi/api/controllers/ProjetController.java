@@ -1,6 +1,7 @@
 package be.ucm.projetrecrutementapi.api.controllers;
 
 import be.ucm.projetrecrutementapi.api.dto.*;
+import be.ucm.projetrecrutementapi.dal.entities.Maitrise;
 import be.ucm.projetrecrutementapi.dal.entities.Projet;
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
 import be.ucm.projetrecrutementapi.dal.repositories.ProjetDAO;
@@ -11,8 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.rmi.CORBA.Util;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @CrossOrigin("*")
@@ -35,6 +39,14 @@ public class ProjetController {
                 new AfficheProjetDTO(
                     this.projetService.findById(id).orElse(new Projet())
         ));
+    }
+
+    @GetMapping("/maitrises/{id}")
+    public ResponseEntity<List<MaitriseDTO>> getMaitrises(@PathVariable Long id){
+        Set<Maitrise> maitrises = projetDAO.findById(id).orElseThrow(EntityNotFoundException::new).getMaitrisesDemandees();
+        List<MaitriseDTO> maitriseDTOList = maitrises.stream().map(MaitriseDTO::new).collect(Collectors.toList());
+
+        return ResponseEntity.ok(maitriseDTOList);
     }
 
     @GetMapping("/utilisateur/{id}")

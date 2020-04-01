@@ -38,7 +38,7 @@ public class Projet {
     @Column(nullable = false)
     private EtatProjet statut;
 
-    @ManyToMany (cascade = CascadeType.PERSIST)
+    @ManyToMany (cascade = CascadeType.DETACH)
     private Set<Maitrise> maitrisesDemandees = new HashSet<>();
 
     @OneToMany (cascade = CascadeType.PERSIST)
