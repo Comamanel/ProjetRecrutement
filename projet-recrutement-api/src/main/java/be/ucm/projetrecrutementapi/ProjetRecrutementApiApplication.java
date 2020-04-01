@@ -5,8 +5,6 @@ import be.ucm.projetrecrutementapi.dal.entities.Technologie;
 import be.ucm.projetrecrutementapi.dal.entities.enums.EtatProjet;
 import be.ucm.projetrecrutementapi.dal.entities.enums.TypeProjet;
 import be.ucm.projetrecrutementapi.dal.repositories.*;
-import be.ucm.projetrecrutementapi.services.UtilisateurServices;
-import net.minidev.json.JSONUtil;
 import be.ucm.projetrecrutementapi.dal.repositories.ParticipationDAO;
 import be.ucm.projetrecrutementapi.dal.repositories.ProjetDAO;
 import org.springframework.beans.factory.annotation.Autowired;
