@@ -60,4 +60,75 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     }
 
+    @Override
+    public Utilisateur modifierInfosUtilisateur(Utilisateur utilisateurActif, Utilisateur utilisateurInfoModif){
+
+        String newPseudo = utilisateurInfoModif.getPseudo();
+        if ((newPseudo != null && !newPseudo.trim().equals(""))
+        && (utilisateurDAO.findByPseudo(newPseudo).orElse(null) == null)
+        && (newPseudo.matches("^[^<>%$#=*/\\\\]*$"))
+        ){
+            utilisateurActif.setPseudo(newPseudo);
+        }
+
+        String newPrenom = utilisateurInfoModif.getPrenom();
+        if (newPrenom != null && !newPrenom.trim().equals("")
+        ){
+            utilisateurActif.setPrenom(newPrenom);
+        }
+
+        String newNom = utilisateurInfoModif.getNom();
+        if (newNom != null && !newNom.trim().equals("")
+        ){
+            utilisateurActif.setNom(newNom);
+        }
+
+        String newPays = utilisateurInfoModif.getPays();
+        if (newPays != null && !newPays.trim().equals("")
+        ){
+            utilisateurActif.setPays(newPays);
+        }
+
+        String newMail = utilisateurInfoModif.getEmail();
+        if ((newMail != null && !newMail.trim().equals(""))
+        && (utilisateurDAO.findByEmail(newMail).orElse(null) == null
+        && (newMail.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")))
+        ){
+            utilisateurActif.setEmail(newMail);
+        }
+
+        String newNumTel = utilisateurInfoModif.getNumTel();
+        if (newNumTel != null && !newNumTel.trim().equals("")
+        ){
+            utilisateurActif.setNumTel(newNumTel);
+        }
+
+        String newProfilPhot = utilisateurInfoModif.getPhotoProfil();
+        if (newProfilPhot != null && !newProfilPhot.trim().equals("")
+        ){
+            utilisateurActif.setPhotoProfil(newProfilPhot);
+        }
+
+        String newInfoSupp = utilisateurInfoModif.getInfoSupp();
+        if (newInfoSupp != null && !newInfoSupp.trim().equals("")
+        ){
+            utilisateurActif.setInfoSupp(newInfoSupp);
+        }
+
+        String newLienGit = utilisateurInfoModif.getLienGit();
+        if (newLienGit != null && !newLienGit.trim().equals("")
+        ){
+            utilisateurActif.setLienGit(newLienGit);
+        }
+
+        String newCvDoc = utilisateurInfoModif.getCvDoc();
+        if (newCvDoc != null && !newCvDoc.trim().equals("")
+        ){
+            utilisateurActif.setCvDoc(newCvDoc);
+        }
+
+        return utilisateurActif;
+
+    }
+
 }

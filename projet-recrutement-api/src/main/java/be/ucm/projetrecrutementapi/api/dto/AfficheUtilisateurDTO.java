@@ -32,6 +32,22 @@ public class AfficheUtilisateurDTO {
     private List<AfficheProjetDTO> projetsCrees;
     private List<MaitriseDTO> maitrises;
 
+    public Utilisateur toEntity(){
+        Utilisateur utilisateurAffiche = new Utilisateur();
+        utilisateurAffiche.setId(this.id);
+        utilisateurAffiche.setPseudo(this.pseudo);
+        utilisateurAffiche.setEmail(this.email);
+        utilisateurAffiche.setNom(this.nom);
+        utilisateurAffiche.setPrenom(this.prenom);
+        utilisateurAffiche.setNumTel(this.numTel);
+        utilisateurAffiche.setPays(this.pays);
+        utilisateurAffiche.setLienGit(this.lienGit);
+        utilisateurAffiche.setPhotoProfil(this.photoProfil);
+        utilisateurAffiche.setCvDoc(this.cvDoc);
+        utilisateurAffiche.setInfoSupp(this.infoSupp);
+        return utilisateurAffiche;
+    }
+
     public AfficheUtilisateurDTO(){};
     public AfficheUtilisateurDTO(Utilisateur utilisateur){
         this.id = utilisateur.getId();

@@ -6,4 +6,6 @@ public interface UtilisateurService {
 
     public Utilisateur testerNouvelUtilisateur(Utilisateur nouvelUtilisateur);
 
+    public Utilisateur modifierInfosUtilisateur(Utilisateur utilisateurActif, Utilisateur utilisateurInfoModif);
+
 }

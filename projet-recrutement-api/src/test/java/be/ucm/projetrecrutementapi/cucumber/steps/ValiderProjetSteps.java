@@ -23,6 +23,7 @@ public class ValiderProjetSteps {
     @Given("a new project is initiated")
     public void a_new_project_is_initiated(){
         utilisateurActif = new Utilisateur();
+        utilisateurActif.setId((long) 1);
         utilisateurActif.setNom("Cucumber");
 
         nouveauProjet = new Projet();
