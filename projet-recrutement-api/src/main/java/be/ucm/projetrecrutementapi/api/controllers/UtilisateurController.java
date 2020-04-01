@@ -25,17 +25,17 @@ public class UtilisateurController {
     private UtilisateurService utilisateurService;
 
     @GetMapping("")
-    public ResponseEntity<List<AfficheUtilisateurDTO>> getAll(){
+    public ResponseEntity<List<AfficheUtilisateurDTO>> getAll() {
         List<Utilisateur> utilisateurs = utilisateurDAO.findAll();
 
         return ResponseEntity.ok(utilisateurs.stream().map(AfficheUtilisateurDTO::new).collect(Collectors.toList()));
     }
 
     @PostMapping("/create")
-    public ResponseEntity createUser (@RequestBody DataUtilisateurDTO dataUtilisateurDTO){
+    public ResponseEntity createUser(@RequestBody DataUtilisateurDTO dataUtilisateurDTO) {
         Utilisateur nouvelUtilisateur = dataUtilisateurDTO.toEntity();
 
-        if(utilisateurService.testerNouvelUtilisateur(nouvelUtilisateur) != null){
+        if (utilisateurService.testerNouvelUtilisateur(nouvelUtilisateur) != null) {
             return ResponseEntity.ok(utilisateurDAO.save(nouvelUtilisateur));
         }
 
@@ -43,20 +43,15 @@ public class UtilisateurController {
 
     }
 
+    @PostMapping("/updateUserId={id}")
+    public ResponseEntity updateUser(@PathVariable Long id, @RequestBody AfficheUtilisateurDTO utilisateurDTO) {
+        Utilisateur utilisateurActif = utilisateurDAO.findById(id).orElse(null);
+        Utilisateur utilisateurModif = utilisateurDTO.toEntity();
 
-//    Pour tester si il renvoie bien quelque chose (pas indispensable)
-//    @GetMapping("/email={email}")
-//    public ResponseEntity<Utilisateur> getByEmail(@PathVariable String email){
-//        Utilisateur utilisateur = utilisateurDAO.findByEmail(email).orElse(null);
-//
-//        return ResponseEntity.ok(utilisateur);
-//    }
+        utilisateurModif = utilisateurService.modifierInfosUtilisateur(utilisateurActif, utilisateurModif);
 
-//    @GetMapping("/pseudo={pseudo}")
-//    public ResponseEntity<Utilisateur> getByPseudo(@PathVariable String pseudo){
-//        Utilisateur utilisateur = utilisateurDAO.findByPseudo(pseudo).orElse(null);
-//
-//        return ResponseEntity.ok(utilisateur);
-//    }
+        return ResponseEntity.ok(utilisateurDAO.save(utilisateurModif));
+
+    }
 
 }
