@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,12 +34,12 @@ public class UtilisateurController {
 
     @GetMapping("{id}")
     public ResponseEntity<AfficheUtilisateurDTO> getOne(@PathVariable Long id){
-        AfficheUtilisateurDTO utilisateur = new AfficheUtilisateurDTO(utilisateurDAO.getOne(id));
+        AfficheUtilisateurDTO utilisateur = new AfficheUtilisateurDTO(utilisateurDAO.findById(id).orElseThrow(EntityNotFoundException::new));
         return ResponseEntity.ok(utilisateur);
     }
 
     @PostMapping("/create")
-    public ResponseEntity createUser (@RequestBody DataUtilisateurDTO dataUtilisateurDTO){
+    public ResponseEntity<Utilisateur> createUser (@RequestBody DataUtilisateurDTO dataUtilisateurDTO){
         Utilisateur nouvelUtilisateur = dataUtilisateurDTO.toEntity();
 
         if(utilisateurService.testerNouvelUtilisateur(nouvelUtilisateur) != null){
