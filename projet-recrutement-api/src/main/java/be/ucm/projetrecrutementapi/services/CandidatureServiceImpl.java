@@ -1,11 +1,10 @@
 package be.ucm.projetrecrutementapi.services;
 
+import be.ucm.projetrecrutementapi.Exceptions.CandidatureNonValideException;
 import be.ucm.projetrecrutementapi.api.dto.CandidatureFormulaireDTO;
-import be.ucm.projetrecrutementapi.dal.entities.Candidature;
-import be.ucm.projetrecrutementapi.dal.entities.Projet;
-import be.ucm.projetrecrutementapi.dal.entities.Technologie;
-import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
+import be.ucm.projetrecrutementapi.dal.entities.*;
 import be.ucm.projetrecrutementapi.dal.entities.enums.EtatCandidature;
+import be.ucm.projetrecrutementapi.dal.entities.enums.TypeProjet;
 import be.ucm.projetrecrutementapi.dal.repositories.CandidatureDAO;
 import be.ucm.projetrecrutementapi.dal.repositories.ProjetDAO;
 import be.ucm.projetrecrutementapi.dal.repositories.TechnologieDAO;
@@ -14,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,11 +54,25 @@ public class CandidatureServiceImpl implements CandidatureService {
 
         if(checkCandidOk(candid))
             return this.candidatureDAO.save(candid);
-        return new Candidature();
+        throw new CandidatureNonValideException();
     }
 
+    //Trucs à check : si le projet est sérieux, l'user doit avoir coché des trucs qu'il connaît, sinon non
     private boolean checkCandidOk(Candidature candidature){
+        if(candidature.getProjet().getTypeProjet() == TypeProjet.SER){
+            for (Technologie technoSouhaitee: candidature.getTechnologieSouhaitee()) {
+                boolean estMaitrise = false;
+                Maitrise[] maitriseTab = candidature.getUtilisateur().getMaitrises().toArray(new Maitrise[0]);
+                for(int i = 0; i < maitriseTab.length && !estMaitrise; i++){
+                    if(maitriseTab[i].getTechnologie() == technoSouhaitee)
+                        estMaitrise = true;
+                }
 
-        return false;
+                if(!estMaitrise)
+                    return false;
+            }
+        }
+
+        return true;
     }
 }

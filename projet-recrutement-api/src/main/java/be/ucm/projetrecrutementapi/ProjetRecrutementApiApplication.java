@@ -111,7 +111,7 @@ public class ProjetRecrutementApiApplication {
 		user2.setPhotoProfil("mauricelechevalier.png");
 		user2.setCvDoc("maurice.pdf");
 		user2.setGroup(members);
-
+		user2.getMaitrises().add(maitriseDAO.findById(5L).orElse(null));
 		utilisateurDAO.save(user2);
 
 
