@@ -51,6 +51,14 @@ public class CandidatureServiceImpl implements CandidatureService {
                 .getTechnologiesSouhaitees()
                 .forEach(id -> candid.getTechnologieSouhaitee().add(this.technologieDAO.getOne(id)));
 
-        return this.candidatureDAO.save(candid);
+
+        if(checkCandidOk(candid))
+            return this.candidatureDAO.save(candid);
+        return new Candidature();
+    }
+
+    private boolean checkCandidOk(Candidature candidature){
+
+        return false;
     }
 }
