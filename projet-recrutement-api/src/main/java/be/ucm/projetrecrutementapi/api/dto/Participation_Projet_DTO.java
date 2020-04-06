@@ -15,6 +15,16 @@ public class Participation_Projet_DTO {
     private boolean actif;
     private boolean proprio;
 
+    public Participation_Projet toEntity(){
+        Participation_Projet participationProjet = new Participation_Projet();
+        participationProjet.setId(this.id);
+        participationProjet.setUtilisateur(this.utilisateur);
+        participationProjet.setProprio(this.proprio);
+        participationProjet.setActif(this.actif);
+        participationProjet.setProjet(this.projet);
+        return participationProjet;
+    }
+
     public Participation_Projet_DTO(){}
     public Participation_Projet_DTO(Participation_Projet pp){
         this.id = pp.getId();

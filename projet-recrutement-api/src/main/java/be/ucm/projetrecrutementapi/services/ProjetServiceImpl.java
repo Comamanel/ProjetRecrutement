@@ -1,11 +1,14 @@
 package be.ucm.projetrecrutementapi.services;
 
 import be.ucm.projetrecrutementapi.api.dto.ProjetFiltreDTO;
+import be.ucm.projetrecrutementapi.dal.entities.Participation_Projet;
 import be.ucm.projetrecrutementapi.dal.entities.Projet;
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
 import be.ucm.projetrecrutementapi.dal.entities.enums.EtatProjet;
 import be.ucm.projetrecrutementapi.dal.entities.enums.TypeProjet;
+import be.ucm.projetrecrutementapi.dal.repositories.ParticipationDAO;
 import be.ucm.projetrecrutementapi.dal.repositories.ProjetDAO;
+import lombok.EqualsAndHashCode;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,11 +16,15 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ProjetServiceImpl implements ProjetService {
     @Autowired
     private ProjetDAO projetDAO;
+
+    @Autowired
+    private ParticipationDAO participationDAO;
 
     @Override
     public Optional<Projet> findById(Long id) {
@@ -70,6 +77,16 @@ public class ProjetServiceImpl implements ProjetService {
         String titre = nouveauProjet.getNom();
         if(titre == null || titre.trim().equals("")){
             return null;
+        } else {
+           Set<Participation_Projet> pu = utilisateurActif.getProjetsParticipes();
+           Participation_Projet[] projetsUtilisateur = pu.toArray(new Participation_Projet[pu.size()]);
+           for(int i=0; i<projetsUtilisateur.length; i++){
+               EtatProjet statutProjetBoucle = projetsUtilisateur[i].getProjet().getStatut();
+              String nomProjetBoucle = projetsUtilisateur[i].getProjet().getNom();
+              if((nomProjetBoucle.toLowerCase()).equals(titre.toLowerCase()) && statutProjetBoucle.equals(EtatProjet.ACT) ){
+                  return null;
+              }
+          }
         }
 
         LocalDate dateDebut = nouveauProjet.getDateDebut();
@@ -110,6 +127,19 @@ public class ProjetServiceImpl implements ProjetService {
 
         nouveauProjet.setStatut(EtatProjet.ACT);
         return nouveauProjet;
+
+    }
+
+    @Override
+    public boolean verifierProprieteProjet(Utilisateur utilisateurActif, Projet projetVise) {
+
+        Participation_Projet pp = participationDAO.findByUserAndProject(utilisateurActif.getId(), projetVise.getId()).orElse(null);
+
+        if(pp != null) {
+            return pp.isProprio();
+        }
+
+        return false;
 
     }
 }

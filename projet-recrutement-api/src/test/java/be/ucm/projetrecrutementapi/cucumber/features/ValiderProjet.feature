@@ -85,3 +85,47 @@ Scenario: the project description is excessively long
     And said project ends on "2021-03-24"
 	Then this project cannot be created
 
+Scenario: the user is already working on a project with the same name
+    Given a new project is initiated
+    And said project is given the name "Sushi Shop"
+    And said project is described as "Une appli pour commander des bons sushis"
+    And said project begins on "2020-12-07"
+    And said project ends on "2021-03-24"
+    And the user is currently working on a project named "Sushi Shop"
+    Then this project cannot be created
+
+Scenario: the user is already working on a project with a different name
+    Given a new project is initiated
+    And said project is given the name "Sushi Shop"
+    And said project is described as "Une appli pour commander des bons sushis"
+    And said project begins on "2020-12-07"
+    And said project ends on "2021-03-24"
+    And the user is currently working on a project named "Lasagne Shop"
+    Then this project can be created
+
+Scenario: the user is already working on a project with a the same name (Caseproof)
+    Given a new project is initiated
+    And said project is given the name "Sushi Shop"
+    And said project is described as "Une appli pour commander des bons sushis"
+    And said project begins on "2020-12-07"
+    And said project ends on "2021-03-24"
+    And the user is currently working on a project named "SUSHI SHOP"
+    Then this project cannot be created
+
+Scenario: the user has previously worked on a project with the same name
+    Given a new project is initiated
+    And said project is given the name "Sushi Shop"
+    And said project is described as "Une appli pour commander des bons sushis"
+    And said project begins on "2020-12-07"
+    And said project ends on "2021-03-24"
+    And the user has previously worked on a project named "Sushi Shop"
+    Then this project can be created
+
+Scenario: the user has previously worked on a project with the same name (Caseproof)
+    Given a new project is initiated
+    And said project is given the name "Sushi Shop"
+    And said project is described as "Une appli pour commander des bons sushis"
+    And said project begins on "2020-12-07"
+    And said project ends on "2021-03-24"
+    And the user has previously worked on a project named "SUSHI SHOP"
+    Then this project can be created

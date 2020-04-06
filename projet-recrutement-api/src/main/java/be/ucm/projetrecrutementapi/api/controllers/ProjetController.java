@@ -1,8 +1,10 @@
 package be.ucm.projetrecrutementapi.api.controllers;
 
 import be.ucm.projetrecrutementapi.api.dto.*;
+import be.ucm.projetrecrutementapi.dal.entities.Participation_Projet;
 import be.ucm.projetrecrutementapi.dal.entities.Projet;
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
+import be.ucm.projetrecrutementapi.dal.repositories.ParticipationDAO;
 import be.ucm.projetrecrutementapi.dal.repositories.ProjetDAO;
 import be.ucm.projetrecrutementapi.dal.repositories.UtilisateurDAO;
 import be.ucm.projetrecrutementapi.services.ProjetService;
@@ -28,6 +30,9 @@ public class ProjetController {
 
     @Autowired
     private ProjetDAO projetDAO;
+
+    @Autowired
+    private ParticipationDAO participationDAO;
 
     @GetMapping(value={"/{id}"})
     public ResponseEntity<AfficheProjetDTO> getOne(@PathVariable Long id){
@@ -56,7 +61,13 @@ public class ProjetController {
         Utilisateur utilisateurActif = utilisateurDAO.findById(id).orElse(null);
 
         if(projetService.testerValiditeProjet(utilisateurActif, nouveauprojet) != null){
-            return ResponseEntity.ok(projetDAO.save(nouveauprojet));
+            Participation_Projet pp = new Participation_Projet();
+            pp.setActif(true);
+            pp.setUtilisateur(utilisateurActif);
+            pp.setProjet(nouveauprojet);
+            pp.setProprio(true);
+            projetDAO.save(nouveauprojet);
+            return ResponseEntity.ok(participationDAO.save(pp));
         }
 
         return null;

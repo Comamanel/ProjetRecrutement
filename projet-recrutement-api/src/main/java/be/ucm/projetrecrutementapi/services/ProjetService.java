@@ -15,4 +15,5 @@ public interface ProjetService {
     List<Projet> findAll();
     public List<Projet> findAllFiltered(ProjetFiltreDTO filtres);
     public Projet testerValiditeProjet(Utilisateur utilisateurActif, Projet nouveauProjet);
+    public boolean verifierProprieteProjet(Utilisateur utilisateurActif, Projet projetVise);
 }

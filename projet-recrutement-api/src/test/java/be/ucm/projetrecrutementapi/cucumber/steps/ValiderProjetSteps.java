@@ -3,7 +3,10 @@ package be.ucm.projetrecrutementapi.cucumber.steps;
 import be.ucm.projetrecrutementapi.dal.entities.Participation_Projet;
 import be.ucm.projetrecrutementapi.dal.entities.Projet;
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
+import be.ucm.projetrecrutementapi.dal.entities.enums.EtatProjet;
 import be.ucm.projetrecrutementapi.dal.entities.enums.TypeProjet;
+import be.ucm.projetrecrutementapi.dal.repositories.ParticipationDAO;
+import be.ucm.projetrecrutementapi.dal.repositories.ProjetDAO;
 import be.ucm.projetrecrutementapi.services.ProjetService;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -35,19 +38,59 @@ public class ValiderProjetSteps {
     @Given("the creator is currently working on {int} projects")
     public void the_creator_is_currently_working_on(int nbProjets){
         for(int i = 0; i<nbProjets; i++){
-            Participation_Projet temp = new Participation_Projet();
-            temp.setId((long) i);
-            utilisateurActif.getProjetsParticipes().add(temp);
+            Projet np = new Projet();
+            np.setId((long) i);
+            np.setNom("Projet" + i);
+
+            Participation_Projet pp = new Participation_Projet();
+            pp.setId((long) i);
+            pp.setProjet(np);
+            pp.setActif(true);
+            pp.setProprio(false);
+            utilisateurActif.getProjetsParticipes().add(pp);
         }
-        System.out.println("Projets Participés :");
-        System.out.println(utilisateurActif.getProjetsParticipes().size());
     }
 
     @Given("the creator is currently administrating {int} projects")
-    public void the_creator_is_currently_administratin(int nbProjets){
+    public void the_creator_is_currently_administrating(int nbProjets){
         for(int i = 0; i<nbProjets; i++){
-            utilisateurActif.getProjetsCrees().add(new Projet());
+            Projet np = new Projet();
+            np.setId((long) i);
+            np.setNom("ProjetAdmin" + i);
+
+            Participation_Projet pp = new Participation_Projet();
+            pp.setId((long) i);
+            pp.setProjet(np);
+            pp.setActif(true);
+            pp.setProprio(true);
+            utilisateurActif.getProjetsCrees().add(np);
         }
+    }
+
+    @Given("the user is currently working on a project named {string}")
+    public void the_user_is_currently_working_on_a_project_named(String nom){
+        Projet np = new Projet();
+        np.setNom(nom);
+        np.setStatut(EtatProjet.ACT);
+
+        Participation_Projet pp = new Participation_Projet();
+        pp.setActif(true);
+        pp.setProjet(np);
+
+        utilisateurActif.getProjetsParticipes().add(pp);
+    }
+
+    @Given("the user has previously worked on a project named {string}")
+    public void the_user_has_previously_worked_on_a_project_named(String nom){
+        Projet np = new Projet();
+        np.setNom(nom);
+        np.setStatut(EtatProjet.ARC);
+
+        Participation_Projet pp = new Participation_Projet();
+        pp.setActif(true);
+        pp.setProjet(np);
+
+        utilisateurActif.getProjetsParticipes().add(pp);
     }
 
     @Given("said project is given the name {string}")
