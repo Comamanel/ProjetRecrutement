@@ -1,19 +1,19 @@
 package be.ucm.projetrecrutementapi.dal.entities;
 
 import be.ucm.projetrecrutementapi.dal.entities.enums.NiveauMaitrise;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Maitrise {
+@EqualsAndHashCode(of={ "id", "niveauMaitrise", "technologie" })
+@ToString(of={ "id", "niveauMaitrise", "technologie" })
+public class Maitrise implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

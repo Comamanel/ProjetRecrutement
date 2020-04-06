@@ -1,5 +1,6 @@
 package be.ucm.projetrecrutementapi.api.controllers;
 
+import be.ucm.projetrecrutementapi.Exceptions.CandidatureNonValideException;
 import be.ucm.projetrecrutementapi.api.dto.AfficheCandidatureDTO;
 import be.ucm.projetrecrutementapi.api.dto.CandidatureFormulaireDTO;
 import be.ucm.projetrecrutementapi.services.CandidatureService;
@@ -20,13 +21,17 @@ public class CandidatureController {
     private CandidatureService candidatureService;
 
     @PostMapping("new")
-    public ResponseEntity<AfficheCandidatureDTO> createCandidature(@RequestBody @Valid CandidatureFormulaireDTO candidature){
+    public ResponseEntity<AfficheCandidatureDTO> createCandidature(@RequestBody @Valid CandidatureFormulaireDTO candidature) throws CandidatureNonValideException {
         try{
             return ResponseEntity.ok(new AfficheCandidatureDTO(this.candidatureService.save(candidature)));
         }
         catch (EntityNotFoundException e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        catch(CandidatureNonValideException e){
+            e.printStackTrace();
+            throw new CandidatureNonValideException();
         }
         catch (Exception e){
             e.printStackTrace();

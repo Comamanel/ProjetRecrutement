@@ -1,19 +1,18 @@
 package be.ucm.projetrecrutementapi.dal.entities;
 
 import be.ucm.projetrecrutementapi.api.dto.TechnologieDTO;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Technologie {
+@EqualsAndHashCode(of={ "id", "nom", "createur" })
+public class Technologie implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +28,5 @@ public class Technologie {
         this.nom = dto.getNom();
         this.createur = dto.getCreateur();
     }
+
 }
