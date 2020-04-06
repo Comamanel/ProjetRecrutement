@@ -75,4 +75,8 @@ public class CandidatureServiceImpl implements CandidatureService {
 
         return true;
     }
+
+    public boolean testsBooleanOk(Candidature candidature){
+        return this.checkCandidOk(candidature);
+    }
 }
