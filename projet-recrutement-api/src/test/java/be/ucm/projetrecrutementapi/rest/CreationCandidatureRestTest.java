@@ -19,9 +19,8 @@ public class CreationCandidatureRestTest {
         CandidatureFormulaireDTO candidatureFormulaireDTO = new CandidatureFormulaireDTO();
         candidatureFormulaireDTO.setNbHeuresSemaine(10);
         candidatureFormulaireDTO.setProjetId(1L);
-        candidatureFormulaireDTO.setUtilisateurId(1L);
+        candidatureFormulaireDTO.setUtilisateurId(2L);
         Set<Long> technologies = new HashSet<>();
-        technologies.add(1L);
         technologies.add(2L);
         candidatureFormulaireDTO.setTechnologiesSouhaitees(technologies);
 
@@ -33,7 +32,7 @@ public class CreationCandidatureRestTest {
                 .then()
                 .assertThat()
                 .statusCode(200)
-                .body("utilisateur.id", equalTo(1))
+                .body("utilisateur.id", equalTo(2))
                 .and()
                 .body("projet.id", equalTo(1));
     }
