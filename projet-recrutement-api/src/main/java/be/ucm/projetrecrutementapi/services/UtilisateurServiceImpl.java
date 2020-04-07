@@ -1,6 +1,8 @@
 package be.ucm.projetrecrutementapi.services;
 
+import be.ucm.projetrecrutementapi.dal.entities.Participation_Projet;
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
+import be.ucm.projetrecrutementapi.dal.entities.enums.EtatProjet;
 import be.ucm.projetrecrutementapi.dal.repositories.UtilisateurDAO;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,6 +131,17 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
         return utilisateurActif;
 
+    }
+
+    @Override
+    public boolean checkUtilisateurNEstPasProprietaireDePlusDeDeuxProjets(Utilisateur utilisateur) {
+        long nbProjetsProprio = utilisateur
+                .getProjetsParticipes()
+                .stream()
+                .filter(Participation_Projet::isProprio)
+                .filter(pp -> pp.getProjet().getStatut().equals(EtatProjet.ACT))
+                .count();
+        return nbProjetsProprio < 3;
     }
 
 }
