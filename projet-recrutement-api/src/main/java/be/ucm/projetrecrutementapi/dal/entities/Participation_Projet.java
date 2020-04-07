@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of={"id", "actif", "proprio", "utilisateur"/*, "projet"*/ })
+@EqualsAndHashCode(of={"id", "actif", "proprio", "utilisateur", "projet" })
 public class Participation_Projet implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

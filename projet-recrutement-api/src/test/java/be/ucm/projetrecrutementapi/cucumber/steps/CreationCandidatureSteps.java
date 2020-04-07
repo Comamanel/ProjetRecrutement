@@ -1,5 +1,6 @@
 package be.ucm.projetrecrutementapi.cucumber.steps;
 
+import be.ucm.projetrecrutementapi.cucumber.TestsData;
 import be.ucm.projetrecrutementapi.dal.entities.*;
 import be.ucm.projetrecrutementapi.dal.entities.enums.EtatCandidature;
 import be.ucm.projetrecrutementapi.dal.entities.enums.EtatProjet;
@@ -19,8 +20,6 @@ import java.util.List;
 public class CreationCandidatureSteps {
     List<Technologie> technologies = new ArrayList<>();
     List<Maitrise> maitrises = new ArrayList<>();
-    Utilisateur utilisateur;
-    Projet projet;
     Candidature candidature;
     Boolean isCandidOk;
 
@@ -50,10 +49,10 @@ public class CreationCandidatureSteps {
 
     @Given("un utilisateur avec un email {string}, {string} comme mdp, un pseudo {string} la maîtrise en {string} pour la technologie {string} et la maîtrise en {string} pour la technologie {string}")
     public void unUtilisateurAvecUnEmailCommeMdpUnPseudoLaMaitriseEnPourLaTechnologieEtLaMaitriseEnPourLaTechnologie(String email, String mdp, String pseudo, String niveauMaitriseUn, String nomMaitriseUn, String niveauMaitriseDeux, String nomMaitriseDeux) throws Exception {
-        this.utilisateur = new Utilisateur();
-        this.utilisateur.setEmail(email);
-        this.utilisateur.setMotDePasse(mdp);
-        this.utilisateur.setPseudo(pseudo);
+        TestsData.utilisateur = new Utilisateur();
+        TestsData.utilisateur.setEmail(email);
+        TestsData.utilisateur.setMotDePasse(mdp);
+        TestsData.utilisateur.setPseudo(pseudo);
 
         Maitrise maitrise1 = this.maitrises
                 .stream()
@@ -70,16 +69,16 @@ public class CreationCandidatureSteps {
         if(maitrise1 == null || maitrise2 == null)
             throw new Exception("souci au niveau de la récupération de la maîtrise");
 
-        this.utilisateur.getMaitrises().add(maitrise1);
-        this.utilisateur.getMaitrises().add(maitrise2);
+        TestsData.utilisateur.getMaitrises().add(maitrise1);
+        TestsData.utilisateur.getMaitrises().add(maitrise2);
     }
 
     @Given("un utilisateur avec un email {string}, {string} comme mdp, un pseudo {string} et la maîtrise en {string} pour la technologie {string}")
     public void unUtilisateurAvecUnEmailCommeMdpUnPseudoEtLaMaîtriseEnPourLaTechnologie(String email, String mdp, String pseudo, String niveauMaitriseUn, String nomMaitriseUn) throws Exception {
-        this.utilisateur = new Utilisateur();
-        this.utilisateur.setEmail(email);
-        this.utilisateur.setMotDePasse(mdp);
-        this.utilisateur.setPseudo(pseudo);
+        TestsData.utilisateur = new Utilisateur();
+        TestsData.utilisateur.setEmail(email);
+        TestsData.utilisateur.setMotDePasse(mdp);
+        TestsData.utilisateur.setPseudo(pseudo);
 
         Maitrise maitrise1 = this.maitrises
                 .stream()
@@ -90,26 +89,26 @@ public class CreationCandidatureSteps {
         if(maitrise1 == null)
             throw new Exception("souci au niveau de la récupération de la maîtrise");
 
-        this.utilisateur.getMaitrises().add(maitrise1);
+        TestsData.utilisateur.getMaitrises().add(maitrise1);
     }
 
     @Given("un utilisateur avec un email {string}, {string} comme mdp et un pseudo {string}")
     public void unUtilisateurAvecUnEmailCommeMdpEtUnPseudo(String email, String mdp, String pseudo) {
-        this.utilisateur = new Utilisateur();
-        this.utilisateur.setEmail(email);
-        this.utilisateur.setMotDePasse(mdp);
-        this.utilisateur.setPseudo(pseudo);
+        TestsData.utilisateur = new Utilisateur();
+        TestsData.utilisateur.setEmail(email);
+        TestsData.utilisateur.setMotDePasse(mdp);
+        TestsData.utilisateur.setPseudo(pseudo);
     }
 
     @Given("un projet avec un nom {string}, la description {string}, une date de début fixée au {string}, un type de projet fixé à {string} avec {int} participants maximum et un statut fixé à {string}, une maîtrise en {string} demandée au niveau {string}, et une en {string} demandée au niveau {string}")
     public void unProjetAvecUnNomLaDescriptionUneDateDeDebutFixeeAuUnTypeDeProjetFixeAAvecParticipantsMaximumEtUnStatutFixeAUneMaitriseEnDemandeeAuNiveauEtUneEnDemandeeAuNiveau(String nom, String description, String dateDebut, String typeProjet, int nbParticipants, String statut, String nomMaitriseUn, String niveauMaitriseUn, String nomMaitriseDeux, String niveauMaitriseDeux) {
-        this.projet = new Projet();
-        this.projet.setNom(nom);
-        this.projet.setDescription(description);
-        this.projet.setDateDebut(LocalDate.parse(dateDebut));
-        this.projet.setTypeProjet(TypeProjet.valueOf(typeProjet));
-        this.projet.setMaxParticipants(nbParticipants);
-        this.projet.setStatut(EtatProjet.valueOf(statut));
+        TestsData.projet = new Projet();
+        TestsData.projet.setNom(nom);
+        TestsData.projet.setDescription(description);
+        TestsData.projet.setDateDebut(LocalDate.parse(dateDebut));
+        TestsData.projet.setTypeProjet(TypeProjet.valueOf(typeProjet));
+        TestsData.projet.setMaxParticipants(nbParticipants);
+        TestsData.projet.setStatut(EtatProjet.valueOf(statut));
 
         this.maitrises
                 .stream()
@@ -118,14 +117,14 @@ public class CreationCandidatureSteps {
                         ||
                         (m.getTechnologie().getNom().equalsIgnoreCase(nomMaitriseDeux) && m.getNiveauMaitrise().equals(NiveauMaitrise.valueOf(niveauMaitriseDeux)))
                 )
-                .forEach(m -> this.projet.getMaitrisesDemandees().add(m));
+                .forEach(m -> TestsData.projet.getMaitrisesDemandees().add(m));
     }
 
     @Given("une candidature contenant le projet, l'utilisateur, avec, en guise de technologies cochées, celles avec le nom {string} et le nom {string}, le statut à {string}, le nombre d'heures par semaines fixées à {int}")
     public void uneCandidatureContenantLeProjetLUtilisateurAvecToutesLesMaitrisesDeLUtilisateurCocheesLeStatutALeNombreDHeuresParSemainesFixeesA(String nomTechno1, String nomTechno2, String statut, int heuresSemaine) {
         this.candidature = new Candidature();
-        this.candidature.setUtilisateur(this.utilisateur);
-        this.candidature.setProjet(this.projet);
+        this.candidature.setUtilisateur(TestsData.utilisateur);
+        this.candidature.setProjet(TestsData.projet);
         this.candidature.setStatut(EtatCandidature.valueOf(statut));
         this.candidature.setNbHeuresSemaine(heuresSemaine);
 
@@ -139,8 +138,8 @@ public class CreationCandidatureSteps {
     @Given("une candidature contenant le projet, l'utilisateur, avec, en guise de technologies cochées, celle avec le nom {string}, le statut à {string}, le nombre d'heures par semaines fixées à {int}")
     public void uneCandidatureContenantLeProjetLUtilisateurAvecEnGuiseDeTechnologiesCocheesCelleAvecLeNomLeStatutALeNombreDHeuresParSemainesFixeesA(String nomTechno, String statut, int heuresSemaine) {
         this.candidature = new Candidature();
-        this.candidature.setUtilisateur(this.utilisateur);
-        this.candidature.setProjet(this.projet);
+        this.candidature.setUtilisateur(TestsData.utilisateur);
+        this.candidature.setProjet(TestsData.projet);
         this.candidature.setStatut(EtatCandidature.valueOf(statut));
         this.candidature.setNbHeuresSemaine(heuresSemaine);
 
@@ -153,8 +152,8 @@ public class CreationCandidatureSteps {
     @Given("une candidature contenant le projet, l'utilisateur, avec aucune technologie cochée, le statut à {string}, le nombre d'heures par semaines fixées à {int}")
     public void uneCandidatureContenantLeProjetLUtilisateurAvecAucuneTechnologieCocheeLeStatutALeNombreDHeuresParSemainesFixeesA(String statut, int heuresSemaine) {
         this.candidature = new Candidature();
-        this.candidature.setUtilisateur(this.utilisateur);
-        this.candidature.setProjet(this.projet);
+        this.candidature.setUtilisateur(TestsData.utilisateur);
+        this.candidature.setProjet(TestsData.projet);
         this.candidature.setStatut(EtatCandidature.valueOf(statut));
         this.candidature.setNbHeuresSemaine(heuresSemaine);
     }
