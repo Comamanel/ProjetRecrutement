@@ -30,6 +30,9 @@ public class ProjetController {
     private ProjetService projetService;
 
     @Autowired
+    private UtilisateurService utilisateurService;
+
+    @Autowired
     private UtilisateurDAO utilisateurDAO;
 
     @Autowired
@@ -81,11 +84,15 @@ public class ProjetController {
             projetDAO.save(nouveauprojet);
             return ResponseEntity.ok(participationDAO.save(pp));
         }
-
         return null;
-
     }
 
+    @PostMapping("changer-proprietaire")
+    public ResponseEntity<Boolean> changerProprietaire(@RequestBody ChangementProprietaireFormulaire changementProprietaireFormulaire){
+        boolean isProprietaireProjetChange = this.projetService.changerProprietaireProjet(changementProprietaireFormulaire);
+
+        return ResponseEntity.ok(isProprietaireProjetChange);
+    }
 }
 
 

@@ -1,5 +1,6 @@
 package be.ucm.projetrecrutementapi.services;
 
+import be.ucm.projetrecrutementapi.api.dto.ChangementProprietaireFormulaire;
 import be.ucm.projetrecrutementapi.api.dto.ProjetFiltreDTO;
 import be.ucm.projetrecrutementapi.dal.entities.Participation_Projet;
 import be.ucm.projetrecrutementapi.dal.entities.Projet;
@@ -8,6 +9,7 @@ import be.ucm.projetrecrutementapi.dal.entities.enums.EtatProjet;
 import be.ucm.projetrecrutementapi.dal.entities.enums.TypeProjet;
 import be.ucm.projetrecrutementapi.dal.repositories.ParticipationDAO;
 import be.ucm.projetrecrutementapi.dal.repositories.ProjetDAO;
+import be.ucm.projetrecrutementapi.dal.repositories.UtilisateurDAO;
 import lombok.EqualsAndHashCode;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,12 @@ import java.util.Set;
 public class ProjetServiceImpl implements ProjetService {
     @Autowired
     private ProjetDAO projetDAO;
+
+    @Autowired
+    private UtilisateurDAO utilisateurDAO;
+
+    @Autowired
+    private UtilisateurService utilisateurService;
 
     @Autowired
     private ParticipationDAO participationDAO;
@@ -140,6 +148,45 @@ public class ProjetServiceImpl implements ProjetService {
         }
 
         return false;
+
+    }
+
+    @Override
+    public boolean changerProprietaireProjet(ChangementProprietaireFormulaire changementProprietaireFormulaire) {
+        if(changementProprietaireFormulaire.getProjet() == null || changementProprietaireFormulaire.getAncienProprietaire() == null || changementProprietaireFormulaire.getNouveauProprietaire() == null)
+            return false;
+        Utilisateur ancienProprio = this.utilisateurDAO.findById(changementProprietaireFormulaire.getAncienProprietaire()).orElse(null);
+        Utilisateur nouveauProprio = this.utilisateurDAO.findById(changementProprietaireFormulaire.getNouveauProprietaire()).orElse(null);
+
+        if(ancienProprio == null || ancienProprio.getProjetsParticipes() == null)
+            return false;
+        if(nouveauProprio == null || nouveauProprio.getProjetsParticipes() == null)
+            return false;
+
+        boolean changeageProprioOk = utilisateurService.checkUtilisateurNEstPasProprietaireDePlusDeDeuxProjets(nouveauProprio);
+
+        if(!changeageProprioOk)
+            return changeageProprioOk;
+
+        Participation_Projet participationAncienProprio = ancienProprio.getProjetsParticipes().stream().filter(p -> p.getProjet().getId().equals(changementProprietaireFormulaire.getProjet())).findFirst().orElse(null);
+        Participation_Projet participationNouveauProprio = nouveauProprio.getProjetsParticipes().stream().filter(p -> p.getProjet().getId().equals(changementProprietaireFormulaire.getProjet())).findFirst().orElse(null);
+
+        if(participationAncienProprio == null || participationNouveauProprio == null || !participationAncienProprio.isProprio())
+            return false;
+
+        ancienProprio.getProjetsParticipes().stream().filter(p -> p.getId().equals(participationAncienProprio.getId())).findFirst().orElse(new Participation_Projet()).setProprio(false);
+
+        nouveauProprio.getProjetsParticipes().stream().filter(p -> p.getProjet().getId().equals(changementProprietaireFormulaire.getProjet())).findFirst().orElse(new Participation_Projet()).setProprio(true);
+
+        try{
+            utilisateurDAO.save(nouveauProprio);
+            utilisateurDAO.save(ancienProprio);
+            return true;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
 
     }
 }

@@ -1,5 +1,6 @@
 package be.ucm.projetrecrutementapi.services;
 
+import be.ucm.projetrecrutementapi.api.dto.ChangementProprietaireFormulaire;
 import be.ucm.projetrecrutementapi.api.dto.ProjetFiltreDTO;
 import be.ucm.projetrecrutementapi.dal.entities.Projet;
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
@@ -16,4 +17,5 @@ public interface ProjetService {
     public List<Projet> findAllFiltered(ProjetFiltreDTO filtres);
     public Projet testerValiditeProjet(Utilisateur utilisateurActif, Projet nouveauProjet);
     public boolean verifierProprieteProjet(Utilisateur utilisateurActif, Projet projetVise);
+    public boolean changerProprietaireProjet(ChangementProprietaireFormulaire changementProprietaireFormulaire);
 }
