@@ -75,6 +75,7 @@ public class ValiderProjetSteps {
 
         Participation_Projet pp = new Participation_Projet();
         pp.setActif(true);
+        pp.setProprio(true);
         pp.setProjet(np);
 
         utilisateurActif.getProjetsParticipes().add(pp);

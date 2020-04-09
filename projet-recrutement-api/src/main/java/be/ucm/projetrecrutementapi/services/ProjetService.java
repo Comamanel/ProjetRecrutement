@@ -18,4 +18,6 @@ public interface ProjetService {
     public Projet testerValiditeProjet(Utilisateur utilisateurActif, Projet nouveauProjet);
     public boolean verifierProprieteProjet(Utilisateur utilisateurActif, Projet projetVise);
     public boolean changerProprietaireProjet(ChangementProprietaireFormulaire changementProprietaireFormulaire);
+    public Projet modifierInfosProjet(Utilisateur utilisateurActif, Projet projetActif, Projet projetModif);
+    public Utilisateur ajouterParticipant(Projet projetActif, Utilisateur candidat);
 }

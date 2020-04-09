@@ -144,4 +144,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         return nbProjetsProprio < 3;
     }
 
+
+
 }

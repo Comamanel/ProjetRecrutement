@@ -15,6 +15,7 @@ import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -22,11 +23,12 @@ import java.util.Set;
 
 @Service
 public class ProjetServiceImpl implements ProjetService {
-    @Autowired
-    private ProjetDAO projetDAO;
 
     @Autowired
     private UtilisateurDAO utilisateurDAO;
+
+    @Autowired
+    private ProjetDAO projetDAO;
 
     @Autowired
     private UtilisateurService utilisateurService;
@@ -89,9 +91,10 @@ public class ProjetServiceImpl implements ProjetService {
            Set<Participation_Projet> pu = utilisateurActif.getProjetsParticipes();
            Participation_Projet[] projetsUtilisateur = pu.toArray(new Participation_Projet[pu.size()]);
            for(int i=0; i<projetsUtilisateur.length; i++){
+               boolean proprietaireProjetBoucle = projetsUtilisateur[i].isProprio();
                EtatProjet statutProjetBoucle = projetsUtilisateur[i].getProjet().getStatut();
               String nomProjetBoucle = projetsUtilisateur[i].getProjet().getNom();
-              if((nomProjetBoucle.toLowerCase()).equals(titre.toLowerCase()) && statutProjetBoucle.equals(EtatProjet.ACT) ){
+              if(proprietaireProjetBoucle && (nomProjetBoucle.toLowerCase()).equals(titre.toLowerCase()) && statutProjetBoucle.equals(EtatProjet.ACT)){
                   return null;
               }
           }
@@ -188,5 +191,76 @@ public class ProjetServiceImpl implements ProjetService {
             return false;
         }
 
+    }
+
+    @Override
+    public Projet modifierInfosProjet(Utilisateur utilisateurActif, Projet projetActif, Projet projetModif){
+
+        if (verifierProprieteProjet(utilisateurActif, projetActif)) {
+
+            String newNom = projetModif.getNom();
+            List<Projet> projetsUtilisateur = projetDAO.findByUserId(utilisateurActif.getId());
+
+            if (newNom != null && !(newNom.trim().equals(""))) {
+                for (Projet projet : projetsUtilisateur) {
+                    if (!(projet.getNom().equals(newNom))) {
+                        projetActif.setNom(newNom);
+                    }
+                }
+            }
+
+            String newDesc = projetModif.getDescription();
+            if (newDesc != null && newDesc.length() < 1000) {
+                projetActif.setDescription(newDesc);
+            }
+
+            LocalDate newDateFin = projetModif.getDateFin();
+            if (newDateFin != null && newDateFin.compareTo(projetActif.getDateDebut()) > 0) {
+                projetActif.setDateFin(newDateFin);
+            }
+
+            int newMaxParticipants = projetModif.getMaxParticipants();
+            if (newMaxParticipants >= 0 & newMaxParticipants != projetActif.getMaxParticipants()) {
+                projetActif.setMaxParticipants(newMaxParticipants);
+            }
+
+            int newTpsTravailHebdo = projetModif.getTpsTravailHebdo();
+            if (newTpsTravailHebdo > 0 && newTpsTravailHebdo < 24) {
+                projetActif.setTpsTravailHebdo(newTpsTravailHebdo);
+            }
+        }
+
+        return projetActif;
+    }
+
+    @Override
+    public Utilisateur ajouterParticipant (Projet projetActif, Utilisateur candidat){
+
+        Set<Participation_Projet> candidats = participationDAO.findByProjectId(projetActif.getId());
+
+        if(projetActif.getMaxParticipants() == 0 || projetActif.getMaxParticipants() > candidats.size()){
+
+            int projetsActifs = candidat.getProjetsParticipes().size();
+            System.out.println(projetsActifs);
+
+            if (projetsActifs < 5) {
+                Participation_Projet pp = new Participation_Projet();
+                pp.setProjet(projetActif);
+                pp.setActif(true);
+                pp.setProprio(false);
+                pp.setUtilisateur(candidat);
+
+                candidat.getProjetsParticipes().add(pp);
+                return candidat;
+            }
+        }
+        return null;
+    }
+
+    public ProjetServiceImpl() {
+    }
+
+    public ProjetServiceImpl(ParticipationDAO participationDAO) {
+        this.participationDAO = participationDAO;
     }
 }
