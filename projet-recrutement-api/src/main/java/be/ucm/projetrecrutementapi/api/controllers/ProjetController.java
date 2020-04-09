@@ -55,7 +55,7 @@ public class ProjetController {
         return ResponseEntity.ok(projetsFiltres.stream().map(AfficheProjetDTO::new).collect(Collectors.toList()));
     }
 
-    @PostMapping("/createByUser{id}")
+    @PostMapping("/CurrentUserId={id}/create")
     public ResponseEntity createUser (@PathVariable Long id, @RequestBody ProjetDTO dataProjetDTO){
         Projet nouveauprojet = dataProjetDTO.toEntity();
         Utilisateur utilisateurActif = utilisateurDAO.findById(id).orElse(null);
@@ -72,6 +72,17 @@ public class ProjetController {
 
         return null;
 
+    }
+
+    @PostMapping("/CurrentUserId={userId}/ProjectId={projetId}")
+    public ResponseEntity updateUser(@PathVariable Long projetId, @PathVariable Long userId, @RequestBody ProjetDTO projetDTO) {
+        Projet projetActif = projetDAO.findById(projetId).orElse(null);
+        Projet projetModif = projetDTO.toEntity();
+        Utilisateur utilisateurActif = utilisateurDAO.findById(userId).orElse(null);
+
+        projetModif = projetService.modifierInfosProjet(utilisateurActif, projetActif, projetModif);
+
+        return ResponseEntity.ok(projetDAO.save(projetModif));
     }
 
 }
