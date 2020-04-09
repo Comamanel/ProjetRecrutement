@@ -88,10 +88,10 @@ public class ProjetController {
     }
 
     @PostMapping("changer-proprietaire")
-    public ResponseEntity<Boolean> changerProprietaire(@RequestBody ChangementProprietaireFormulaire changementProprietaireFormulaire){
-        boolean isProprietaireProjetChange = this.projetService.changerProprietaireProjet(changementProprietaireFormulaire);
+    public ResponseEntity<ChangementProprietaireFormulaire> changerProprietaire(@RequestBody ChangementProprietaireFormulaire changementProprietaireFormulaire){
+        changementProprietaireFormulaire.setResponse(this.projetService.changerProprietaireProjet(changementProprietaireFormulaire));
 
-        return ResponseEntity.ok(isProprietaireProjetChange);
+        return ResponseEntity.ok(changementProprietaireFormulaire);
     }
 }
 

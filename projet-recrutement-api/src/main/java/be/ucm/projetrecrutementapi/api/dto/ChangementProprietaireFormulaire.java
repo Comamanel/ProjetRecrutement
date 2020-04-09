@@ -11,4 +11,5 @@ public class ChangementProprietaireFormulaire {
     private Long ancienProprietaire;
     private Long nouveauProprietaire;
     private Long projet;
+    private boolean response;
 }

@@ -1,7 +1,6 @@
 package be.ucm.projetrecrutementapi.cucumber.steps;
 
 import be.ucm.projetrecrutementapi.api.dto.ChangementProprietaireFormulaire;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -9,8 +8,11 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+import org.hamcrest.Matchers;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 public class ChangementProprietaireProjetSteps {
 
@@ -54,5 +56,10 @@ public class ChangementProprietaireProjetSteps {
         this.validatableResponse = this.response.then()
                 .assertThat()
                 .statusCode(numCode);
+    }
+
+    @Then("un body avec {bool}")
+    public void unBodyAvecFalse(boolean body) {
+        this.validatableResponse.body("response", equalTo(body));
     }
 }
