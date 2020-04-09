@@ -50,6 +50,7 @@ public class ProjetRecrutementApiApplication {
 		this.ajouterUtilisateur();
 		this.ajouterProjet();
 		this.ajouterProjet2();
+		this.ajouterParticipation();
 	}
 
 	private void ajouterTechnologies(){
@@ -190,5 +191,23 @@ public class ProjetRecrutementApiApplication {
 		projet.setStatut(EtatProjet.ARC);
 
 		this.projetDAO.save(projet);
+	}
+
+	private void ajouterParticipation(){
+		Participation_Projet participation = new Participation_Projet();
+		participation.setActif(true);
+		participation.setProprio(true);
+		participation.setUtilisateur(this.utilisateurDAO.findById(1L).orElse(new Utilisateur()));
+		participation.setProjet(this.projetDAO.findById(1L).orElse(new Projet()));
+
+
+		Participation_Projet participation2 = new Participation_Projet();
+		participation2.setActif(true);
+		participation2.setProprio(false);
+		participation2.setUtilisateur(this.utilisateurDAO.findById(2L).orElse(new Utilisateur()));
+		participation2.setProjet(this.projetDAO.findById(1L).orElse(new Projet()));
+
+		this.participationDAO.save(participation);
+		this.participationDAO.save(participation2);
 	}
 }
