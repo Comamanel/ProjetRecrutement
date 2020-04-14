@@ -93,6 +93,13 @@ public class ProjetController {
 
         return ResponseEntity.ok(changementProprietaireFormulaire);
     }
+
+    @PostMapping("participation/annulation")
+    public ResponseEntity<AnnulationParticipationProjetDTO> annulationParticipation(@RequestBody AnnulationParticipationProjetDTO annulationParticipationProjet){
+        annulationParticipationProjet.setReponse(this.projetService.annulationParticipationProjet(annulationParticipationProjet));
+
+        return ResponseEntity.ok(annulationParticipationProjet);
+    }
 }
 
 

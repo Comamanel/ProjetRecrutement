@@ -1,6 +1,7 @@
 package be.ucm.projetrecrutementapi.api.controllers;
 
 import be.ucm.projetrecrutementapi.api.dto.AfficheUtilisateurDTO;
+import be.ucm.projetrecrutementapi.api.dto.AnnulationParticipationProjetDTO;
 import be.ucm.projetrecrutementapi.api.dto.DataUtilisateurDTO;
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
 import be.ucm.projetrecrutementapi.dal.repositories.UtilisateurDAO;

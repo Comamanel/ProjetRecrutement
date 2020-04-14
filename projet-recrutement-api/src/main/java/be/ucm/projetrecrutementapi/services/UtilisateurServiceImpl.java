@@ -1,5 +1,6 @@
 package be.ucm.projetrecrutementapi.services;
 
+import be.ucm.projetrecrutementapi.api.dto.AnnulationParticipationProjetDTO;
 import be.ucm.projetrecrutementapi.dal.entities.Participation_Projet;
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
 import be.ucm.projetrecrutementapi.dal.entities.enums.EtatProjet;
@@ -143,7 +144,4 @@ public class UtilisateurServiceImpl implements UtilisateurService {
                 .count();
         return nbProjetsProprio < 3;
     }
-
-
-
 }

@@ -1,5 +1,6 @@
 package be.ucm.projetrecrutementapi.services;
 
+import be.ucm.projetrecrutementapi.api.dto.AnnulationParticipationProjetDTO;
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
 
 public interface UtilisateurService {

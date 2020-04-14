@@ -1,5 +1,6 @@
 package be.ucm.projetrecrutementapi.services;
 
+import be.ucm.projetrecrutementapi.api.dto.AnnulationParticipationProjetDTO;
 import be.ucm.projetrecrutementapi.api.dto.ChangementProprietaireFormulaire;
 import be.ucm.projetrecrutementapi.api.dto.ProjetFiltreDTO;
 import be.ucm.projetrecrutementapi.dal.entities.Participation_Projet;
@@ -255,6 +256,20 @@ public class ProjetServiceImpl implements ProjetService {
             }
         }
         return null;
+    }
+
+    @Override
+    public boolean annulationParticipationProjet(AnnulationParticipationProjetDTO annulationParticipationProjet) {
+
+        Participation_Projet pp = this.participationDAO.findByUserAndProject(annulationParticipationProjet.getUtilisateurId(), annulationParticipationProjet.getProjetId()).orElse(null);
+
+        if(pp == null)
+            return false;
+
+        pp.setActif(false);
+        this.participationDAO.save(pp);
+
+        return false;
     }
 
     public ProjetServiceImpl() {
