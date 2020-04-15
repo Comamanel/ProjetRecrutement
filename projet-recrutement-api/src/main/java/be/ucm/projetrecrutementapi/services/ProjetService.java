@@ -31,5 +31,5 @@ public interface ProjetService {
     public Utilisateur ajouterParticipant(Projet projetActif, Utilisateur candidat);
 
 
-    public boolean annulationParticipationProjet(AnnulationParticipationProjetDTO annulationParticipationProjet);
+    public AnnulationParticipationProjetDTO annulationParticipationProjet(AnnulationParticipationProjetDTO annulationParticipationProjet);
 }

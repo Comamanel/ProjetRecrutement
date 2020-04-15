@@ -10,5 +10,6 @@ import lombok.Setter;
 public class AnnulationParticipationProjetDTO {
     private Long utilisateurId;
     private Long projetId;
-    private boolean reponse;
+    private boolean annulationActeeEnDB;
+    private boolean necessitePasserLeRoleDeProprietaire;
 }

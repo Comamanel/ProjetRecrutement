@@ -259,17 +259,28 @@ public class ProjetServiceImpl implements ProjetService {
     }
 
     @Override
-    public boolean annulationParticipationProjet(AnnulationParticipationProjetDTO annulationParticipationProjet) {
+    public AnnulationParticipationProjetDTO annulationParticipationProjet(AnnulationParticipationProjetDTO annulationParticipationProjet) {
+        annulationParticipationProjet.setAnnulationActeeEnDB(false);
+        annulationParticipationProjet.setNecessitePasserLeRoleDeProprietaire(false);
 
         Participation_Projet pp = this.participationDAO.findByUserAndProject(annulationParticipationProjet.getUtilisateurId(), annulationParticipationProjet.getProjetId()).orElse(null);
 
-        if(pp == null)
-            return false;
 
-        pp.setActif(false);
-        this.participationDAO.save(pp);
+        if(pp != null){
+            if(!pp.isProprio()){
+                pp.setActif(false);
+                this.participationDAO.save(pp);
+                annulationParticipationProjet.setAnnulationActeeEnDB(true);
+            }
+            else{
+                annulationParticipationProjet.setNecessitePasserLeRoleDeProprietaire(true);
+            }
 
-        return false;
+
+        }
+
+
+        return annulationParticipationProjet;
     }
 
     public ProjetServiceImpl() {
