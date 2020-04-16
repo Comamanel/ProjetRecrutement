@@ -208,6 +208,6 @@ public class ProjetRecrutementApiApplication {
 		participation2.setProjet(this.projetDAO.findById(1L).orElse(new Projet()));
 
 		this.participationDAO.save(participation);
-		this.participationDAO.save(participation2);
+		//this.participationDAO.save(participation2);
 	}
 }

@@ -265,15 +265,25 @@ public class ProjetServiceImpl implements ProjetService {
 
         Participation_Projet pp = this.participationDAO.findByUserAndProject(annulationParticipationProjet.getUtilisateurId(), annulationParticipationProjet.getProjetId()).orElse(null);
 
-
         if(pp != null){
+
             if(!pp.isProprio()){
                 pp.setActif(false);
                 this.participationDAO.save(pp);
                 annulationParticipationProjet.setAnnulationActeeEnDB(true);
             }
             else{
-                annulationParticipationProjet.setNecessitePasserLeRoleDeProprietaire(true);
+
+                if(pp.getProjet() != null && checkLeProjetNAQuUnSeulParticipant(pp.getProjet())){
+                     //Projet p = pp.getProjet();
+                    pp.getProjet().setStatut(EtatProjet.ARC);
+                    pp.setActif(false);
+                    this.participationDAO.save(pp);
+                    annulationParticipationProjet.setAnnulationActeeEnDB(true);
+                }
+                else{
+                    annulationParticipationProjet.setNecessitePasserLeRoleDeProprietaire(true);
+                }
             }
 
 
@@ -281,6 +291,15 @@ public class ProjetServiceImpl implements ProjetService {
 
 
         return annulationParticipationProjet;
+    }
+
+    private boolean checkLeProjetNAQuUnSeulParticipant(Projet projet){
+        long nbParticipants = participationDAO.findByProjectId(projet.getId())
+                .stream()
+                .filter(Participation_Projet::isActif)
+                .count();
+
+        return nbParticipants == 1;
     }
 
     public ProjetServiceImpl() {
