@@ -70,7 +70,7 @@ public class ProjetController {
         return ResponseEntity.ok(projetsFiltres.stream().map(AfficheProjetDTO::new).collect(Collectors.toList()));
     }
 
-    @PostMapping("/createByUser{id}")
+    @PostMapping("/CurrentUserId={id}/create")
     public ResponseEntity createUser (@PathVariable Long id, @RequestBody ProjetDTO dataProjetDTO){
         Projet nouveauprojet = dataProjetDTO.toEntity();
         Utilisateur utilisateurActif = utilisateurDAO.findById(id).orElse(null);
