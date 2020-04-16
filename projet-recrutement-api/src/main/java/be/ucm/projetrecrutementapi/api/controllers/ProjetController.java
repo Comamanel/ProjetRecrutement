@@ -86,7 +86,17 @@ public class ProjetController {
         }
         return null;
     }
-    //test
+
+    @PostMapping("/CurrentUserId={userId}/ProjectId={projetId}")
+    public ResponseEntity updateUser(@PathVariable Long projetId, @PathVariable Long userId, @RequestBody ProjetDTO projetDTO) {
+        Projet projetActif = projetDAO.findById(projetId).orElse(null);
+        Projet projetModif = projetDTO.toEntity();
+        Utilisateur utilisateurActif = utilisateurDAO.findById(userId).orElse(null);
+
+        projetModif = projetService.modifierInfosProjet(utilisateurActif, projetActif, projetModif);
+
+        return ResponseEntity.ok(projetDAO.save(projetModif));
+    }
 
     @PostMapping("changer-proprietaire")
     public ResponseEntity<ChangementProprietaireFormulaire> changerProprietaire(@RequestBody ChangementProprietaireFormulaire changementProprietaireFormulaire){
