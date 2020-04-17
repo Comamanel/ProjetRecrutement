@@ -1,9 +1,13 @@
 package be.ucm.projetrecrutementapi.services;
 
 import be.ucm.projetrecrutementapi.api.dto.AnnulationParticipationProjetDTO;
+import be.ucm.projetrecrutementapi.api.dto.MaitriseDTO;
+import be.ucm.projetrecrutementapi.dal.entities.Maitrise;
 import be.ucm.projetrecrutementapi.dal.entities.Participation_Projet;
+import be.ucm.projetrecrutementapi.dal.entities.Technologie;
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
 import be.ucm.projetrecrutementapi.dal.entities.enums.EtatProjet;
+import be.ucm.projetrecrutementapi.dal.repositories.MaitriseDAO;
 import be.ucm.projetrecrutementapi.dal.repositories.UtilisateurDAO;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +21,17 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Autowired
     private UtilisateurDAO utilisateurDAO;
+
+    @Autowired
+    private MaitriseDAO maitriseDAO;
 
     @Override
     public Utilisateur testerNouvelUtilisateur(Utilisateur nouvelUtilisateur){
@@ -144,4 +153,30 @@ public class UtilisateurServiceImpl implements UtilisateurService {
                 .count();
         return nbProjetsProprio < 3;
     }
+
+    @Override
+    public Utilisateur ajouterMaitrise(Utilisateur utilisateurCourant, Maitrise nouvelleMaitrise){
+
+        Maitrise presenceMaitrise = utilisateurCourant.getMaitrises().stream().filter(mu -> mu.getTechnologie().equals(nouvelleMaitrise.getTechnologie())).findFirst().orElse(null);
+
+        if(presenceMaitrise != null){
+            if(nouvelleMaitrise.getNiveauMaitrise() != presenceMaitrise.getNiveauMaitrise()){
+                presenceMaitrise.setNiveauMaitrise(nouvelleMaitrise.getNiveauMaitrise());
+            }
+        } else {
+            utilisateurCourant.getMaitrises().add(nouvelleMaitrise);
+        }
+
+        return utilisateurCourant;
+
+    }
+
+    @Override
+    public Utilisateur retirerMaitrise(Utilisateur utilisateurCourant, Maitrise maitriseASupprimer){
+
+        utilisateurCourant.getMaitrises().remove(maitriseASupprimer);
+        return utilisateurCourant;
+
+    }
+
 }
