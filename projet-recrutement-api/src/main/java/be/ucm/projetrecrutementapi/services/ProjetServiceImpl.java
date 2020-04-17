@@ -2,6 +2,7 @@ package be.ucm.projetrecrutementapi.services;
 
 import be.ucm.projetrecrutementapi.api.dto.ChangementProprietaireFormulaire;
 import be.ucm.projetrecrutementapi.api.dto.ProjetFiltreDTO;
+import be.ucm.projetrecrutementapi.dal.entities.Maitrise;
 import be.ucm.projetrecrutementapi.dal.entities.Participation_Projet;
 import be.ucm.projetrecrutementapi.dal.entities.Projet;
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
@@ -145,6 +146,7 @@ public class ProjetServiceImpl implements ProjetService {
     public boolean verifierProprieteProjet(Utilisateur utilisateurActif, Projet projetVise) {
 
         Participation_Projet pp = participationDAO.findByUserAndProject(utilisateurActif.getId(), projetVise.getId()).orElse(null);
+        System.out.println(pp);
 
         if(pp != null) {
             return pp.isProprio();
@@ -255,6 +257,30 @@ public class ProjetServiceImpl implements ProjetService {
             }
         }
         return null;
+    }
+
+    @Override
+    public Projet ajouterMaitrise(Projet projetActif, Maitrise nouvelleMaitrise){
+
+        Maitrise presenceMaitrise =
+                projetActif.getMaitrisesDemandees().stream()
+                .filter(mp -> mp.getTechnologie().equals(nouvelleMaitrise.getTechnologie()))
+                .filter(mp -> mp.getNiveauMaitrise().equals(nouvelleMaitrise.getNiveauMaitrise()))
+                        .findFirst().orElse(null);
+
+        if(presenceMaitrise == null){
+            projetActif.getMaitrisesDemandees().add(nouvelleMaitrise);
+        }
+
+        return projetActif;
+
+    }
+
+    public Projet retirerMaitrise(Projet projetActif, Maitrise maitriseARetirer){
+
+        projetActif.getMaitrisesDemandees().remove(maitriseARetirer);
+        return projetActif;
+
     }
 
     public ProjetServiceImpl() {

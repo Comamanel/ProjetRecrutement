@@ -1,14 +1,11 @@
 package be.ucm.projetrecrutementapi.api.dto;
 
 import be.ucm.projetrecrutementapi.dal.entities.*;
-import be.ucm.projetrecrutementapi.dal.entities.enums.EtatProjet;
-import be.ucm.projetrecrutementapi.dal.entities.enums.TypeProjet;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Getter
