@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface ProjetDAO extends JpaRepository<Projet, Long> {
     @Query(value = "SELECT * "
-            + "FROM PROJET p JOIN PARTICIPATION_PROJET pp ON p.ID_PROJET = pp.PROJET_ID_PROJET WHERE UTILISATEUR_ID  = :id", nativeQuery = true)
+            + "FROM PROJET p JOIN PARTICIPATION_PROJET pp ON p.ID_PROJET = pp.PROJET_ID WHERE UTILISATEUR_ID  = :id", nativeQuery = true)
     public List<Projet> findByUserId(@Param("id") Long id);
 
     @Query(value="SELECT p"

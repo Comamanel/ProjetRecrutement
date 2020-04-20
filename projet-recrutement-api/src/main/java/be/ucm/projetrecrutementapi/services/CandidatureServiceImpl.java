@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,11 @@ public class CandidatureServiceImpl implements CandidatureService {
 
     @Autowired
     private TechnologieDAO technologieDAO;
+
+    @Override
+    public List<Candidature> findByProjet(Long projetId) {
+        return this.candidatureDAO.findByProjet(projetId);
+    }
 
     @Override
     public Candidature save(CandidatureFormulaireDTO candidature) throws Exception {

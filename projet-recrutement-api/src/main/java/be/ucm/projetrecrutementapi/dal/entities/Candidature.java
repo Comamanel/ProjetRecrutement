@@ -34,6 +34,7 @@ public class Candidature {
     private Projet projet;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "Projet_Id")
     private Set<Technologie> technologieSouhaitee = new HashSet<>();
 
 }
