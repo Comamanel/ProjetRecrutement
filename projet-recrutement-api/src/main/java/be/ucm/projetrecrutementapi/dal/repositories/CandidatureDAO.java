@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface CandidatureDAO extends JpaRepository<Candidature, Long> {
 
-    @Query(value="SELECT * FROM Candidature WHERE Projet_Id = :projetId", nativeQuery = true)
+    @Query(value="SELECT * FROM Candidature WHERE projet_id = :projetId", nativeQuery = true)
     public List<Candidature> findByProjet(Long projetId);
 }

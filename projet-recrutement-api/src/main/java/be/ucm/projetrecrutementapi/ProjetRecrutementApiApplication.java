@@ -1,15 +1,11 @@
 package be.ucm.projetrecrutementapi;
 
-import be.ucm.projetrecrutementapi.api.dto.MaitriseDTO;
 import be.ucm.projetrecrutementapi.dal.entities.*;
-import be.ucm.projetrecrutementapi.dal.entities.enums.EtatProjet;
-import be.ucm.projetrecrutementapi.dal.entities.enums.NiveauMaitrise;
-import be.ucm.projetrecrutementapi.dal.entities.enums.TypeProjet;
+import be.ucm.projetrecrutementapi.dal.entities.enums.*;
 import be.ucm.projetrecrutementapi.dal.repositories.*;
 import be.ucm.projetrecrutementapi.dal.repositories.ParticipationDAO;
 import be.ucm.projetrecrutementapi.dal.repositories.ProjetDAO;
 import org.springframework.beans.factory.annotation.Autowired;
-import be.ucm.projetrecrutementapi.dal.entities.enums.GroupEnum;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -38,6 +34,9 @@ public class ProjetRecrutementApiApplication {
 	@Autowired
 	private MaitriseDAO maitriseDAO;
 
+	@Autowired
+	private CandidatureDAO candidatureDAO;
+
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetRecrutementApiApplication.class, args);
 	}
@@ -51,6 +50,7 @@ public class ProjetRecrutementApiApplication {
 		this.ajouterProjet();
 		this.ajouterProjet2();
 		this.ajouterParticipation();
+		this.ajouterCandidature();
 	}
 
 	private void ajouterTechnologies(){
@@ -114,6 +114,24 @@ public class ProjetRecrutementApiApplication {
 		user2.setGroup(members);
 		user2.getMaitrises().add(maitriseDAO.findById(5L).orElse(null));
 		utilisateurDAO.save(user2);
+
+		Utilisateur user3 = new Utilisateur();
+		user3.setPseudo("covid");
+		user3.setNom("Virus");
+		user3.setPrenom("Corona");
+		user3.setEmail("covid-19@sars.disease");
+		user3.setDateDeNaissance(LocalDate.of(2019, 12, 5));
+		user3.setMotDePasse("MortAuxHumains");
+		user3.setInfoSupp("Le virus qui a causé un confinement mondial");
+		user3.setNumTel("000/000000");
+		user3.setPays("Monde");
+		user3.setLienGit("sars-covid-19.git");
+		user3.setPhotoProfil("covid-19.png");
+		user3.setCvDoc("covid-19.pdf");
+		user3.setGroup(members);
+		user2.getMaitrises().add(maitriseDAO.findById(1L).orElse(null));
+		user2.getMaitrises().add(maitriseDAO.findById(2L).orElse(null));
+		utilisateurDAO.save(user3);
 
 
 	}
@@ -209,5 +227,18 @@ public class ProjetRecrutementApiApplication {
 
 		this.participationDAO.save(participation);
 		this.participationDAO.save(participation2);
+	}
+
+	private void ajouterCandidature(){
+		Candidature candidature1 = new Candidature();
+		candidature1.setNbHeuresSemaine(20);
+		candidature1.setStatut(EtatCandidature.ATT);
+		candidature1.setUtilisateur(this.utilisateurDAO.findById(3L).orElse(new Utilisateur()));
+		candidature1.setProjet(this.projetDAO.findById(1L).orElse(new Projet()));
+
+		candidature1.getTechnologieSouhaitee().add(technologieDAO.findById(1L).orElse(null));
+		candidature1.getTechnologieSouhaitee().add(technologieDAO.findById(2L).orElse(null));
+
+		this.candidatureDAO.save(candidature1);
 	}
 }

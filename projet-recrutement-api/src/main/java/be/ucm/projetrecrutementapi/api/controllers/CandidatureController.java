@@ -22,7 +22,7 @@ public class CandidatureController {
     @Autowired
     private CandidatureService candidatureService;
 
-    @GetMapping("projet/{id}")
+    @GetMapping("projet/{projetId}")
     public ResponseEntity<List<AfficheCandidatureDTO>> getByProjet(@PathVariable Long projetId){
 
 
