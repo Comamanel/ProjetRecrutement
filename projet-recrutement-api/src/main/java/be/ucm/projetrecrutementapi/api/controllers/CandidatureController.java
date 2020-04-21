@@ -2,7 +2,10 @@ package be.ucm.projetrecrutementapi.api.controllers;
 
 import be.ucm.projetrecrutementapi.Exceptions.CandidatureNonValideException;
 import be.ucm.projetrecrutementapi.api.dto.AfficheCandidatureDTO;
+import be.ucm.projetrecrutementapi.api.dto.AfficheNouvelleParticipationDTO;
 import be.ucm.projetrecrutementapi.api.dto.CandidatureFormulaireDTO;
+import be.ucm.projetrecrutementapi.api.dto.TraitementCandidatureFormulaireDTO;
+import be.ucm.projetrecrutementapi.dal.entities.Participation_Projet;
 import be.ucm.projetrecrutementapi.services.CandidatureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,5 +49,12 @@ public class CandidatureController {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping("acceptation")
+    public ResponseEntity<AfficheNouvelleParticipationDTO> acceptationCandidature(@RequestBody TraitementCandidatureFormulaireDTO traitementCandidatureFormulaireDTO){
+        Participation_Projet participation_projet = this.candidatureService.validerCandidature(traitementCandidatureFormulaireDTO);
+
+        return ResponseEntity.ok(new AfficheNouvelleParticipationDTO(participation_projet));
     }
 }

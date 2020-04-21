@@ -2,13 +2,11 @@ package be.ucm.projetrecrutementapi.services;
 
 import be.ucm.projetrecrutementapi.Exceptions.CandidatureNonValideException;
 import be.ucm.projetrecrutementapi.api.dto.CandidatureFormulaireDTO;
+import be.ucm.projetrecrutementapi.api.dto.TraitementCandidatureFormulaireDTO;
 import be.ucm.projetrecrutementapi.dal.entities.*;
 import be.ucm.projetrecrutementapi.dal.entities.enums.EtatCandidature;
 import be.ucm.projetrecrutementapi.dal.entities.enums.TypeProjet;
-import be.ucm.projetrecrutementapi.dal.repositories.CandidatureDAO;
-import be.ucm.projetrecrutementapi.dal.repositories.ProjetDAO;
-import be.ucm.projetrecrutementapi.dal.repositories.TechnologieDAO;
-import be.ucm.projetrecrutementapi.dal.repositories.UtilisateurDAO;
+import be.ucm.projetrecrutementapi.dal.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +28,9 @@ public class CandidatureServiceImpl implements CandidatureService {
 
     @Autowired
     private TechnologieDAO technologieDAO;
+
+    @Autowired
+    private ParticipationDAO participationDAO;
 
     @Override
     public List<Candidature> findByProjet(Long projetId) {
@@ -61,6 +62,27 @@ public class CandidatureServiceImpl implements CandidatureService {
         if(checkCandidOk(candid))
             return this.candidatureDAO.save(candid);
         throw new CandidatureNonValideException();
+    }
+
+    @Override
+    public Participation_Projet validerCandidature(TraitementCandidatureFormulaireDTO traitementCandidatureFormulaireDTO) {
+        Candidature candidature = this.candidatureDAO.findById(traitementCandidatureFormulaireDTO.getCandidatureId()).orElse(null);
+
+        if(candidature != null){
+            Participation_Projet nouvelleParticipation = new Participation_Projet();
+            nouvelleParticipation.setActif(true);
+            nouvelleParticipation.setProprio(false);
+            nouvelleParticipation.setProjet(candidature.getProjet());
+            nouvelleParticipation.setUtilisateur(candidature.getUtilisateur());
+            nouvelleParticipation = this.participationDAO.save(nouvelleParticipation);
+
+            if(nouvelleParticipation.getId() != null){
+                candidature.setStatut(EtatCandidature.ARC);
+                candidatureDAO.save(candidature);
+                return nouvelleParticipation;
+            }
+        }
+        return new Participation_Projet();
     }
 
     //Trucs à check : si le projet est sérieux, l'user doit avoir coché des trucs qu'il connaît, sinon non
