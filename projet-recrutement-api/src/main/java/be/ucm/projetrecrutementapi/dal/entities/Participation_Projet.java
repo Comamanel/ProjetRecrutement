@@ -18,6 +18,7 @@ public class Participation_Projet implements Serializable {
     @ManyToOne(targetEntity = Utilisateur.class, cascade = CascadeType.DETACH)
     private Utilisateur utilisateur;
     @ManyToOne(targetEntity = Projet.class, cascade = CascadeType.DETACH)
+    @JoinColumn(name = "projet_id")
     private Projet projet;
     @Column(nullable = false)
     private boolean actif;

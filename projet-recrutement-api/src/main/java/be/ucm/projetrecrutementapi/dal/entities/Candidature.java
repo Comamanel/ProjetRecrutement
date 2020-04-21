@@ -26,14 +26,15 @@ public class Candidature {
     @Column(nullable = false)
     private EtatCandidature statut;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(nullable = false)
     private Utilisateur utilisateur;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name = "Projet_Id")
     private Projet projet;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.DETACH)
     private Set<Technologie> technologieSouhaitee = new HashSet<>();
 
 }

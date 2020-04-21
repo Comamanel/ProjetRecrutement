@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin("*")
 @RestController
@@ -19,6 +21,13 @@ public class CandidatureController {
 
     @Autowired
     private CandidatureService candidatureService;
+
+    @GetMapping("projet/{projetId}")
+    public ResponseEntity<List<AfficheCandidatureDTO>> getByProjet(@PathVariable Long projetId){
+
+
+        return ResponseEntity.ok(this.candidatureService.findByProjet(projetId).stream().map(AfficheCandidatureDTO::new).collect(Collectors.toList()));
+    }
 
     @PostMapping("new")
     public ResponseEntity<AfficheCandidatureDTO> createCandidature(@RequestBody @Valid CandidatureFormulaireDTO candidature) throws CandidatureNonValideException {

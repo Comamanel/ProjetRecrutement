@@ -17,7 +17,7 @@ public class AfficheCandidatureDTO {
     private Long id;
     private int nbHeuresSemaine;
     private EtatCandidature statut;
-    private AfficheUtilisateurDTO utilisateur;
+    private AfficheCandidatureUtilisateurDTO utilisateur;
     private AfficheProjetDTO projet;
     private Set<TechnologieDTO> technologiesSouhaitees = new HashSet<>();
 
@@ -25,7 +25,7 @@ public class AfficheCandidatureDTO {
         this.id = candidature.getId();
         this.nbHeuresSemaine = candidature.getNbHeuresSemaine();
         this.statut = candidature.getStatut();
-        this.utilisateur = new AfficheUtilisateurDTO(candidature.getUtilisateur());
+        this.utilisateur = new AfficheCandidatureUtilisateurDTO(candidature.getUtilisateur());
         this.projet = new AfficheProjetDTO(candidature.getProjet());
         this.technologiesSouhaitees = candidature.getTechnologieSouhaitee().stream().map(TechnologieDTO::new).collect(Collectors.toSet());
     }

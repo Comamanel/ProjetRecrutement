@@ -8,9 +8,9 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface ParticipationDAO extends JpaRepository<Participation_Projet, Long> {
-    @Query(value = "SELECT * FROM PARTICIPATION_PROJET pp WHERE pp.utilisateur_id = :utilisateurId AND pp.projet_id_projet = :projetId", nativeQuery = true)
+    @Query(value = "SELECT * FROM PARTICIPATION_PROJET pp WHERE pp.utilisateur_id = :utilisateurId AND pp.projet_id = :projetId", nativeQuery = true)
     Optional<Participation_Projet> findByUserAndProject(Long utilisateurId, Long projetId);
 
-    @Query(value = "SELECT * FROM PARTICIPATION_PROJET pp WHERE pp.projet_id_projet = :projetId", nativeQuery = true)
+    @Query(value = "SELECT * FROM PARTICIPATION_PROJET pp WHERE pp.projet_id = :projetId", nativeQuery = true)
     Set<Participation_Projet> findByProjectId(Long projetId);
 }
