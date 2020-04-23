@@ -10,5 +10,6 @@ import java.util.List;
 public interface CandidatureService {
     List<Candidature> findByProjet(Long ProjetId);
     Candidature save(CandidatureFormulaireDTO candidature) throws Exception;
-    Participation_Projet validerCandidature(TraitementCandidatureFormulaireDTO candidature);
+    Participation_Projet validerCandidature(TraitementCandidatureFormulaireDTO traitementCandidatureFormulaireDTO);
+    Candidature refuserCandidature(TraitementCandidatureFormulaireDTO traitementCandidatureFormulaireDTO);
 }

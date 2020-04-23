@@ -1,28 +1,15 @@
 package be.ucm.projetrecrutementapi.services;
 
-import be.ucm.projetrecrutementapi.api.dto.AnnulationParticipationProjetDTO;
-import be.ucm.projetrecrutementapi.api.dto.MaitriseDTO;
 import be.ucm.projetrecrutementapi.dal.entities.Maitrise;
 import be.ucm.projetrecrutementapi.dal.entities.Participation_Projet;
-import be.ucm.projetrecrutementapi.dal.entities.Technologie;
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
 import be.ucm.projetrecrutementapi.dal.entities.enums.EtatProjet;
 import be.ucm.projetrecrutementapi.dal.repositories.MaitriseDAO;
 import be.ucm.projetrecrutementapi.dal.repositories.UtilisateurDAO;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class UtilisateurServiceImpl implements UtilisateurService {
