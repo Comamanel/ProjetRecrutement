@@ -7,14 +7,11 @@ import be.ucm.projetrecrutementapi.dal.entities.*;
 import be.ucm.projetrecrutementapi.dal.entities.enums.EtatCandidature;
 import be.ucm.projetrecrutementapi.dal.entities.enums.TypeProjet;
 import be.ucm.projetrecrutementapi.dal.repositories.*;
-import io.cucumber.java.ro.Cand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class CandidatureServiceImpl implements CandidatureService {
@@ -93,8 +90,9 @@ public class CandidatureServiceImpl implements CandidatureService {
         if(candidature != null){
             candidature.setStatut(EtatCandidature.SUS);
             candidature = this.candidatureDAO.save(candidature);
+            return candidature;
         }
-        return candidature;
+        return new Candidature();
     }
 
     //Trucs à check : si le projet est sérieux, l'user doit avoir coché des trucs qu'il connaît, sinon non

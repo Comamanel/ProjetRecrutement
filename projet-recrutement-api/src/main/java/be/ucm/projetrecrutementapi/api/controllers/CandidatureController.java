@@ -60,7 +60,7 @@ public class CandidatureController {
 
     @PostMapping("refus")
     public ResponseEntity<AfficheCandidatureDTO> refusCandidature(@RequestBody TraitementCandidatureFormulaireDTO traitementCandidatureFormulaireDTO){
-        this.candidatureService.
+        return ResponseEntity.ok(new AfficheCandidatureDTO(this.candidatureService.refuserCandidature(traitementCandidatureFormulaireDTO)));
     }
 
 }
