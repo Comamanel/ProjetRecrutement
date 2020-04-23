@@ -57,4 +57,10 @@ public class CandidatureController {
 
         return ResponseEntity.ok(new AfficheNouvelleParticipationDTO(participation_projet));
     }
+
+    @PostMapping("refus")
+    public ResponseEntity<AfficheCandidatureDTO> refusCandidature(@RequestBody TraitementCandidatureFormulaireDTO traitementCandidatureFormulaireDTO){
+        this.candidatureService.
+    }
+
 }

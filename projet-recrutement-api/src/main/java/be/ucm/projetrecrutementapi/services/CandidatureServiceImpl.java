@@ -7,6 +7,7 @@ import be.ucm.projetrecrutementapi.dal.entities.*;
 import be.ucm.projetrecrutementapi.dal.entities.enums.EtatCandidature;
 import be.ucm.projetrecrutementapi.dal.entities.enums.TypeProjet;
 import be.ucm.projetrecrutementapi.dal.repositories.*;
+import io.cucumber.java.ro.Cand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -83,6 +84,17 @@ public class CandidatureServiceImpl implements CandidatureService {
             }
         }
         return new Participation_Projet();
+    }
+
+    @Override
+    public Candidature refuserCandidature(TraitementCandidatureFormulaireDTO traitementCandidatureFormulaireDTO) {
+        Candidature candidature = this.candidatureDAO.findById(traitementCandidatureFormulaireDTO.getCandidatureId()).orElse(null);
+
+        if(candidature != null){
+            candidature.setStatut(EtatCandidature.SUS);
+            candidature = this.candidatureDAO.save(candidature);
+        }
+        return candidature;
     }
 
     //Trucs à check : si le projet est sérieux, l'user doit avoir coché des trucs qu'il connaît, sinon non
