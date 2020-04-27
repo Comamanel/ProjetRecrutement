@@ -42,4 +42,7 @@ public class Projet {
     @OneToMany (cascade = CascadeType.PERSIST)
     private Set<Candidature> candidatures = new HashSet<>();
 
+    @OneToMany (cascade = CascadeType.DETACH)
+    private Set<ProfilType> profilsType = new HashSet<>();
+
 }

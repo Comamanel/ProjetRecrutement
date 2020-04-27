@@ -3,11 +3,9 @@ package be.ucm.projetrecrutementapi.services;
 import be.ucm.projetrecrutementapi.api.dto.AnnulationParticipationProjetDTO;
 import be.ucm.projetrecrutementapi.api.dto.ChangementProprietaireFormulaire;
 import be.ucm.projetrecrutementapi.api.dto.ProjetFiltreDTO;
-import be.ucm.projetrecrutementapi.dal.entities.Maitrise;
-import be.ucm.projetrecrutementapi.dal.entities.Participation_Projet;
-import be.ucm.projetrecrutementapi.dal.entities.Projet;
-import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
+import be.ucm.projetrecrutementapi.dal.entities.*;
 import be.ucm.projetrecrutementapi.dal.entities.enums.EtatProjet;
+import be.ucm.projetrecrutementapi.dal.entities.enums.NiveauMaitrise;
 import be.ucm.projetrecrutementapi.dal.entities.enums.TypeProjet;
 import be.ucm.projetrecrutementapi.dal.repositories.ParticipationDAO;
 import be.ucm.projetrecrutementapi.dal.repositories.ProjetDAO;
@@ -16,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjetServiceImpl implements ProjetService {
@@ -273,9 +273,30 @@ public class ProjetServiceImpl implements ProjetService {
 
     }
 
+    @Override
     public Projet retirerMaitrise(Projet projetActif, Maitrise maitriseARetirer){
 
         projetActif.getMaitrisesDemandees().remove(maitriseARetirer);
+        return projetActif;
+
+    }
+
+    @Override
+    public Projet ajouterProfilType(Projet projetActif, Set<ProfilType> profilsType){
+
+        for(ProfilType pf : profilsType){
+            projetActif.getProfilsType().add(pf);
+        }
+
+        return projetActif;
+
+    }
+
+    @Override
+    public Projet retirerProfilType(Projet projetActif, ProfilType profilASupp){
+
+        projetActif.getProfilsType().remove(profilASupp);
+
         return projetActif;
 
     }
@@ -313,6 +334,85 @@ public class ProjetServiceImpl implements ProjetService {
 
 
         return annulationParticipationProjet;
+    }
+
+    @Override
+    public double CalculerMatchingProjet(Projet projetActif, Utilisateur utilisateurActif) {
+
+        double matching = 0;
+        List<Maitrise> maitrisesUtilisateur = new ArrayList<>(utilisateurActif.getMaitrises());
+        int nbMaitrisesUtilisateur = maitrisesUtilisateur.size();
+        double matchingScale = 100.0/nbMaitrisesUtilisateur;
+
+        for (Maitrise mu : maitrisesUtilisateur) {
+            //mp = Maitrise présente
+            Maitrise mp = projetActif.getMaitrisesDemandees()
+                    .stream()
+                    .filter(maitrise -> maitrise.getTechnologie().equals(mu.getTechnologie()))
+                    .findFirst()
+                    .orElse(null);
+
+            if (mp != null) {
+                //Niveau Utilisateur
+                int nu = mu.getNiveauMaitrise().getValeurNiveau();
+                //Niveau Projet
+                int np = mp.getNiveauMaitrise().getValeurNiveau();
+
+                if(np <= nu){
+                    matching += matchingScale;
+                }
+            }
+        }
+
+        return matching;
+
+    }
+
+    @Override
+    public double CalculerMatchingUtilisateur(Projet projetActif, Utilisateur utilisateurActif){
+
+        double matching = 0;
+        int nbProfilsTypeProjet = projetActif.getProfilsType().size();
+        double matchingScale = 100.0/nbProfilsTypeProjet;
+
+        //Ne conserve que les profils type dont la place est libre
+        List<ProfilType> profilsLibres = projetActif.getProfilsType().stream().filter(ProfilType::isOuvert).collect(Collectors.toList());
+
+        //Observe les profils un par un et établit une "checklist" des maitrises qui doivent être confirmées
+        for(ProfilType pl : profilsLibres){
+            //Maitrises profil = mp
+            Set<Maitrise> mp = pl.getMaitrisesDemandees();
+            int maitrisesOk = 0;
+            int nbMaitrisesProfil = mp.size();
+
+            //Maitrises utilisateur = mu
+            Set<Maitrise> mu = utilisateurActif.getMaitrises();
+
+            //Observe chaque maitrise une par une et vérifie que les maitrises de l'utilisateur correspondent
+            //Maitrise Profil Itérée = mpi
+            for(Maitrise mpi : mp){
+
+                //Récupère un optional de maitrise correspondante dans le profil user
+                //Maitrise utilisateur itérée = mui
+                Maitrise maitriseTechCheck = mu.stream().filter(mui -> mui.getTechnologie().equals(mpi.getTechnologie())).findFirst().orElse(null);
+
+                if(maitriseTechCheck != null){
+                    if(maitriseTechCheck.getNiveauMaitrise().getValeurNiveau() >= mpi.getNiveauMaitrise().getValeurNiveau())
+                    maitrisesOk++;
+                }
+
+            }
+
+            if(maitrisesOk == nbMaitrisesProfil){
+
+                matching += matchingScale;
+
+            }
+
+        }
+
+        return matching;
+
     }
 
     private boolean checkLeProjetNAQuUnSeulParticipant(Projet projet){

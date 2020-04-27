@@ -111,6 +111,29 @@ public class ProjetController {
 
         return ResponseEntity.ok(annulationParticipationProjet);
     }
+
+    @PostMapping("/updateProjectId={id}/addSkills")
+    public ResponseEntity updateUser(@PathVariable Long id, MaitriseDTO maitriseDTO) {
+        Projet projetActif = projetDAO.findById(id).orElse(null);
+        Maitrise nouvelleMaitrise = maitriseDTO.toEntity();
+
+        projetActif = projetService.ajouterMaitrise(projetActif, nouvelleMaitrise);
+
+        return ResponseEntity.ok(projetDAO.save(projetActif));
+    }
+
+    @PostMapping("/updateProjectId={id}/removeSkillId={idMaitrise}")
+    public ResponseEntity updateUser(@PathVariable Long id, @PathVariable Long idMaitrise) {
+        Projet projetActif = projetDAO.findById(id).orElseThrow(Error::new);
+        Maitrise maitriseASupprimer = projetActif.getMaitrisesDemandees().stream().filter(mu -> mu.getId().equals(idMaitrise)).findFirst().orElse(null);
+
+        projetActif = projetService.retirerMaitrise(projetActif, maitriseASupprimer);
+
+        return ResponseEntity.ok(projetDAO.save(projetActif));
+
+    }
+
 }
+
 
 

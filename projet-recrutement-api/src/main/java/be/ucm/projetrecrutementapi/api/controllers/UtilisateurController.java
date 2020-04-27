@@ -3,6 +3,8 @@ package be.ucm.projetrecrutementapi.api.controllers;
 import be.ucm.projetrecrutementapi.api.dto.AfficheUtilisateurDTO;
 import be.ucm.projetrecrutementapi.api.dto.AnnulationParticipationProjetDTO;
 import be.ucm.projetrecrutementapi.api.dto.DataUtilisateurDTO;
+import be.ucm.projetrecrutementapi.api.dto.MaitriseDTO;
+import be.ucm.projetrecrutementapi.dal.entities.Maitrise;
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
 import be.ucm.projetrecrutementapi.dal.repositories.UtilisateurDAO;
 import be.ucm.projetrecrutementapi.services.UtilisateurService;
@@ -59,6 +61,27 @@ public class UtilisateurController {
         utilisateurModif = utilisateurService.modifierInfosUtilisateur(utilisateurActif, utilisateurModif);
 
         return ResponseEntity.ok(utilisateurDAO.save(utilisateurModif));
+
+    }
+
+    @PostMapping("/updateUserId={id}/addSkills")
+    public ResponseEntity updateUser(@PathVariable Long id, MaitriseDTO maitriseDTO) {
+        Utilisateur utilisateurActif = utilisateurDAO.findById(id).orElse(null);
+        Maitrise nouvelleMaitrise = maitriseDTO.toEntity();
+
+        utilisateurActif = utilisateurService.ajouterMaitrise(utilisateurActif, nouvelleMaitrise);
+
+        return ResponseEntity.ok(utilisateurDAO.save(utilisateurActif));
+    }
+
+    @PostMapping("/updateUserId={id}/removeSkillId={idMaitrise}")
+    public ResponseEntity updateUser(@PathVariable Long id, @PathVariable Long idMaitrise) {
+        Utilisateur utilisateurActif = utilisateurDAO.findById(id).orElseThrow(Error::new);
+        Maitrise maitriseASupprimer = utilisateurActif.getMaitrises().stream().filter(mu -> mu.getId().equals(idMaitrise)).findFirst().orElse(null);
+
+        utilisateurActif = utilisateurService.retirerMaitrise(utilisateurActif, maitriseASupprimer);
+
+        return ResponseEntity.ok(utilisateurDAO.save(utilisateurActif));
 
     }
 

@@ -5,11 +5,18 @@ import be.ucm.projetrecrutementapi.dal.entities.Projet;
 import be.ucm.projetrecrutementapi.dal.entities.Utilisateur;
 import be.ucm.projetrecrutementapi.dal.repositories.ParticipationDAO;
 import be.ucm.projetrecrutementapi.services.ProjetService;
+import be.ucm.projetrecrutementapi.services.ProjetServiceImpl;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import junit.framework.Assert;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.mockito.Mockito.when;
 
 public class ProprieteProjetSteps {
 
@@ -17,12 +24,11 @@ public class ProprieteProjetSteps {
     private Utilisateur utilisateur2;
     private Utilisateur suppresseur;
     private Projet projet;
+    private Set<Participation_Projet> fausseDbParticipations = new HashSet<>();
 
-    @Autowired
     private ProjetService projetService;
 
-    @Autowired
-    private ParticipationDAO participationDAO;
+    private ParticipationDAO participationDAO = Mockito.mock(ParticipationDAO.class);
 
     @Given("a user with the id {int}")
     public void a_user_with_the_id(int id){
@@ -55,8 +61,7 @@ public class ProprieteProjetSteps {
             pp.setProprio(true);
         }
 
-        participationDAO.save(pp);
-
+        fausseDbParticipations.add(pp);
     }
 
     @When("the user {int} wants to put an end to the project")
@@ -66,6 +71,15 @@ public class ProprieteProjetSteps {
         } else {
             this.suppresseur = this.utilisateur2;
         }
+
+        this.projetService = new ProjetServiceImpl(participationDAO);
+        when(participationDAO.findByUserAndProject(suppresseur.getId(), projet.getId())).thenReturn(
+                fausseDbParticipations.stream()
+                        .filter(dpp -> dpp.getProjet().getId().equals(projet.getId()))
+                        .filter(dpp -> dpp.getUtilisateur().getId().equals(suppresseur.getId()))
+                        .findFirst()
+        );
+
     }
 
     @Then("the user can put the project to an end")
