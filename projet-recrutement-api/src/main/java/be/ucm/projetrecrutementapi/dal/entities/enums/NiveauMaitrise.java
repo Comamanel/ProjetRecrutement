@@ -1,17 +1,17 @@
 package be.ucm.projetrecrutementapi.dal.entities.enums;
 
 public enum NiveauMaitrise {
-    DEB("Débutant"),
-    INT("Intermédiaire"),
-    AVA("Avancé");
+    DEB(1),
+    INT(2),
+    AVA(3);
 
-    private String niveauMaitrise;
+    private int niveauMaitrise;
 
-    public String getNiveauMaitrise() {
+    public int getValeurNiveau() {
         return niveauMaitrise;
     }
 
-    NiveauMaitrise(String niveauMaitrise) {
+    NiveauMaitrise(int niveauMaitrise) {
         this.niveauMaitrise = niveauMaitrise;
     }
 }
