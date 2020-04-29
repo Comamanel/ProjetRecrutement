@@ -12,7 +12,8 @@ public class ListeUtilisateursAction extends ActionSupport {
     private static final long serialVersionUID = 1L;
     private List<Utilisateur> utilisateurs;
 
-    public String execute(){
+    @Override
+    public String execute() throws Exception{
         return SUCCESS;
     }
 
