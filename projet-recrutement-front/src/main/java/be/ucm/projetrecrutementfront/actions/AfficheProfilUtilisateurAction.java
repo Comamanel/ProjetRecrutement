@@ -4,7 +4,7 @@ import be.ucm.projetrecrutementfront.models.Utilisateur;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.convention.annotation.Action;
 
-public class PageProfilUtilisateurAction extends ActionSupport {
+public class AfficheProfilUtilisateurAction extends ActionSupport {
     private static final long serialVersionUID = 1L;
     private Utilisateur utilisateur;
 
