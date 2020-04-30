@@ -9,11 +9,11 @@ public class AfficheProfilUtilisateurAction extends ActionSupport {
     private Utilisateur utilisateur;
     private Long id;
 
-    @Override
     public String execute() throws Exception {
 
         if(id != null) {
             //Appeler l'API pour peupler l'user
+            utilisateur = new Utilisateur();
             utilisateur.setId(getId());
         }
 

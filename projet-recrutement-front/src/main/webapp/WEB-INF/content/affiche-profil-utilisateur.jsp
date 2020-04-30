@@ -10,8 +10,8 @@
     <title>Projet Recrutement - Liste des utilisateurs</title>
 </head>
 <body>
-<h1>Voici la page de profil de l'utilisateur <s:property value="%{utilisateur.id} />}</h1>
-    <p><a href="<s:url action='index'  />">Revenir à la page d'accueil</a>.</p>
-
+<h1>Voici la page de profil de l'utilisateur</h1>
+    <p><a href="index.jsp">Revenir à la page d'accueil</a>.</p>
+    <p><s:property value="id" /> </p>
 </body>
 </html>
