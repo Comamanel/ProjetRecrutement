@@ -1,6 +1,10 @@
 package be.ucm.projetrecrutementfront.models;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,6 +13,7 @@ public class Utilisateur {
     private String email;
     private String pseudo;
     private LocalDate dateDeNaissance;
+    private String dateDeNaissanceFormattee;
     private String nom;
     private String prenom;
     private String infosSupp;
@@ -29,6 +34,7 @@ public class Utilisateur {
         this.email = email;
         this.pseudo = pseudo;
         this.dateDeNaissance = dateDeNaissance;
+        this.dateDeNaissanceFormattee = dateDeNaissance.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         this.nom = nom;
         this.prenom = prenom;
         this.infosSupp = infosSupp;
@@ -74,6 +80,14 @@ public class Utilisateur {
 
     public void setDateDeNaissance(LocalDate dateDeNaissance) {
         this.dateDeNaissance = dateDeNaissance;
+    }
+
+    public String getDateDeNaissanceFormattee() {
+        return dateDeNaissanceFormattee;
+    }
+
+    public void setDateDeNaissanceFormattee(String dateDeNaissanceFormattee) {
+        this.dateDeNaissanceFormattee = dateDeNaissanceFormattee;
     }
 
     public String getNom() {

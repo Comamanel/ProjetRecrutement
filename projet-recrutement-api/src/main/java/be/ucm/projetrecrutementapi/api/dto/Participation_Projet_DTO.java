@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class Participation_Projet_DTO {
     private Long id;
-    private Projet projet;
+    private ProjetDTO projet;
     private boolean actif;
     private boolean proprio;
 
@@ -19,14 +19,14 @@ public class Participation_Projet_DTO {
         participationProjet.setId(this.id);
         participationProjet.setProprio(this.proprio);
         participationProjet.setActif(this.actif);
-        participationProjet.setProjet(this.projet);
+        participationProjet.setProjet(this.projet.toEntity());
         return participationProjet;
     }
 
     public Participation_Projet_DTO(){}
     public Participation_Projet_DTO(Participation_Projet pp){
         this.id = pp.getId();
-        this.projet = pp.getProjet();
+        this.projet = new ProjetDTO(pp.getProjet());
         this.actif = pp.isActif();
         this.proprio = pp.isProprio();
     }
