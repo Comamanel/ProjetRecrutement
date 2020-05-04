@@ -129,8 +129,8 @@ public class ProjetRecrutementApiApplication {
 		user3.setPhotoProfil("covid-19.png");
 		user3.setCvDoc("covid-19.pdf");
 		user3.setGroup(members);
-		user2.getMaitrises().add(maitriseDAO.findById(1L).orElse(null));
-		user2.getMaitrises().add(maitriseDAO.findById(2L).orElse(null));
+		user3.getMaitrises().add(maitriseDAO.findById(1L).orElse(null));
+		user3.getMaitrises().add(maitriseDAO.findById(2L).orElse(null));
 		utilisateurDAO.save(user3);
 
 

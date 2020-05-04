@@ -28,6 +28,7 @@ public class Utilisateur {
         this.maitrises = new HashSet<>();
     }
 
+
     public Utilisateur(Long id, String email, String pseudo, LocalDate dateDeNaissance, String nom, String prenom, String infosSupp, String numTel, String pays, String lienGit, String photoProfil, String cvDoc) {
         this();
         this.id = id;
@@ -80,6 +81,7 @@ public class Utilisateur {
 
     public void setDateDeNaissance(LocalDate dateDeNaissance) {
         this.dateDeNaissance = dateDeNaissance;
+        this.dateDeNaissanceFormattee = dateDeNaissance.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 
     public String getDateDeNaissanceFormattee() {
