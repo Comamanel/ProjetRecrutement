@@ -10,6 +10,7 @@
     <title>Projet Recrutement - Page d accueil</title>
 </head>
 <body>
-<h1>Bienvenue sur la page d accueil de notre projet de Recrutement!</h1>
+    <h1>Bienvenue sur la page d accueil de notre projet de Recrutement!</h1>
+    <a href="<s:url action='projets-liste' />" >Voir tous les beaux projets</a>
 </body>
 </html>
