@@ -13,6 +13,6 @@
 <h1>Bienvenue sur la page d'accueil de notre projet de Recrutement!</h1>
 
 <p><a href="<s:url action='liste-utilisateurs'  />" >Afficher la liste de tous les utilisateurs</a></p>
-
+<p><a href="<s:url action='projets-liste' />" >Voir tous les beaux projets</a></p>
 </body>
 </html>

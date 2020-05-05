@@ -2,27 +2,27 @@ package be.ucm.projetrecrutementfront.services;
 
 import be.ucm.projetrecrutementfront.models.Projet;
 import org.json.JSONArray;
-<<<<<<< HEAD
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ProjetService {
 
-    private static ApiService apiService;
+    public static List<Projet> getProjets() {
 
-    public static List<Projet> getProjets(){
-
-        ArrayList<Projet> projets = new ArrayList<Projet>();
-        String output = apiService.contacterAPI("projet/", "GET");
+        List<Projet> projets = new ArrayList<>();
+        String output = ApiService.contacterApiSansBody("projet/", "GET");
 
         JSONArray ja = new JSONArray(output);
         System.out.println(ja.get(0));
         System.out.println(ja.get(1));
 
-        for(int i=0; i<ja.length(); i++){
+        for (int i = 0; i < ja.length(); i++) {
             JSONObject p = ja.getJSONObject(i);
             Projet np = remplirProjet(p);
             projets.add(np);
@@ -31,9 +31,19 @@ public class ProjetService {
         return projets;
     }
 
-    private static Projet remplirProjet(JSONObject output){
+    public static Set<Projet> remplirDesProjets(JSONArray output){
+        Set<Projet> projets = new HashSet<>();
+
+        for (int i = 0; i < output.length() ; i++) {
+            projets.add(remplirProjet(output.getJSONObject(i)));
+        }
+
+        return projets;
+    }
+
+    public static Projet remplirProjet(JSONObject output) {
         Projet par = new Projet();
-        if(output != null){
+        if (output != null) {
             try {
                 par.setId(output.getLong("id"));
                 par.setNom(output.getString("nom"));
@@ -42,58 +52,15 @@ public class ProjetService {
                 par.setDateFin(LocalDate.parse(output.getString("dateFin")));
                 par.setTypeProjet(output.getString("typeProjet"));
                 par.setMaxParticipants(output.getInt("maxParticipants"));
-                par.setNbParticipants(output.getInt("nbParticipants"));
                 par.setStatut(output.getString("statut"));
                 par.setTpsTravailHebdo(output.getInt("tpsTravailHebdo"));
-                par.setMaitrises(MaitriseService.remplirPlusieursMaitrises(json));
-            }
-            catch (JSONException e){
+                par.setMaitrises(MaitriseService.remplirPlusieursMaitrises(output));
+                //par.setNbParticipants(output.getInt("nbParticipants"));
+                //L'attribut NbParticipats a l'air d'être nulle part dans l'API :o)
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
         return par;
     }
-
-
-
-=======
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashSet;
-import java.util.Set;
-
-public class ProjetService {
-
-    public static Set<Projet> remplirDesProjets(JSONArray projetsjson){
-        Set<Projet> projets = new HashSet<>();
-
-        for (int i = 0; i < projetsjson.length(); i++) {
-            JSONObject projetJson = projetsjson.getJSONObject(i);
-            projets.add(remplirUnProjet(projetJson));
-        }
-        return projets;
-    }
-
-    public static Projet remplirUnProjet(JSONObject json){
-        Projet p = new Projet();
-        try{
-            p.setId(json.getLong("id"));
-            p.setNom(json.getString("nom"));
-            p.setDescription(json.getString("description"));
-            p.setDateDebutString(json.getString("dateDebut"));
-            p.setDateFinString(json.getString("dateFin"));
-            p.setStatut(json.getString("statut"));
-            p.setTypeProjet(json.getString("typeProjet"));
-            p.setTpsTravailHebdo(json.getInt("tpsTravailHebdo"));
-            p.setMaxParticipants(json.getInt("maxParticipants"));
-            p.setMaitrises(MaitriseService.remplirPlusieursMaitrises(json));
-        }
-        catch (JSONException e){
-            e.printStackTrace();
-        }
-
-        return p;
-    }
->>>>>>> feature/front-affichage-page-profil-utilisateur
 }

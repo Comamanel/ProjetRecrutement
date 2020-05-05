@@ -10,7 +10,7 @@ public class UtilisateurService {
 
     public static Utilisateur getUtilisateur(Long id) {
         Utilisateur u = new Utilisateur();
-        String output = ContactAPIService.contactSansBody("utilisateur/" + id, "GET");
+        String output = ApiService.contacterApiSansBody("utilisateur/" + id, "GET");
         if (output != null) {
             JSONObject json = new JSONObject(output);
             remplirUnUtilisateur(u, json);

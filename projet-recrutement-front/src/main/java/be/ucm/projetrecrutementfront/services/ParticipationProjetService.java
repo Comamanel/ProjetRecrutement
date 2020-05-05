@@ -21,7 +21,7 @@ public class ParticipationProjetService {
             participationProjet.setId(maitriseJson.getLong("id"));
             participationProjet.setActif(maitriseJson.getBoolean("actif"));
             participationProjet.setProprio(maitriseJson.getBoolean("proprio"));
-            participationProjet.setProjet(ProjetService.remplirUnProjet(maitriseJson.getJSONObject("projet")));
+            participationProjet.setProjet(ProjetService.remplirProjet(maitriseJson.getJSONObject("projet")));
             participationProjets.add(participationProjet);
         }
         return participationProjets;
