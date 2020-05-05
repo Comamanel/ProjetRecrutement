@@ -79,6 +79,48 @@
                 </table>
             </td>
         </tr>
+        <tr>
+            <td>Projets participés</td>
+            <td>
+                <table>
+                    <tr>
+                        <td>Nom du projet</td>
+                        <td>Propriétaire ?</td>
+                        <td>Toujours actif sur le projet ? </td>
+                    </tr>
+                    <s:iterator value="utilisateur.projetsParticipes">
+                        <tr>
+                            <td><s:property value="projet.nom" /></td>
+                           <td>
+                                <s:if test="proprio">Oui</s:if>
+                                <s:else>Non</s:else>
+                            </td>
+                            <td>
+                                <s:if test="actif">Oui</s:if>
+                                <s:else>Non</s:else>
+                            </td>
+                            <td><a href="<s:url value=''><s:param name='id' value='%{id}' /></s:url>">Page du projet</td>
+                        </tr>
+                    </s:iterator>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>Projets créés</td>
+            <td>
+                <table>
+                    <tr>
+                        <td>Nom du projet</td>
+                    </tr>
+                    <s:iterator value="utilisateur.projetsCrees">
+                        <tr>
+                            <td><s:property value="nom" /></td>
+                            <td><a href="<s:url value='affiche-profil-utilisateur'><s:param name='id' value='%{id}' /></s:url>">Page du projet</td>
+                        </tr>
+                    </s:iterator>
+                </table>
+            </td>
+        </tr>
     </table>
 
 

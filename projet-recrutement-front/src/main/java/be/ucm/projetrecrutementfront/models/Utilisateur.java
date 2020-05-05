@@ -30,10 +30,13 @@ public class Utilisateur {
 
     public Utilisateur() {
         this.maitrises = new HashSet<>();
+        this.roles = new HashSet<>();
+        this.projetsParticipes = new HashSet<>();
+        this.projetsCrees = new HashSet<>();
     }
 
 
-    public Utilisateur(Long id, String email, String pseudo, LocalDate dateDeNaissance, String nom, String prenom, String infosSupp, String numTel, String pays, String lienGit, String photoProfil, String cvDoc) {
+    public Utilisateur(Long id, String email, String pseudo, LocalDate dateDeNaissance, String nom, String prenom, String infosSupp, String numTel, String pays, String lienGit, String photoProfil, String cvDoc, Group group) {
         this();
         this.id = id;
         this.email = email;
@@ -48,11 +51,15 @@ public class Utilisateur {
         this.lienGit = lienGit;
         this.photoProfil = photoProfil;
         this.cvDoc = cvDoc;
+        this.group = group;
     }
 
-    public Utilisateur(Long id, String email, String pseudo, LocalDate dateDeNaissance, String nom, String prenom, String infosSupp, String numTel, String pays, String lienGit, String photoProfil, String cvDoc, Set<Maitrise> maitrises) {
-        this(id, email, pseudo, dateDeNaissance, nom, prenom, infosSupp, numTel, pays, lienGit, photoProfil, cvDoc);
+    public Utilisateur(Long id, String email, String pseudo, LocalDate dateDeNaissance, String dateDeNaissanceFormattee, String nom, String prenom, String infosSupp, String numTel, String pays, String lienGit, String photoProfil, String cvDoc, Group group, Set<Maitrise> maitrises, Set<Role> roles, Set<Participation_Projet> projetsParticipes, Set<Projet> projetsCrees) {
+        this();
         this.maitrises = maitrises;
+        this.roles = roles;
+        this.projetsParticipes = projetsParticipes;
+        this.projetsCrees = projetsCrees;
     }
 
     public Long getId() {
@@ -166,5 +173,37 @@ public class Utilisateur {
 
     public void setMaitrises(Set<Maitrise> maitrises) {
         this.maitrises = maitrises;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Set<Participation_Projet> getProjetsParticipes() {
+        return projetsParticipes;
+    }
+
+    public void setProjetsParticipes(Set<Participation_Projet> projetsParticipes) {
+        this.projetsParticipes = projetsParticipes;
+    }
+
+    public Set<Projet> getProjetsCrees() {
+        return projetsCrees;
+    }
+
+    public void setProjetsCrees(Set<Projet> projetsCrees) {
+        this.projetsCrees = projetsCrees;
     }
 }

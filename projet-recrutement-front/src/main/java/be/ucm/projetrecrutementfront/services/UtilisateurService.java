@@ -14,8 +14,9 @@ public class UtilisateurService {
         if (output != null) {
             JSONObject json = new JSONObject(output);
             remplirUnUtilisateur(u, json);
-
             u.setMaitrises(MaitriseService.remplirPlusieursMaitrises(json));
+            u.setProjetsParticipes(ParticipationProjetService.remplirDesParticipationProjets(json));
+            u.setProjetsCrees(ProjetService.remplirDesProjets(json.getJSONArray("projetsCrees")));
         }
         return u;
     }

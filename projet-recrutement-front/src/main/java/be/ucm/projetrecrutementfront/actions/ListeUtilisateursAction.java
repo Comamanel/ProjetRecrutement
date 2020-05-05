@@ -1,5 +1,6 @@
 package be.ucm.projetrecrutementfront.actions;
 
+import be.ucm.projetrecrutementfront.models.Group;
 import be.ucm.projetrecrutementfront.models.Utilisateur;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.convention.annotation.Action;
@@ -32,7 +33,9 @@ public class ListeUtilisateursAction extends ActionSupport {
                     "testPays",
                     "testLienGit",
                     "test photo",
-                    "test cv"));
+                    "test cv",
+                    new Group()
+                    ));
         }
         return utilisateurs;
     }

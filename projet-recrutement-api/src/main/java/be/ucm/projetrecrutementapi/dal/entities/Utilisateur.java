@@ -44,7 +44,7 @@ public class Utilisateur implements Serializable {
     @OneToMany(targetEntity = Participation_Projet.class, mappedBy = "utilisateur", cascade = CascadeType.PERSIST)
     private Set<Participation_Projet> projetsParticipes;
 
-    @OneToMany(targetEntity = Projet.class, cascade = CascadeType.PERSIST)
+    @OneToMany(targetEntity = Projet.class, cascade = CascadeType.DETACH)
     private Set<Projet> projetsCrees;
 
     @ManyToMany(targetEntity = Maitrise.class, cascade = CascadeType.DETACH)
