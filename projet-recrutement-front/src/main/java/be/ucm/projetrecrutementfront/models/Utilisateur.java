@@ -22,7 +22,11 @@ public class Utilisateur {
     private String lienGit;
     private String photoProfil;
     private String cvDoc;
+    private Group group;
     private Set<Maitrise> maitrises;
+    private Set<Role> roles;
+    private Set<Participation_Projet> projetsParticipes;
+    private Set<Projet> projetsCrees;
 
     public Utilisateur() {
         this.maitrises = new HashSet<>();
