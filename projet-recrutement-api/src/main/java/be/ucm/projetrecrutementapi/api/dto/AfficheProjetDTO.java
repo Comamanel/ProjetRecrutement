@@ -17,7 +17,7 @@ import java.util.Set;
 public class AfficheProjetDTO {
 
     private Long id;
-    private String name;
+    private String nom;
     private String description;
     private LocalDate dateDebut;
     private TypeProjet typeProjet;
@@ -30,7 +30,7 @@ public class AfficheProjetDTO {
 
     public AfficheProjetDTO(Projet projet){
         this.id = projet.getId();
-        this.name = projet.getNom();
+        this.nom = projet.getNom();
         this.description = projet.getDescription();
         this.dateDebut = projet.getDateDebut();
         this.typeProjet = projet.getTypeProjet();
