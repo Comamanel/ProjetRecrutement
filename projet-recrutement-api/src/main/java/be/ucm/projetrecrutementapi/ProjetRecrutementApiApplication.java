@@ -46,9 +46,9 @@ public class ProjetRecrutementApiApplication {
 	private void ajouts(){
 		this.ajouterTechnologies();
 		this.ajouterMaitrises();
-		this.ajouterUtilisateur();
 		this.ajouterProjet();
 		this.ajouterProjet2();
+		this.ajouterUtilisateur();
 		this.ajouterParticipation();
 		this.ajouterCandidature();
 	}
@@ -113,6 +113,7 @@ public class ProjetRecrutementApiApplication {
 		user2.setCvDoc("maurice.pdf");
 		user2.setGroup(members);
 		user2.getMaitrises().add(maitriseDAO.findById(5L).orElse(null));
+		user2.getProjetsCrees().add(this.projetDAO.findById(2L).orElse(new Projet()));
 		utilisateurDAO.save(user2);
 
 		Utilisateur user3 = new Utilisateur();
@@ -129,11 +130,10 @@ public class ProjetRecrutementApiApplication {
 		user3.setPhotoProfil("covid-19.png");
 		user3.setCvDoc("covid-19.pdf");
 		user3.setGroup(members);
-		user2.getMaitrises().add(maitriseDAO.findById(1L).orElse(null));
-		user2.getMaitrises().add(maitriseDAO.findById(2L).orElse(null));
+		user3.getMaitrises().add(maitriseDAO.findById(1L).orElse(null));
+		user3.getMaitrises().add(maitriseDAO.findById(2L).orElse(null));
+		user3.getProjetsCrees().add(this.projetDAO.findById(1L).orElse(new Projet()));
 		utilisateurDAO.save(user3);
-
-
 	}
 
 	private void ajouterMaitrises(){
@@ -234,7 +234,7 @@ public class ProjetRecrutementApiApplication {
 		candidature1.setNbHeuresSemaine(20);
 		candidature1.setStatut(EtatCandidature.ATT);
 		candidature1.setUtilisateur(this.utilisateurDAO.findById(3L).orElse(new Utilisateur()));
-		candidature1.setProjet(this.projetDAO.findById(1L).orElse(new Projet()));
+		candidature1.setProjet(this.projetDAO.findById(2L).orElse(new Projet()));
 
 		candidature1.getTechnologieSouhaitee().add(technologieDAO.findById(1L).orElse(null));
 		candidature1.getTechnologieSouhaitee().add(technologieDAO.findById(2L).orElse(null));

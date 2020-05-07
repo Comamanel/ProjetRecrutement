@@ -7,7 +7,7 @@ import java.net.URL;
 
 public class ApiService {
 
-    protected static String contacterAPI(String lien, String methode){
+    public static String contacterApiSansBody(String lien, String methode){
         try {
 
             URL url = new URL("http://localhost:8081/api/" + lien);
@@ -34,10 +34,6 @@ public class ApiService {
             e.printStackTrace();
 
         }
-
         return null;
-    }
-
-    public ApiService() {
     }
 }
