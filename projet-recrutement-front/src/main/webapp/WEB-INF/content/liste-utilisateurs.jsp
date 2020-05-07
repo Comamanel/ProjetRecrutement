@@ -34,7 +34,7 @@
             </tr>
         </s:iterator>
     </table>
-    <p><a href="/projet-recrutement-front">Revenir à la page d'accueil</a>.</p>
+    <p><a href="/projet-recrutement-front/">Revenir à la page d'accueil</a>.</p>
 
 </body>
 </html>
