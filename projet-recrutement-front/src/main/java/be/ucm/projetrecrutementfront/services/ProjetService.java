@@ -12,6 +12,19 @@ public class ProjetService {
 
     private static ApiService apiService;
 
+    public static Projet getProjet(int idProjet){
+
+        String output = apiService.contacterAPI("projet/" + idProjet, "GET");
+
+        JSONObject jo = new JSONObject(output);
+        System.out.println(jo);
+
+        Projet p = remplirProjet(jo);
+
+        return p;
+
+    }
+
     public static List<Projet> getProjets(){
 
         ArrayList<Projet> projets = new ArrayList<Projet>();

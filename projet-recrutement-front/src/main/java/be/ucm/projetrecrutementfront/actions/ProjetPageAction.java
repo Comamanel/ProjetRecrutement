@@ -13,4 +13,13 @@ public class ProjetPageAction extends ActionSupport {
         return SUCCESS;
     }
 
+    public Projet getProjet() {
+        return projet;
+    }
+
+    public void setProjet(Projet projet) {
+        this.projet = projet;
+    }
+
+
 }
