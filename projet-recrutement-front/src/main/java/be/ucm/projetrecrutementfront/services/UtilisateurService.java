@@ -1,12 +1,25 @@
 package be.ucm.projetrecrutementfront.services;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 
 import be.ucm.projetrecrutementfront.models.Utilisateur;
+import be.ucm.projetrecrutementfront.models.forms.InscriptionUtilisateur;
 import org.json.*;
 
 public class UtilisateurService {
+    public static void testContactAvecBody(){
+        InscriptionUtilisateur u = new InscriptionUtilisateur();
+        u.setEmail("test-contact-avec-body@api.pr");
+        u.setPseudo("TestContactAPIAvecBody");
+        u.setMotDePasse("testmdp");
+        u.setDateDeNaissance(LocalDate.now());
+        JSONObject obj = new JSONObject(u);
+        ApiService.contacterApiAvecBody("utilisateur/create","POST", obj.toString());
+        System.out.println("Méthode de test du body. Valeur : ");
+        System.out.println(obj);
 
+    }
 
     public static Utilisateur getUtilisateur(Long id) {
         Utilisateur u = new Utilisateur();
