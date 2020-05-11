@@ -3,6 +3,7 @@ package be.ucm.projetrecrutementfront.actions;
 import be.ucm.projetrecrutementfront.models.Maitrise;
 import be.ucm.projetrecrutementfront.models.Technologie;
 import be.ucm.projetrecrutementfront.models.Utilisateur;
+import be.ucm.projetrecrutementfront.services.ApiService;
 import be.ucm.projetrecrutementfront.services.UtilisateurService;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.convention.annotation.Action;
