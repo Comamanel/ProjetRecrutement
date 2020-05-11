@@ -1,6 +1,6 @@
 package be.ucm.projetrecrutementapi.api.controllers;
 
-import be.ucm.projetrecrutementapi.Exceptions.CandidatureNonValideException;
+import be.ucm.projetrecrutementapi.exceptions.CandidatureNonValideException;
 import be.ucm.projetrecrutementapi.api.dto.AfficheCandidatureDTO;
 import be.ucm.projetrecrutementapi.api.dto.AfficheNouvelleParticipationDTO;
 import be.ucm.projetrecrutementapi.api.dto.CandidatureFormulaireDTO;

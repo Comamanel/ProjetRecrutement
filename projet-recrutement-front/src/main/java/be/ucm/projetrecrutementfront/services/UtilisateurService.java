@@ -50,7 +50,9 @@ public class UtilisateurService {
         u.setCvDoc(json.getString("cvDoc"));
     }
 
-
+    public static void inscriptionUtilisateur(InscriptionUtilisateur utilisateur){
+        System.out.println(utilisateur);
+    }
 
 
 }

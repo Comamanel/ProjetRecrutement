@@ -14,5 +14,6 @@
 
 <p><a href="<s:url action='liste-utilisateurs'  />" >Afficher la liste de tous les utilisateurs</a></p>
 <p><a href="<s:url action='projets-liste' />" >Voir tous les beaux projets</a></p>
+<p><a href="<s:url action='inscription' />" >S'inscrire</a></p>
 </body>
 </html>

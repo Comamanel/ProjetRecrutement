@@ -1,4 +1,4 @@
-package be.ucm.projetrecrutementapi.Exceptions;
+package be.ucm.projetrecrutementapi.exceptions;
 
 public class CandidatureNonValideException extends Exception {
 }
