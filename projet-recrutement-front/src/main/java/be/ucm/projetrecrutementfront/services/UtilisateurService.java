@@ -8,18 +8,19 @@ import be.ucm.projetrecrutementfront.models.forms.InscriptionUtilisateur;
 import org.json.*;
 
 public class UtilisateurService {
+
+    /* Méthode de démo du contact de l'API avec un Body, pour le POST
     public static void testContactAvecBody(){
         InscriptionUtilisateur u = new InscriptionUtilisateur();
         u.setEmail("test-contact-avec-body@api.pr");
         u.setPseudo("TestContactAPIAvecBody");
-        u.setMotDePasse("testmdp");
+        u.setMotDePasse("testmDp5!");
         u.setDateDeNaissance(LocalDate.now());
         JSONObject obj = new JSONObject(u);
-        ApiService.contacterApiAvecBody("utilisateur/create","POST", obj.toString());
+        String resultat = ApiService.contacterApiAvecBody("utilisateur/create","POST", obj.toString());
         System.out.println("Méthode de test du body. Valeur : ");
-        System.out.println(obj);
-
-    }
+        System.out.println(resultat);
+    }*/
 
     public static Utilisateur getUtilisateur(Long id) {
         Utilisateur u = new Utilisateur();

@@ -27,7 +27,7 @@ public class ApiService {
 
             String output;
             output = br.readLine();
-            System.out.println("Output from Server ....");
+            System.out.println("Output from Server - Without body ....");
             System.out.println(output + "\n");
             conn.disconnect();
             return output;
@@ -63,7 +63,7 @@ public class ApiService {
 
             String output;
             output = br.readLine();
-            System.out.println("Output from Server ....");
+            System.out.println("Output from Server - With body ....");
             System.out.println(output + "\n");
             conn.disconnect();
             return output;

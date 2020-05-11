@@ -22,7 +22,6 @@ public class AfficheProfilUtilisateurAction extends ActionSupport {
         if(id != null) {
             //Appeler l'API pour peupler l'user
             this.utilisateur = UtilisateurService.getUtilisateur(id);
-            UtilisateurService.testContactAvecBody();
         }
 
         return SUCCESS;
