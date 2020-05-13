@@ -26,9 +26,10 @@
             <s:form action="inscription">
                 <s:textfield name="utilisateur.email" label="Adresse email " />
                 <s:textfield name="utilisateur.pseudo" label="Pseudonyme " />
-                <s:textfield name="utilisateur.motDePasse" label="Mot de Passe " />
+                <s:password key="utilisateur.motDePasse" label="Mot de Passe " />
+                <s:password key="confirmMotDePasse" label="Confirmez votre de Passe " />
                 <sx:datetimepicker name="utilisateur.dateDeNaissance" label="Date de Naissance "
-                displayFormat="dd/MM/yyyy" value="%{'2000-01-01'}"/>
+                displayFormat="dd/MM/yyyy" value="%{utilisateur.dateDeNaissance}"/>
                 <s:submit value="S'enregistrer" />
             </s:form>
         </div>

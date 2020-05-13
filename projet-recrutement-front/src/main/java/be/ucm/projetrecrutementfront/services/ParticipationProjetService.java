@@ -10,7 +10,20 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ParticipationProjetService {
-    public static Set<Participation_Projet> remplirDesParticipationProjets(JSONObject json){
+
+    private static ParticipationProjetService instance;
+
+    private ParticipationProjetService(){
+    }
+
+    public static ParticipationProjetService getInstance(){
+        if(instance == null){
+            instance = new ParticipationProjetService();
+        }
+        return instance;
+    }
+
+    public Set<Participation_Projet> jsonToParticipationProjets(JSONObject json){
         Set<Participation_Projet> participationProjets = new HashSet<>();
         JSONArray participationsJson = json.getJSONArray("projetsParticipes");
 
@@ -21,13 +34,13 @@ public class ParticipationProjetService {
             participationProjet.setId(maitriseJson.getLong("id"));
             participationProjet.setActif(maitriseJson.getBoolean("actif"));
             participationProjet.setProprio(maitriseJson.getBoolean("proprio"));
-            participationProjet.setProjet(ProjetService.remplirProjet(maitriseJson.getJSONObject("projet")));
+            participationProjet.setProjet(ProjetService.getInstance().jsonToProjet(maitriseJson.getJSONObject("projet")));
             participationProjets.add(participationProjet);
         }
         return participationProjets;
     }
 
-    public static Participation_Projet remplirUnProjet(Participation_Projet p, JSONObject json){
+    public Participation_Projet remplirUnProjet(Participation_Projet p, JSONObject json){
         return p;
     }
 }

@@ -9,7 +9,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class MaitriseService {
-    public static Set<Maitrise> remplirPlusieursMaitrises(JSONObject json) {
+
+    private static MaitriseService instance;
+
+    public static MaitriseService getInstance(){
+        if(instance == null)
+            instance = new MaitriseService();
+        return instance;
+    }
+
+    private MaitriseService(){}
+
+
+    public Set<Maitrise> jsonToMaitrises(JSONObject json) {
         Set<Maitrise> maitrises = new HashSet<>();
         JSONArray maitrisesJson = json.getJSONArray("maitrises");
 
@@ -18,7 +30,7 @@ public class MaitriseService {
             JSONObject maitriseJson = maitrisesJson.getJSONObject(i);
             maitrise.setId(maitriseJson.getLong("id"));
             maitrise.setNiveauMaitrise(maitriseJson.getString("niveauMaitrise"));
-            maitrise.setTechnologie(TechnologieService.remplirUneTechnologie(maitriseJson.getJSONObject("technologie")));
+            maitrise.setTechnologie(TechnologieService.getInstance().jsonToTechnologie(maitriseJson.getJSONObject("technologie")));
             maitrises.add(maitrise);
         }
 

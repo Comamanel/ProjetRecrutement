@@ -13,33 +13,40 @@ import java.util.Set;
 
 public class ProjetService {
 
-    private static ApiService apiService;
+    private static ProjetService instance;
 
-    public static Projet getProjet(int idProjet){
+    private ProjetService(){}
 
-        String output = ApiService.contacterApiSansBody("projet/" + idProjet, "GET");
+    public static ProjetService getInstance(){
+        if(instance == null){
+            instance = new ProjetService();
+        }
+        return instance;
+    }
+
+
+    public Projet getProjet(int idProjet){
+
+        String output = ApiService.getInstance().contacterApiSansBody("projet/" + idProjet, "GET");
 
         JSONObject jo = new JSONObject(output);
 
-        Projet p = remplirProjet(jo);
-
-        return p;
-
+        return jsonToProjet(jo);
     }
 
-    public static Set<Projet> getProjets(){
+    public Set<Projet> getProjets(){
 
         Set<Projet> projets = new HashSet<>();
-        String output = ApiService.contacterApiSansBody("projet/", "GET");
+        String output = ApiService.getInstance().contacterApiSansBody("projet/", "GET");
 
         JSONArray ja = new JSONArray(output);
 
-        projets = remplirListeProjets(ja);
+        projets = jsonToProjets(ja);
 
         return projets;
     }
 
-    protected static Projet remplirProjet(JSONObject output){
+    public Projet jsonToProjet(JSONObject output){
         Projet par = new Projet();
         if (output != null) {
             try {
@@ -62,11 +69,11 @@ public class ProjetService {
         return par;
     }
 
-    public static Set<Projet> remplirListeProjets(JSONArray output){
+    public Set<Projet> jsonToProjets(JSONArray output){
         Set<Projet> projets = new HashSet<>();
 
         for (int i = 0; i < output.length() ; i++) {
-            projets.add(remplirProjet(output.getJSONObject(i)));
+            projets.add(jsonToProjet(output.getJSONObject(i)));
         }
 
         return projets;

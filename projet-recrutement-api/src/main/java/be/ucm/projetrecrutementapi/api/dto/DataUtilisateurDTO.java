@@ -24,6 +24,14 @@ public class DataUtilisateurDTO {
         nouvelUtilisateur.setEmail(this.email);
         nouvelUtilisateur.setDateDeNaissance(this.dateDeNaissance);
         nouvelUtilisateur.setMotDePasse(this.motDePasse);
+        nouvelUtilisateur.setCvDoc("");
+        nouvelUtilisateur.setNom("");
+        nouvelUtilisateur.setPrenom("");
+        nouvelUtilisateur.setInfoSupp("");
+        nouvelUtilisateur.setLienGit("");
+        nouvelUtilisateur.setNumTel("");
+        nouvelUtilisateur.setPays("");
+        nouvelUtilisateur.setPhotoProfil("");
         return nouvelUtilisateur;
     }
 

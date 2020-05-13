@@ -10,6 +10,13 @@ public class InscriptionUtilisateur {
     private String motDePasse;
     private LocalDate dateDeNaissance;
 
+    public InscriptionUtilisateur(){
+        email = "";
+        pseudo = "";
+        motDePasse = "";
+        dateDeNaissance = LocalDate.of(2000, 1,1);
+    }
+
     public String getEmail() {
         return email;
     }
