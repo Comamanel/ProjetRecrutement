@@ -1,12 +1,21 @@
 package be.ucm.projetrecrutementfront.models.forms;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 public class InscriptionUtilisateur {
     private String email;
     private String pseudo;
     private String motDePasse;
     private LocalDate dateDeNaissance;
+
+    public InscriptionUtilisateur(){
+        email = "";
+        pseudo = "";
+        motDePasse = "";
+        dateDeNaissance = LocalDate.of(2000, 1,1);
+    }
 
     public String getEmail() {
         return email;
@@ -36,7 +45,17 @@ public class InscriptionUtilisateur {
         return dateDeNaissance;
     }
 
-    public void setDateDeNaissance(LocalDate dateDeNaissance) {
-        this.dateDeNaissance = dateDeNaissance;
+    public void setDateDeNaissance(Date dateDeNaissance) {
+        this.dateDeNaissance = dateDeNaissance.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();;
+    }
+
+    @Override
+    public String toString() {
+        return "InscriptionUtilisateur{" +
+                "email='" + email + '\'' +
+                ", pseudo='" + pseudo + '\'' +
+                ", motDePasse='" + motDePasse + '\'' +
+                ", dateDeNaissance=" + dateDeNaissance +
+                '}';
     }
 }

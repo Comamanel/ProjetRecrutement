@@ -3,12 +3,24 @@ package be.ucm.projetrecrutementfront.services;
 import java.time.LocalDate;
 import java.util.HashSet;
 
+import be.ucm.projetrecrutementfront.models.Group;
 import be.ucm.projetrecrutementfront.models.Utilisateur;
 import be.ucm.projetrecrutementfront.models.forms.InscriptionUtilisateur;
 import org.json.*;
 
 public class UtilisateurService {
 
+    private static UtilisateurService instance;
+
+    private UtilisateurService(){
+    }
+
+    public static UtilisateurService getInstance(){
+        if(instance == null){
+            instance = new UtilisateurService();
+        }
+        return instance;
+    }
     /* Méthode de démo du contact de l'API avec un Body, pour le POST
     public static void testContactAvecBody(){
         InscriptionUtilisateur u = new InscriptionUtilisateur();
@@ -22,20 +34,20 @@ public class UtilisateurService {
         System.out.println(resultat);
     }*/
 
-    public static Utilisateur getUtilisateur(Long id) {
+    public Utilisateur getUtilisateur(Long id) {
         Utilisateur u = new Utilisateur();
-        String output = ApiService.contacterApiSansBody("utilisateur/" + id, "GET");
+        String output = ApiService.getInstance().contacterApiSansBody("utilisateur/" + id, "GET");
         if (output != null) {
             JSONObject json = new JSONObject(output);
-            remplirUnUtilisateur(u, json);
-            u.setMaitrises(MaitriseService.remplirPlusieursMaitrises(json));
-            u.setProjetsParticipes(ParticipationProjetService.remplirDesParticipationProjets(json));
-            u.setProjetsCrees(ProjetService.remplirListeProjets(json.getJSONArray("projetsCrees")));
+            getInstance().jsonToUtilisateur(u, json);
+            u.setMaitrises(MaitriseService.getInstance().jsonToMaitrises(json));
+            u.setProjetsParticipes(ParticipationProjetService.getInstance().jsonToParticipationProjets(json));
+            u.setProjetsCrees(ProjetService.getInstance().jsonToProjets(json.getJSONArray("projetsCrees")));
         }
         return u;
     }
 
-    private static void remplirUnUtilisateur(Utilisateur u, JSONObject json) {
+    private void jsonToUtilisateur(Utilisateur u, JSONObject json) {
         u.setId(json.getLong("id"));
         u.setPseudo(json.getString("pseudo"));
         u.setPrenom(json.getString("prenom"));
@@ -50,7 +62,19 @@ public class UtilisateurService {
         u.setCvDoc(json.getString("cvDoc"));
     }
 
+    public Utilisateur inscriptionUtilisateur(InscriptionUtilisateur utilisateur){
+        JSONObject jsonUtilisateur = new JSONObject(utilisateur);
+        String stringUtilisateur = jsonUtilisateur.toString();
+        stringUtilisateur = ApiService.getInstance().contacterApiAvecBody("utilisateur/create", "POST", stringUtilisateur);
+        if(stringUtilisateur != null){
+            Utilisateur u = new Utilisateur();
+            jsonToUtilisateur(u, new JSONObject(stringUtilisateur));
 
+            System.out.println(u);
+            return u;
+        }
+        return null;
+    }
 
 
 }

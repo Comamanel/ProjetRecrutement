@@ -36,14 +36,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         }
 
         if (!(nouvelUtilisateur.getEmail().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"))){
-            return null;
+                return null;
         }
 
         if (nouvelUtilisateur.getDateDeNaissance().compareTo(LocalDate.now()) > 0) {
             return null;
         }
 
-        if (!nouvelUtilisateur.getMotDePasse().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&éè]{8,}$")){
+        if (!nouvelUtilisateur.getMotDePasse().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*=?&])[A-Za-z\\d@$!%*?=&éè]{8,}$")){
             return null;
         }
 

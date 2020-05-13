@@ -9,7 +9,17 @@ import java.nio.charset.StandardCharsets;
 
 public class ApiService {
 
-    public static String contacterApiSansBody(String lien, String methode){
+    private static ApiService instance;
+
+    public static ApiService getInstance(){
+        if(instance == null)
+            instance = new ApiService();
+        return instance;
+    }
+
+    private ApiService(){}
+
+    public  String contacterApiSansBody(String lien, String methode){
         try {
 
             URL url = new URL("http://localhost:8081/api/" + lien);
@@ -39,7 +49,7 @@ public class ApiService {
         return null;
     }
 
-    public static String contacterApiAvecBody(String lien, String methode, String body){
+    public String contacterApiAvecBody(String lien, String methode, String body){
         try {
 
             URL url = new URL("http://localhost:8081/api/" + lien);
