@@ -6,6 +6,7 @@ import java.util.Set;
 
 public class Projet {
     private Long id;
+    private Long adminId;
     private String nom;
     private String description;
     private LocalDate dateDebut;
@@ -17,7 +18,9 @@ public class Projet {
     private int tpsTravailHebdo;
     private String statut;
     private int nbParticipants;
-    //private Set<Maitrise> maitrises = new HashSet<>();
+    private Set<Maitrise> maitrises = new HashSet<>();
+    private Set<Utilisateur> utilActifs = new HashSet<>();
+    private Set<Utilisateur> utilNonActifs = new HashSet<>();
     //private Set<Candidature> candidatures = new HashSet<>();
     //private Set<ProfilType> profilsType = new HashSet<>();
 
@@ -26,6 +29,7 @@ public class Projet {
 
     public Projet(Long id, String nom, String description, LocalDate dateDebut, String typeProjet, int maxParticipants, LocalDate dateFin, int tpsTravailHebdo, String statut) {
         this.id = id;
+        this.adminId = null;
         this.nom = nom;
         this.description = description;
         this.dateDebut = dateDebut;
@@ -38,6 +42,7 @@ public class Projet {
 
     public Projet(Long id, String nom, String description, LocalDate dateDebut, String dateDebutString, LocalDate dateFin, String dateFinString, String typeProjet, int maxParticipants, int tpsTravailHebdo, String statut) {
         this.id = id;
+        this.adminId = null;
         this.nom = nom;
         this.description = description;
         this.dateDebut = dateDebut;
@@ -52,6 +57,7 @@ public class Projet {
 
     public Projet(Long id, String nom, String description, LocalDate dateDebut, String dateDebutString, LocalDate dateFin, String dateFinString, String typeProjet, int maxParticipants, int tpsTravailHebdo, String statut, Set<Maitrise> maitrises) {
         this.id = id;
+        this.adminId = null;
         this.nom = nom;
         this.description = description;
         this.dateDebut = dateDebut;
@@ -62,7 +68,7 @@ public class Projet {
         this.maxParticipants = maxParticipants;
         this.tpsTravailHebdo = tpsTravailHebdo;
         this.statut = statut;
-        //this.maitrises = maitrises;
+        this.maitrises = maitrises;
     }
 
     public Long getId() {
@@ -71,6 +77,14 @@ public class Projet {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(Long adminId) {
+        this.adminId = adminId;
     }
 
     public String getNom() {
@@ -161,11 +175,27 @@ public class Projet {
         this.nbParticipants = nbParticipants;
     }
 
-//    public Set<Maitrise> getMaitrises() {
-//        return maitrises;
-//    }
-//
-//    public void setMaitrises(Set<Maitrise> maitrises) {
-//        this.maitrises = maitrises;
-//    }
+    public Set<Maitrise> getMaitrises() {
+        return maitrises;
+    }
+
+    public void setMaitrises(Set<Maitrise> maitrises) {
+        this.maitrises = maitrises;
+    }
+
+    public Set<Utilisateur> getUtilActifs() {
+        return utilActifs;
+    }
+
+    public void setUtilActifs(Set<Utilisateur> utilActifs) {
+        this.utilActifs = utilActifs;
+    }
+
+    public Set<Utilisateur> getUtilNonActifs() {
+        return utilNonActifs;
+    }
+
+    public void setUtilNonActifs(Set<Utilisateur> utilNonActifs) {
+        this.utilNonActifs = utilNonActifs;
+    }
 }

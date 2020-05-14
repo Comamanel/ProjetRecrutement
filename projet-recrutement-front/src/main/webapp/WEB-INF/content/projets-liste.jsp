@@ -19,30 +19,32 @@
         </div>
         <img id="top-bg" src="img/bg_board.jpg" alt="background tableau">
 
-        <div id="container-projets">
-            <s:iterator value="projets">
-                <div class="boite-projet">
-                    <div class="titre-projet">
-                        <h3><s:property value="nom"/></h3>
+
+            <div id="container-projets">
+                <s:iterator value="projets">
+                    <div class="boite-projet">
+                        <div class="titre-projet">
+                            <h3><s:property value="nom"/></h3>
+                        </div>
+                        <table class="infos-projet">
+                            <tr>
+                                 <td>
+                                     <span><s:property value="typeProjet"/></span>
+                                     <span><s:property value="nbParticipants"/>/<s:property value="maxParticipants"/></span>
+                                  </td>
+                            </tr>
+                        </table>
+                        <div class="specs-projet">
+                            <p><s:property value="description"/></p>
+                        </div>
+                        <div class="explorer-projet">
+                            <a href="<s:url value='projet-page'><s:param name='id' value='%{id}' /></s:url>">
+                                Explorer
+                            </a>
+                        </div>
                     </div>
-                    <table class="infos-projet">
-                        <tr>
-                             <td>
-                                 <span><s:property value="typeProjet"/></span>
-                                 <span><s:property value="nbParticipants"/>/<s:property value="maxParticipants"/></span>
-                              </td>
-                        </tr>
-                    </table>
-                    <div class="specs-projet">
-                        <p><s:property value="description"/></p>
-                    </div>
-                    <div class="explorer-projet">
-                        <a href="<s:url value="projet-page"><s:param name="id" value="%{'58'}" />
-                        </s:url>">Explorer</a>
-                    </div>
-                </div>
-            </s:iterator>
-        </div>
+                </s:iterator>
+            </div>
 
     </body>
 </html>

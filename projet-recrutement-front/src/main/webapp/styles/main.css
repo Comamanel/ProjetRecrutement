@@ -23,17 +23,28 @@ body{
     width: 100%;
 }
 
-#container-projets{
+#container-standard{
     background-color: #e3e2de;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
     border-radius: 25px;
     padding: 3.5rem 1.5rem;
     position: relative;
     width: 90%;
     top: -3rem;
     margin: 0 auto;
+}
+
+#container-projets{
+    background-color: #e3e2de;
+    border-radius: 25px;
+    padding: 3.5rem 1.5rem;
+    position: relative;
+    width: 90%;
+    top: -3rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content:center;
 }
 
 .boite-projet{

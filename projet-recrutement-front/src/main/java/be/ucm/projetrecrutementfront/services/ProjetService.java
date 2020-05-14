@@ -1,6 +1,8 @@
 package be.ucm.projetrecrutementfront.services;
 
+import be.ucm.projetrecrutementfront.models.Participation_Projet;
 import be.ucm.projetrecrutementfront.models.Projet;
+import be.ucm.projetrecrutementfront.models.Utilisateur;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,7 +33,18 @@ public class ProjetService {
 
         JSONObject jo = new JSONObject(output);
 
-        return jsonToProjet(jo);
+        Projet p = remplirProjet(jo);
+        p.setMaitrises(MaitriseService.remplirPlusieursMaitrises(jo));
+
+        Long adminId = UtilisateurService.getUtilisateursParProjet(idProjet, true).fst;
+        Set<Utilisateur> participantsActifs = UtilisateurService.getUtilisateursParProjet(idProjet, true).snd;
+        Set<Utilisateur> participantsNonActifs = UtilisateurService.getUtilisateursParProjet(idProjet, false).snd;
+        p.setUtilActifs(participantsActifs);
+        p.setUtilNonActifs(participantsNonActifs);
+        p.setAdminId(adminId);
+
+        return p;
+
     }
 
     public Set<Projet> getProjets(){

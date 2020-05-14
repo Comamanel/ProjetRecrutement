@@ -2,6 +2,7 @@ package be.ucm.projetrecrutementfront.services;
 
 import be.ucm.projetrecrutementfront.models.Maitrise;
 import be.ucm.projetrecrutementfront.models.Technologie;
+import netscape.javascript.JSObject;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

@@ -25,8 +25,16 @@ public class ParticipationProjetService {
 
     public Set<Participation_Projet> jsonToParticipationProjets(JSONObject json){
         Set<Participation_Projet> participationProjets = new HashSet<>();
-        JSONArray participationsJson = json.getJSONArray("projetsParticipes");
 
+    public Set<Participation_Projet> getParticipationsParUser(JSONObject json){
+        JSONArray participationsJson = json.getJSONArray("projetsParticipes");
+        Set<Participation_Projet> participationProjets = remplirDesParticipationProjets(participationsJson);
+
+        return participationProjets;
+    }
+
+    public Set<Participation_Projet> remplirDesParticipationProjets(JSONArray participationsJson){
+        Set<Participation_Projet> participationProjets = new HashSet<>();
 
         for (int i = 0; i < participationsJson.length(); i++) {
             Participation_Projet participationProjet = new Participation_Projet();

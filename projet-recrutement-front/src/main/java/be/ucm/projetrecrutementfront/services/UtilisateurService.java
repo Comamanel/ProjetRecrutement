@@ -2,9 +2,12 @@ package be.ucm.projetrecrutementfront.services;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Set;
+import java.util.HashSet;
 
 import be.ucm.projetrecrutementfront.models.Group;
 import be.ucm.projetrecrutementfront.models.Utilisateur;
+import com.sun.tools.javac.util.Pair;
 import be.ucm.projetrecrutementfront.models.forms.InscriptionUtilisateur;
 import org.json.*;
 
@@ -21,18 +24,6 @@ public class UtilisateurService {
         }
         return instance;
     }
-    /* Méthode de démo du contact de l'API avec un Body, pour le POST
-    public static void testContactAvecBody(){
-        InscriptionUtilisateur u = new InscriptionUtilisateur();
-        u.setEmail("test-contact-avec-body@api.pr");
-        u.setPseudo("TestContactAPIAvecBody");
-        u.setMotDePasse("testmDp5!");
-        u.setDateDeNaissance(LocalDate.now());
-        JSONObject obj = new JSONObject(u);
-        String resultat = ApiService.contacterApiAvecBody("utilisateur/create","POST", obj.toString());
-        System.out.println("Méthode de test du body. Valeur : ");
-        System.out.println(resultat);
-    }*/
 
     public Utilisateur getUtilisateur(Long id) {
         Utilisateur u = new Utilisateur();
@@ -45,6 +36,35 @@ public class UtilisateurService {
             u.setProjetsCrees(ProjetService.getInstance().jsonToProjets(json.getJSONArray("projetsCrees")));
         }
         return u;
+    }
+
+    public static Pair<Long, Set<Utilisateur>> getUtilisateursParProjet(Long idProjet, Boolean active) {
+
+        Long idAdmin = null;
+        Set<Utilisateur> utilisateurs = new HashSet<>();
+
+        String output = ApiService.contacterApiSansBody("utilisateur/", "GET");
+        JSONArray ja = new JSONArray(output);
+
+        for (int i = 0; i<ja.length(); i++){
+            JSONObject utilJo = ja.getJSONObject(i);
+            JSONArray ppjo = utilJo.getJSONArray("projetsParticipes");
+            for(int j = 0; j<ppjo.length(); j++){
+                JSONObject pjo = ppjo.getJSONObject(j).getJSONObject("projet");
+                if(pjo.getLong("id") == idProjet){
+                    Utilisateur nu = new Utilisateur();
+                    remplirUnUtilisateur(nu, utilJo);
+                    if(ppjo.getJSONObject(j).getBoolean("actif") == active) {
+                        utilisateurs.add(nu);
+                        if(ppjo.getJSONObject(j).getBoolean("proprio")){
+                            idAdmin = nu.getId();
+                        }
+                    }
+                }
+            }
+        }
+
+        return new Pair<>(idAdmin, utilisateurs);
     }
 
     private void jsonToUtilisateur(Utilisateur u, JSONObject json) {

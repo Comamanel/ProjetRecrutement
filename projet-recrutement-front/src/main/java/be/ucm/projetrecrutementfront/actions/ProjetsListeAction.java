@@ -28,13 +28,10 @@ public class ProjetsListeAction extends ActionSupport {
 
     public Set<Projet> getProjets() {
         if(projets == null || projets.size() == 0){
-            System.out.println("Entré dans la condition");
             projet = new Projet();
             projets = ProjetService.getInstance().getProjets();
             System.out.println(projets);
         }
-        System.out.println("Liste récupérée :");
-        System.out.println(projets);
         return projets;
     }
 
