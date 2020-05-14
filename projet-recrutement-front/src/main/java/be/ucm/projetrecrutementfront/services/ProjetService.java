@@ -1,6 +1,8 @@
 package be.ucm.projetrecrutementfront.services;
 
+import be.ucm.projetrecrutementfront.models.Participation_Projet;
 import be.ucm.projetrecrutementfront.models.Projet;
+import be.ucm.projetrecrutementfront.models.Utilisateur;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,13 +17,42 @@ public class ProjetService {
 
     private static ApiService apiService;
 
-    public static Projet getProjet(int idProjet){
+//    public static Long getAdminId(Set<Utilisateur> utilisateurs, Long idProjet){
+//
+//        System.out.println("Début chercher Admin");
+//        Long idAdmin = null;
+//
+//        for (Utilisateur u : utilisateurs) {
+//            System.out.println("Participant observé :");
+//            System.out.println(u.getPseudo());
+//           Set<Participation_Projet> pps = u.getProjetsParticipes();
+//            System.out.println(pps);
+//           for (Participation_Projet pp :pps){
+//               System.out.println("Participation analysée :");
+//               System.out.println(pp);
+//               if(pp.isProprio()){
+//                    return pp.getUtilisateur().getId();
+//               }
+//           }
+//        }
+//        return idAdmin;
+//    }
+
+    public static Projet getSingleProjet(long idProjet){
 
         String output = ApiService.contacterApiSansBody("projet/" + idProjet, "GET");
 
         JSONObject jo = new JSONObject(output);
 
         Projet p = remplirProjet(jo);
+        p.setMaitrises(MaitriseService.remplirPlusieursMaitrises(jo));
+
+        Long adminId = UtilisateurService.getUtilisateursParProjet(idProjet, true).fst;
+        Set<Utilisateur> participantsActifs = UtilisateurService.getUtilisateursParProjet(idProjet, true).snd;
+        Set<Utilisateur> participantsNonActifs = UtilisateurService.getUtilisateursParProjet(idProjet, false).snd;
+        p.setUtilActifs(participantsActifs);
+        p.setUtilNonActifs(participantsNonActifs);
+        p.setAdminId(adminId);
 
         return p;
 
@@ -39,7 +70,7 @@ public class ProjetService {
         return projets;
     }
 
-    protected static Projet remplirProjet(JSONObject output){
+    public static Projet remplirProjet(JSONObject output){
         Projet par = new Projet();
         if (output != null) {
             try {
@@ -71,7 +102,5 @@ public class ProjetService {
 
         return projets;
     }
-
-
 
 }

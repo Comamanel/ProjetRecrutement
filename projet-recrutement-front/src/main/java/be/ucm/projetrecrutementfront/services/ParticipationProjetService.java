@@ -10,10 +10,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ParticipationProjetService {
-    public static Set<Participation_Projet> remplirDesParticipationProjets(JSONObject json){
-        Set<Participation_Projet> participationProjets = new HashSet<>();
-        JSONArray participationsJson = json.getJSONArray("projetsParticipes");
 
+    public static Set<Participation_Projet> getParticipationsParUser(JSONObject json){
+        JSONArray participationsJson = json.getJSONArray("projetsParticipes");
+        Set<Participation_Projet> participationProjets = remplirDesParticipationProjets(participationsJson);
+
+        return participationProjets;
+    }
+
+    public static Set<Participation_Projet> remplirDesParticipationProjets(JSONArray participationsJson){
+        Set<Participation_Projet> participationProjets = new HashSet<>();
 
         for (int i = 0; i < participationsJson.length(); i++) {
             Participation_Projet participationProjet = new Participation_Projet();

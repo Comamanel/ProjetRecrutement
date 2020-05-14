@@ -26,7 +26,7 @@ public class AfficheProjetDTO {
     private int tpsTravailHebdo;
     private EtatProjet statut;
 
-    private Set<MaitriseDTO> maitrisesDemandees = new HashSet<>();
+    private Set<MaitriseDTO> maitrises = new HashSet<>();
 
     public AfficheProjetDTO(Projet projet){
         this.id = projet.getId();
@@ -39,6 +39,6 @@ public class AfficheProjetDTO {
         this.tpsTravailHebdo = projet.getTpsTravailHebdo();
         this.statut = projet.getStatut();
 
-        projet.getMaitrisesDemandees().forEach(m -> this.maitrisesDemandees.add(new MaitriseDTO(m)));
+        projet.getMaitrisesDemandees().forEach(m -> this.maitrises.add(new MaitriseDTO(m)));
     }
 }
