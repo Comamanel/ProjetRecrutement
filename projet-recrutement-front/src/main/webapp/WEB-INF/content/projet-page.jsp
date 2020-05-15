@@ -20,7 +20,7 @@
         <img id="top-bg" src="img/bg_board.jpg" alt="background tableau">
 
            <div id="container-standard">
-                <div id="projet-titre">
+                <div class="titre-projet projet-single">
                     <h2><s:property value="projet.nom" /></h2>
                     <div class="titre-infos">
                         Projet démarré le <s:property value="projet.dateDebut" />
@@ -30,11 +30,13 @@
                     </div>
                 </div>
                 <div class="projet-description">
+                    <h3>Description</h3>
                     <s:property value="projet.description" />
                 </div>
+                <h3>Équipe du projet</h3>
                 <div class="projet-infos-tech">
                     <table class="maitrises-projet">
-                        <th>Compétences requises</th>
+                            <th colspan="2">Compétences requises</th>
                         <s:iterator value="projet.maitrises">
                             <tr>
                                 <td>
@@ -55,11 +57,13 @@
                         </s:iterator>
                     </table>
                     <table class="équipe-projet">
-                        <th>Participants</th>
+                        <th colspan="2">Participants</th>
                         <s:iterator value="projet.utilActifs">
                             <tr>
                                 <td>
-                                    <s:property value="pseudo" />
+                                    <a href="<s:url value='affiche-profil-utilisateur'><s:param name='id' value='%{id}' /></s:url>">
+                                        <s:property value="pseudo" />
+                                    </a>
                                 </td>
                                 <td>
                                     <s:if test="id==projet.adminId">

@@ -38,12 +38,12 @@ public class UtilisateurService {
         return u;
     }
 
-    public static Pair<Long, Set<Utilisateur>> getUtilisateursParProjet(Long idProjet, Boolean active) {
+    public Pair<Long, Set<Utilisateur>> getUtilisateursParProjet(Long idProjet, Boolean active) {
 
         Long idAdmin = null;
         Set<Utilisateur> utilisateurs = new HashSet<>();
 
-        String output = ApiService.contacterApiSansBody("utilisateur/", "GET");
+        String output = ApiService.getInstance().contacterApiSansBody("utilisateur/", "GET");
         JSONArray ja = new JSONArray(output);
 
         for (int i = 0; i<ja.length(); i++){
@@ -53,7 +53,7 @@ public class UtilisateurService {
                 JSONObject pjo = ppjo.getJSONObject(j).getJSONObject("projet");
                 if(pjo.getLong("id") == idProjet){
                     Utilisateur nu = new Utilisateur();
-                    remplirUnUtilisateur(nu, utilJo);
+                    jsonToUtilisateur(nu, utilJo);
                     if(ppjo.getJSONObject(j).getBoolean("actif") == active) {
                         utilisateurs.add(nu);
                         if(ppjo.getJSONObject(j).getBoolean("proprio")){

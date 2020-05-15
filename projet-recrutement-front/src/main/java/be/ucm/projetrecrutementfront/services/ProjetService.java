@@ -27,18 +27,18 @@ public class ProjetService {
     }
 
 
-    public Projet getProjet(int idProjet){
+    public Projet getProjet(long idProjet){
 
         String output = ApiService.getInstance().contacterApiSansBody("projet/" + idProjet, "GET");
 
         JSONObject jo = new JSONObject(output);
 
-        Projet p = remplirProjet(jo);
-        p.setMaitrises(MaitriseService.remplirPlusieursMaitrises(jo));
+        Projet p = jsonToProjet(jo);
+        p.setMaitrises(MaitriseService.getInstance().jsonToMaitrises(jo));
 
-        Long adminId = UtilisateurService.getUtilisateursParProjet(idProjet, true).fst;
-        Set<Utilisateur> participantsActifs = UtilisateurService.getUtilisateursParProjet(idProjet, true).snd;
-        Set<Utilisateur> participantsNonActifs = UtilisateurService.getUtilisateursParProjet(idProjet, false).snd;
+        Long adminId = UtilisateurService.getInstance().getUtilisateursParProjet(idProjet, true).fst;
+        Set<Utilisateur> participantsActifs = UtilisateurService.getInstance().getUtilisateursParProjet(idProjet, true).snd;
+        Set<Utilisateur> participantsNonActifs = UtilisateurService.getInstance().getUtilisateursParProjet(idProjet, false).snd;
         p.setUtilActifs(participantsActifs);
         p.setUtilNonActifs(participantsNonActifs);
         p.setAdminId(adminId);

@@ -20,7 +20,7 @@ public class ProjetPageAction extends ActionSupport {
     @Override
     public String execute() throws Exception{
         if(id != null){
-            this.projet = ProjetService.getSingleProjet(id);
+            this.projet = ProjetService.getInstance().getProjet(id);
             System.out.println(this.projet.getAdminId());
         }
         return SUCCESS;
